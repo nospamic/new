@@ -87,14 +87,14 @@ pits();
 class MyCar:Road
 {
 private:
-int sensitivity;
-int oldTime;
-int newTime;
-int pauseTime;
-float xPosition;
-float dSpeed;
-float dAlfa;
-int screen [41][31];
+int sensitivity_;
+int oldTime_;
+int newTime_;
+int pauseTime_;
+float xPosition_;
+float dSpeed_;
+float dAlfa_;
+int screen_ [41][31];
 int TimeToNumber()
 {
 int Min;int Sec;int Mil;
@@ -119,8 +119,8 @@ return fulTime;
 }
 string getTime()
 {
-newTime=TimeToNumber();
-string fulTime=NumberToTime(float(newTime-oldTime));
+newTime_=TimeToNumber();
+string fulTime=NumberToTime(float(newTime_-oldTime_));
 return fulTime;
 }
 void setcur(int x, int y) 
@@ -136,11 +136,11 @@ int ySize;
 float yPosition;
 MyCar():xSize(4),
 		ySize(5),
-		sensitivity(4),
-		xPosition(20),
+		sensitivity_(4),
+		xPosition_(20),
 		yPosition(0),
-		dSpeed(0),
-		dAlfa(0)
+		dSpeed_(0),
+		dAlfa_(0)
 {}
 
 void SetColor(int text, int background)
@@ -161,12 +161,12 @@ SetColor(15,0);
 }
 void resetTime()
 {
-oldTime=TimeToNumber();
+oldTime_=TimeToNumber();
 }
 void infoPanel()
 {
 
-setcur(6,0);cout <<"Speed - " ;cout <<dSpeed*10<<" km/h  ";
+setcur(6,0);cout <<"Speed - " ;cout <<dSpeed_*10<<" km/h  ";
 setcur(25,0);cout <<"Time - "  ;cout <<getTime()<<"   ";
 setcur(45,0);cout <<"Distance - ";cout <<int(yPosition)<<" m.   ";
 //cout <<"    xPos = "<<xPos<<"   ";
@@ -179,32 +179,32 @@ if(_kbhit())
 		{
 		key=_getch();
 		
-		if (key == 72 && dSpeed<15){dSpeed+=1;}
-  		if (key == 80 && dSpeed>0){dSpeed-=1;}
-		if (key == 75 && dAlfa>-5 && dSpeed!=0){dAlfa=-sensitivity;}
-		if (key == 77 && dAlfa<5  && dSpeed!=0){dAlfa= sensitivity;}
+		if (key == 72 && dSpeed_<15){dSpeed_+=1;}
+  		if (key == 80 && dSpeed_>0){dSpeed_-=1;}
+		if (key == 75 && dAlfa_>-5 && dSpeed_!=0){dAlfa_=-sensitivity_;}
+		if (key == 77 && dAlfa_<5  && dSpeed_!=0){dAlfa_= sensitivity_;}
 		if (key == 27){exit(0);}
 		if (key == 13){pause();}
 			
 		} 
 		
-		else if (dAlfa>0){dAlfa-=0.5;}
-		else if (dAlfa<0){dAlfa+=0.5;}
+		else if (dAlfa_>0){dAlfa_-=0.5;}
+		else if (dAlfa_<0){dAlfa_+=0.5;}
 
-yPosition=yPosition+(dSpeed/10); //y-moove
-if (xPosition+(dAlfa/5)>=6 && xPosition+(dAlfa/5)<=32){xPosition=xPosition+(dAlfa/5);} //x-moove	
+yPosition=yPosition+(dSpeed_/10); //y-moove
+if (xPosition_+(dAlfa_/5)>=6 && xPosition_+(dAlfa_/5)<=32){xPosition_=xPosition_+(dAlfa_/5);} //x-moove	
 
 		
 }
 void carToScreen()
 
 {
-//............................car to screen
-screen [int(xPosition)][4]=213;screen [int(xPosition)+1][4]=223; screen [int(xPosition)+2][4]=223;screen [int(xPosition)+3][4]=184;
-screen [int(xPosition)][3]=179;screen [int(xPosition)+1][3]= 32; screen [int(xPosition)+2][3]= 32;screen [int(xPosition)+3][3]=179;
-screen [int(xPosition)][2]=186;screen [int(xPosition)+1][2]=219; screen [int(xPosition)+2][2]=219;screen [int(xPosition)+3][2]=186;
-screen [int(xPosition)][1]=186;screen [int(xPosition)+1][1]=219; screen [int(xPosition)+2][1]=219;screen [int(xPosition)+3][1]=186;
-screen [int(xPosition)][0]=212;screen [int(xPosition)+1][0]=205; screen [int(xPosition)+2][0]=205;screen [int(xPosition)+3][0]=190;
+//............................car to screen_
+screen_ [int(xPosition_)][4]=213;screen_ [int(xPosition_)+1][4]=223; screen_ [int(xPosition_)+2][4]=223;screen_ [int(xPosition_)+3][4]=184;
+screen_ [int(xPosition_)][3]=179;screen_ [int(xPosition_)+1][3]= 32; screen_ [int(xPosition_)+2][3]= 32;screen_ [int(xPosition_)+3][3]=179;
+screen_ [int(xPosition_)][2]=186;screen_ [int(xPosition_)+1][2]=219; screen_ [int(xPosition_)+2][2]=219;screen_ [int(xPosition_)+3][2]=186;
+screen_ [int(xPosition_)][1]=186;screen_ [int(xPosition_)+1][1]=219; screen_ [int(xPosition_)+2][1]=219;screen_ [int(xPosition_)+3][1]=186;
+screen_ [int(xPosition_)][0]=212;screen_ [int(xPosition_)+1][0]=205; screen_ [int(xPosition_)+2][0]=205;screen_ [int(xPosition_)+3][0]=190;
 }
 void printScreen(int yPosition)
 {
@@ -220,7 +220,7 @@ for(int y=25;y>=0;y--)
 		if (road.roadArray[x][y+dy]==13){pixelKod=177;}//яма
 		if (road.roadArray[x][y+dy]==0){pixelKod=32;}//ничего
 		
-		screen[x][y]=pixelKod;
+		screen_[x][y]=pixelKod;
 		}
 	}
 	
@@ -233,11 +233,11 @@ for(int y=25;y>=0;y--)
 	cout <<"\t      ";
 	for(int x=0;x<=40;x++)
 		{
-		if(screen[x][y]==219){SetColor(15,15);}
-		if(screen[x][y]==176){SetColor(15,8);}
-		if(screen[x][y]==177){SetColor(15,7);}
-		cout << char(screen[x][y]);	
-		if(screen[x][y]!=32){SetColor(15,0);}
+		if(screen_[x][y]==219){SetColor(15,15);}
+		if(screen_[x][y]==176){SetColor(15,8);}
+		if(screen_[x][y]==177){SetColor(15,7);}
+		cout << char(screen_[x][y]);	
+		if(screen_[x][y]!=32){SetColor(15,0);}
 		}
 	cout <<"\n";
 	}
@@ -250,7 +250,7 @@ for (int y=0;y<ySize;y++)
 	{
 	for (int x=0;x<xSize;x++)
 		{
-		if(road.roadArray[int(xPosition)+x][int(yPosition)+y]==13){crash=1;}
+		if(road.roadArray[int(xPosition_)+x][int(yPosition)+y]==13){crash=1;}
 		}
 	}
 return crash;
@@ -263,17 +263,17 @@ if(yPosition>(road.yMax-30)){return 1;}else{return 0;}
 }
 void pause()
 {
-pauseTime=TimeToNumber();
+pauseTime_=TimeToNumber();
 Sleep (200);
 if(kbhit()){while(kbhit()){int a=getch();}}//kill bufer!!
 while(!getch()){}
-oldTime+=(TimeToNumber()-pauseTime);
+oldTime_+=(TimeToNumber()-pauseTime_);
 }
 void restart()
 {
-yPosition=0;xPosition=20;
-dSpeed=0;
-dAlfa=0;
+yPosition=0;xPosition_=20;
+dSpeed_=0;
+dAlfa_=0;
 resetTime();
 }
 }myCar;
