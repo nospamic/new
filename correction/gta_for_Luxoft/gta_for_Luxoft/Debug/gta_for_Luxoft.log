@@ -1,0 +1,74 @@
+﻿Построение начато 30.10.2017 23:57:03.
+Проект "D:\cpp2\gta_for_Luxoft\gta_for_Luxoft\gta_for_Luxoft.vcxproj" в узле 2 (целевые объекты build).
+InitializeBuildStatus:
+  Обращение к "Debug\gta_for_Luxoft.unsuccessfulbuild".
+ClCompile:
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt MyCar.cpp Road.cpp game.cpp
+  game.cpp
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\road.h(73): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(39): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(41): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(68): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(69): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(103): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(103): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(104): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(104): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(105): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(105): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(106): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(106): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(138): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(138): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(146): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(146): error C2228: выражение слева от ".yMax" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(187): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(188): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(189): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\game.cpp(32): error C2661: MyCar::MyCar: нет перегруженной функции, принимающей 2 аргументов
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\game.cpp(38): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\game.cpp(44): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Road.cpp
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\road.h(73): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  MyCar.cpp
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\road.h(73): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(39): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(41): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(68): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(69): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(103): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(103): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(104): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(104): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(105): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(105): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(106): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(106): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(138): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(138): error C2228: выражение слева от ".roadArray" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(146): error C2065: road: необъявленный идентификатор
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(146): error C2228: выражение слева от ".yMax" должно представлять класс, структуру или объединение
+          тип: 'unknown-type'
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(187): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(188): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(189): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.cpp(5): error C2511: MyCar::MyCar(void): перегруженная функция-член не найдена в "MyCar"
+          d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.h(14): см. объявление "MyCar"
+d:\cpp2\gta_for_luxoft\gta_for_luxoft\mycar.cpp(10): error C2600: MyCar::~MyCar: нельзя определить специальную функцию-член, созданную компилятором (сначала необходимо объявить ее в классе)
+  Создание кода...
+Построение проекта "D:\cpp2\gta_for_Luxoft\gta_for_Luxoft\gta_for_Luxoft.vcxproj" завершено (целевые объекты build) с ошибкой.
+
+СБОЙ построения.
+
+Затраченное время: 00:00:03.31
