@@ -27,33 +27,34 @@ SetConsoleOutputCP(1251);
 
 int roadXSize=40;
 int roadYSize=200;
-Road road(roadXSize,roadYSize);
 
-MyCar myCar(roadXSize,roadYSize);
+Road road(roadXSize,roadYSize);
+int **roadArray=road.getRoadArray();
+
+MyCar myCar(roadXSize,roadYSize,roadArray);
 
 while(true)
-	{
+{
 	myCar.restart();
-	road.makeRoad();
-	myCar.printScreen(myCar.yPosition);
+	myCar.printScreen(myCar.yPosition,roadArray);
 	myCar.pause();
 	while(true)
-		{
+	{
 		myCar.control();
 		Sleep (10);
-		myCar.printScreen(myCar.yPosition);
-		if (myCar.isCrash())
-			{
+		myCar.printScreen(myCar.yPosition,roadArray);
+		if (myCar.isCrash(roadArray))
+		{
 			myCar.message("Game over!");
 			break;
-			}
+		}
 		if (myCar.isFinish())
-			{
+		{
 			myCar.message("Welcome to Luxoft!");
 			break;
-			}
-		 }
+		}
 	}
+}
 
 return 0;
 }

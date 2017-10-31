@@ -24,7 +24,7 @@ public:
 		return road;
 	}
 
-	void makeRoad()
+	int **getRoadArray()
 	{
 		int **roadArray=makeRoadArray(xSize,ySize);
 
@@ -46,6 +46,8 @@ public:
 		chessMarking(0,roadArray);
 		chessMarking(ySize-30,roadArray);
 		addPit(roadArray);
+
+		return roadArray;
 	}
 
 
@@ -56,11 +58,12 @@ private:
 		bool isSolid;
 		int squareSize=2;
 		int n=0;
-		for(int y=0;y<10;y++)
+		int markingSizeY=10;
+		for(int y=0;y<markingSizeY;y++)
 		{
 			n=0;
 			if ((y % 2)>0) {isSolid=true;} else {isSolid=false;}
-			for(int x=6;x<=34;x++)
+			for(int x=6;x<=xSize-6;x++)
 			{
 				if(isSolid){roadArray [x][y+position]=10;}else {roadArray[x][y+position]=0;}
 				n++;
@@ -72,8 +75,10 @@ private:
 
 	void addPit(int **roadArray)
 	{
+		int pitStart=20;
+		int pitEnd=40;
 		srand(time(0));
-		for (int y=20;y<(ySize-40);y++)
+		for (int y=pitStart;y<(ySize-pitEnd);y++)
 		{
 			for(int x=7;x<xSize-9;x++)
 			{

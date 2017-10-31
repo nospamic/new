@@ -27,8 +27,9 @@ MyCar(int roadXSize,int roadYSize,int **road):
 		dSpeed_(0),
 		dAlfa_(0)
 {
-roadSizeX=roadXSize;
-roadSizeY=roadYSize;
+	roadSizeX=roadXSize;
+	roadSizeY=roadYSize;
+	int **roadArray=road;
 }
 
 
@@ -49,18 +50,15 @@ oldTime_=TimeToNumber();
 }
 void infoPanel()
 {
-
-setcur(6,0);cout <<"Speed - " ;cout <<dSpeed_*10<<" km/h  ";
-setcur(25,0);cout <<"Time - "  ;cout <<getTime()<<"   ";
-setcur(45,0);cout <<"Distance - ";cout <<int(yPosition)<<" m.   ";
-
-
+	setcur(6,0);cout <<"Speed - " ;cout <<dSpeed_*10<<" km/h  ";
+	setcur(25,0);cout <<"Time - "  ;cout <<getTime()<<"   ";
+	setcur(45,0);cout <<"Distance - ";cout <<int(yPosition)<<" m.   ";
 }
 void control()
 {
-int key=0;
-if(_kbhit())
-		{
+	int key=0;
+	if(_kbhit())
+	{
 		key=_getch();
 		
 		if (key == 72 && dSpeed_<15){dSpeed_+=1;}
@@ -69,43 +67,38 @@ if(_kbhit())
 		if (key == 77 && dAlfa_<5  && dSpeed_!=0){dAlfa_= sensitivity_;}
 		if (key == 27){exit(0);}
 		if (key == 13){pause();}
-			
-		} 
-		
+	} 
 		else if (dAlfa_>0){dAlfa_-=0.5;}
 		else if (dAlfa_<0){dAlfa_+=0.5;}
 
-yPosition=yPosition+(dSpeed_/10); //y-moove
-if (xPosition_+(dAlfa_/5)>=6 && xPosition_+(dAlfa_/5)<=32){xPosition_=xPosition_+(dAlfa_/5);} //x-moove	
-
-		
+	yPosition=yPosition+(dSpeed_/10); 
+	if (xPosition_+(dAlfa_/5)>=6 && xPosition_+(dAlfa_/5)<=32){xPosition_=xPosition_+(dAlfa_/5);} 
+	
 }
 void carToScreen()
-
 {
-//............................car to screen_
-screen_ [int(xPosition_)][4]=213;screen_ [int(xPosition_)+1][4]=223; screen_ [int(xPosition_)+2][4]=223;screen_ [int(xPosition_)+3][4]=184;
-screen_ [int(xPosition_)][3]=179;screen_ [int(xPosition_)+1][3]= 32; screen_ [int(xPosition_)+2][3]= 32;screen_ [int(xPosition_)+3][3]=179;
-screen_ [int(xPosition_)][2]=186;screen_ [int(xPosition_)+1][2]=219; screen_ [int(xPosition_)+2][2]=219;screen_ [int(xPosition_)+3][2]=186;
-screen_ [int(xPosition_)][1]=186;screen_ [int(xPosition_)+1][1]=219; screen_ [int(xPosition_)+2][1]=219;screen_ [int(xPosition_)+3][1]=186;
-screen_ [int(xPosition_)][0]=212;screen_ [int(xPosition_)+1][0]=205; screen_ [int(xPosition_)+2][0]=205;screen_ [int(xPosition_)+3][0]=190;
+	screen_ [int(xPosition_)][4]=213;screen_ [int(xPosition_)+1][4]=223; screen_ [int(xPosition_)+2][4]=223;screen_ [int(xPosition_)+3][4]=184;
+	screen_ [int(xPosition_)][3]=179;screen_ [int(xPosition_)+1][3]= 32; screen_ [int(xPosition_)+2][3]= 32;screen_ [int(xPosition_)+3][3]=179;
+	screen_ [int(xPosition_)][2]=186;screen_ [int(xPosition_)+1][2]=219; screen_ [int(xPosition_)+2][2]=219;screen_ [int(xPosition_)+3][2]=186;
+	screen_ [int(xPosition_)][1]=186;screen_ [int(xPosition_)+1][1]=219; screen_ [int(xPosition_)+2][1]=219;screen_ [int(xPosition_)+3][1]=186;
+	screen_ [int(xPosition_)][0]=212;screen_ [int(xPosition_)+1][0]=205; screen_ [int(xPosition_)+2][0]=205;screen_ [int(xPosition_)+3][0]=190;
 }
-
-
-void printScreen(int yPosition)
+void printScreen(int yPosition, int **roadArray)
 {
-int pixelKod;
-int dy=int(yPosition);
-for(int y=25;y>=0;y--)
+	int pixel;
+	int screenSizeX=40;
+	int screenSizeY=25;
+	int dy=int(yPosition);
+	for(int y=screenSizeY;y>=0;y--)
 	{
-	for(int x=0;x<=roadSizeX;x++)
+		for(int x=0;x<=screenSizeX-1;x++)
 		{
-		if (road.roadArray[x][y+dy]==11){pixelKod=219;}//border
-		if (road.roadArray[x][y+dy]==10){pixelKod=176;}//marking
-		if (road.roadArray[x][y+dy]==13){pixelKod=177;}//pit
-		if (road.roadArray[x][y+dy]==0){pixelKod=32;}
+			if (roadArray[x][y+dy]==11){pixel=219;}//border
+			if (roadArray[x][y+dy]==10){pixel=176;}//marking
+			if (roadArray[x][y+dy]==13){pixel=177;}//pit
+			if (roadArray[x][y+dy]==0){pixel=32;}
 		
-		screen_[x][y]=pixelKod;
+			screen_[x][y]=pixel;
 		}
 	}
 	
@@ -113,10 +106,10 @@ carToScreen();
 infoPanel();
 //............................print
 setcur(0,2);
-for(int y=25;y>=0;y--)
+for(int y=screenSizeY;y>=0;y--)
 	{
 	cout <<"\t      ";
-	for(int x=0;x<=40;x++)
+	for(int x=0;x<=screenSizeX;x++)
 		{
 		if(screen_[x][y]==219){SetColor(15,15);}
 		if(screen_[x][y]==176){SetColor(15,8);}
@@ -128,38 +121,37 @@ for(int y=25;y>=0;y--)
 	}
 
 }
-bool isCrash()
+bool isCrash(int **roadArray)
 {
-bool crash=0;
+bool crash=false;
 for (int y=0;y<ySize;y++)
 	{
 	for (int x=0;x<xSize;x++)
 		{
-		if(road.roadArray[int(xPosition_)+x][int(yPosition)+y]==13){crash=1;}
+		if(roadArray[int(xPosition_)+x][int(yPosition)+y]==13){crash=1;}
 		}
 	}
 return crash;
 }
 bool isFinish()
 {
-//cout <<road.yMax<<" "<< yPos;system("pause");
-if(yPosition>(road.yMax-30)){return 1;}else{return 0;}
-
+	int finishPosition=30;
+	if(yPosition>(roadSizeY-finishPosition)){return 1;}else{return 0;}
 }
 void pause()
 {
-pauseTime_=TimeToNumber();
-Sleep (200);
-if(kbhit()){while(kbhit()){int a=getch();}}//kill bufer!!
-while(!getch()){}
-oldTime_+=(TimeToNumber()-pauseTime_);
+	pauseTime_=TimeToNumber();
+	Sleep (200);
+	if(kbhit()){while(kbhit()){int a=getch();}}//kill bufer!!
+	while(!getch()){}
+	oldTime_+=(TimeToNumber()-pauseTime_);
 }
 void restart()
 {
-yPosition=0;xPosition_=20;
-dSpeed_=0;
-dAlfa_=0;
-resetTime();
+	yPosition=0;xPosition_=20;
+	dSpeed_=0;
+	dAlfa_=0;
+	resetTime();
 }
 
 
