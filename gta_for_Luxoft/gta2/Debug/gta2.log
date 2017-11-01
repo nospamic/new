@@ -1,0 +1,17 @@
+﻿Построение начато 01.11.2017 10:02:47.
+Проект "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" в узле 2 (целевые объекты build).
+InitializeBuildStatus:
+  Создание "Debug\gta2.unsuccessfulbuild", так как было задано "AlwaysCreate".
+ClCompile:
+  Для всех выходных данных обновления не требуется.
+Link:
+  Для всех выходных данных обновления не требуется.
+  gta2.vcxproj -> D:\cpp2\gta_for_Luxoft\Debug\gta2.exe
+FinalizeBuildStatus:
+  Файл "Debug\gta2.unsuccessfulbuild" удаляется.
+  Обращение к "Debug\gta2.lastbuildstate".
+Построение проекта "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" завершено (целевые объекты build).
+
+Построение успешно завершено.
+
+Затраченное время: 00:00:00.09
