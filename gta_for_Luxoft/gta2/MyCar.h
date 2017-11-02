@@ -1,5 +1,6 @@
-#ifndef MYCAR_H
-#define MYCAR_H
+//#ifndef MYCAR_H
+//#define MYCAR_H
+#pragma once
 
 #include "iostream"
 #include <conio.h>
@@ -24,9 +25,9 @@ void control();
 
 void carToScreen();
 
-void printScreen(int yPosition, int **roadArray);
+void printScreen(int yPosition, int *roadArray);
 
-bool isCrash(int **roadArray);
+bool isCrash(int *roadArray);
 
 bool isFinish();
 
@@ -59,4 +60,4 @@ void SetColor(int text, int background);
 };
 
 
-#endif MYCAR_H
+//#endif MYCAR_H

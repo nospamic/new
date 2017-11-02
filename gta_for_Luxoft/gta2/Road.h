@@ -1,7 +1,6 @@
+//#ifndef ROAD_H
+//#define ROAD_H
 #pragma once
-#include "iostream"
-#include <conio.h>
-#include <ctime>
 
 
 
@@ -9,25 +8,22 @@
 class Road
 {
 public:
-	int xSize;
-	int ySize;
-	Road(int XSize,int YSize);
 	
 
-	int **makeRoadArray(int xSize, int ySize);
+	int * getRoadArray();
 	
+	void chessMarking(int position,int *roadArray);
 
-	int **getRoadArray();
-	
+	void addPit(int *roadArray);
+
+
+
 
 private:
 
-	void chessMarking(int position,int **roadArray);
 	
-
-	void addPit(int **roadArray);
-	
-
-
 
 };
+
+
+//#endif ROAD_H

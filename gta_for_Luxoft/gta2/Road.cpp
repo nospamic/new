@@ -1,5 +1,5 @@
+#include "numbers.h"
 #include "Road.h"
-
 #include "iostream"
 #include <conio.h>
 #include <ctime>
@@ -7,50 +7,7 @@
 
 
 
-
-	Road::Road(int XSize,int YSize)
-	{
-		xSize=XSize;
-		ySize=YSize;
-		
-	}
-
-	int Road::**makeRoadArray(int xSize, int ySize)
-	{
-		int **road = new int *[xSize];
-		for (int i = 0; i < xSize; i++) {road[i] = new int [ySize];}
-		return road;
-	}
-
-	int Road::**getRoadArray()
-	{
-		int **roadArray=makeRoadArray(xSize,ySize);
-
-		for (int y=0;y<ySize;y++)
-		{
-			for (int x=0;x<xSize;x++){roadArray[x][y]=0;}
-		}
-
-		int lineLength=6;
-		int n=0;
-		for (int y=0;y<ySize;y++)
-		{
-			roadArray[4][y]=10;roadArray[5][y]=11;roadArray[xSize-5][y]=11;roadArray[xSize-4][y]=10;
-			if (n<lineLength) {roadArray[xSize/2][y]=10;}
-			if (n==lineLength*2){n=0;}
-			n++;
-		}
-
-		chessMarking(0,roadArray);
-		chessMarking(ySize-30,roadArray);
-		addPit(roadArray);
-
-		return roadArray;
-	}
-
-
-
-	void Road::chessMarking(int position,int **roadArray)
+	void Road::chessMarking(int position,int *roadArray)
 	{
 		bool isSolid;
 		int squareSize=2;
@@ -60,9 +17,9 @@
 		{
 			n=0;
 			if ((y % 2)>0) {isSolid=true;} else {isSolid=false;}
-			for(int x=6;x<=xSize-6;x++)
+			for(int x=6;x<=roadXSize-6;x++)
 			{
-				if(isSolid){roadArray [x][y+position]=10;}else {roadArray[x][y+position]=0;}
+				if(isSolid){roadArray [x*roadXSize+(y+position)]=10;}else {roadArray[x*roadXSize+(y+position)]=0;}
 				n++;
 				if (n>=squareSize){isSolid=!isSolid;n=0;}
 			}
@@ -70,20 +27,54 @@
 
 	}
 
-	void Road::addPit(int **roadArray)
+	
+
+	int * Road::getRoadArray()
+	{
+		
+		int *roadArray=new int[roadXSize*roadYSize];
+		
+
+		for (int y=0;y<roadYSize;y++)
+		{
+			for (int x=0;x<roadXSize;x++){roadArray[x*roadXSize+y]=0;}
+		}
+
+		int lineLength=6;
+		int n=0;
+		for (int y=0;y<roadYSize;y++)
+		{
+			roadArray[4*roadXSize+y]=10;roadArray[5*roadXSize+y]=11;roadArray[(roadXSize-5)*roadXSize+y]=11;roadArray[(roadXSize-4)*roadXSize+y]=10;
+			if (n<lineLength) {roadArray[(roadXSize/2)*roadXSize+y]=10;}
+			if (n==lineLength*2){n=0;}
+			n++;
+		}
+
+		chessMarking(0,roadArray);
+		chessMarking(roadYSize-30,roadArray);
+		addPit(roadArray);
+
+		return roadArray;
+	}
+
+
+
+	
+
+	void Road::addPit(int *roadArray)
 	{
 		int pitStart=20;
 		int pitEnd=40;
 		srand(time(0));
-		for (int y=pitStart;y<(ySize-pitEnd);y++)
+		for (int y=pitStart;y<(roadYSize-pitEnd);y++)
 		{
-			for(int x=7;x<xSize-9;x++)
+			for(int x=7;x<roadXSize-9;x++)
 			{
 				int randomNumber=int(rand() % 100);
 				if (randomNumber==1)
 				{
-					roadArray[x][y]=13;roadArray[x+1][y]=13;
-					roadArray[x][y+1]=13;roadArray[x+1][y+1]=13;
+					roadArray[x*roadXSize+y]=13;roadArray[(x+1)*roadXSize+y]=13;
+					roadArray[x*roadXSize+(y+1)]=13;roadArray[(x+1)*roadXSize+(y+1)]=13;
 					y+=5;
 				}
 			}

@@ -1,4 +1,4 @@
-
+#include "numbers.h"
 #include "iostream"
 #include <conio.h>
 #include <ctime>
@@ -7,7 +7,7 @@
 #include <sstream>
 
 #include "MyCar.h"
-#include "numbers.h"
+
 
 //using namespace std;
 
@@ -70,7 +70,7 @@ void MyCar::carToScreen()
 	screen_ [int(xPosition_)][0]=212;screen_ [int(xPosition_)+1][0]=205; screen_ [int(xPosition_)+2][0]=205;screen_ [int(xPosition_)+3][0]=190;
 }
 
-void MyCar::printScreen(int yPosition, int **roadArray)
+void MyCar::printScreen(int yPosition, int *roadArray)
 {
 	int pixel;
 	int yIntPosition=int(yPosition);
@@ -78,10 +78,10 @@ void MyCar::printScreen(int yPosition, int **roadArray)
 	{
 		for(int x=0;x<=screenSizeX-1;x++)
 		{
-			if (roadArray[x][y+yIntPosition]==Point_BORDER){pixel=Char_BORDER;}
-			if (roadArray[x][y+yIntPosition]==Point_MARKING){pixel=Char_MARKING;}
-			if (roadArray[x][y+yIntPosition]==Point_PIT){pixel=Char_PIT;}
-			if (roadArray[x][y+yIntPosition]==Point_EMPTY){pixel=Char_EMPTY;}
+			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
+			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_MARKING){pixel=Char_MARKING;}
+			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
+			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
 		
 			screen_[x][y]=pixel;
 		}
@@ -107,14 +107,14 @@ void MyCar::printScreen(int yPosition, int **roadArray)
 
 }
 
-bool MyCar::isCrash(int **roadArray)
+bool MyCar::isCrash(int *roadArray)
 {
 	bool crash=false;
 	for (int y=0;y<carYSize;y++)
 		{
 		for (int x=0;x<carXSize;x++)
 			{
-			if(roadArray[int(xPosition_)+x][int(yPosition)+y]==Point_PIT){crash=true;}
+			if(roadArray[(int(xPosition_)+x)*roadXSize+(int(yPosition)+y)]==Point_PIT){crash=true;}
 			}
 		}
 	return crash;

@@ -24,8 +24,9 @@ SetConsoleCP(1251);
 SetConsoleOutputCP(1251);
 
 
-Road road(40,200);
-int **roadArray=road.getRoadArray();
+Road road;
+
+int *roadArray=road.getRoadArray();
 
 
 MyCar myCar;
@@ -33,13 +34,13 @@ MyCar myCar;
 while(true)
 {
 	myCar.restart();
-	myCar.printScreen(myCar.yPosition,roadArray);
+	myCar.printScreen(myCar.yPosition, roadArray);
 	myCar.pause();
 	while(true)
 	{
 		myCar.control();
 		Sleep (10);
-		myCar.printScreen(myCar.yPosition,roadArray);
+		myCar.printScreen(myCar.yPosition, roadArray);
 		if (myCar.isCrash(roadArray))
 		{
 			myCar.message("Game over!");

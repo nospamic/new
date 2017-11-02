@@ -1,7 +1,7 @@
-//#ifndef NUMBERS_H
-//#define NUMBERS_H
+#ifndef NUMBERS_H
+#define NUMBERS_H
 
-#pragma once
+//#pragma once
 
 enum Color { Color_Black = 0, Color_Blue, Color_Green, Color_Cyan, Color_Red, Color_Magenta, Color_Brown, Color_LightGray, 
 				Color_DarkGray, Color_LightBlue, Color_LightGreen, 
@@ -37,4 +37,4 @@ int carYSize = 5;
 int controlSensitivity=4;
 
 
-//#endif NUMBERS_H
+#endif NUMBERS_H

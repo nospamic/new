@@ -1,26 +1,50 @@
-﻿Построение начато 02.11.2017 9:53:35.
+﻿Построение начато 03.11.2017 0:37:15.
 Проект "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\gta2.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
-  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt game.cpp MyCar.cpp Road.cpp
+  Road.cpp
+d:\cpp2\gta_for_luxoft\gta2\road.cpp(68): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  MyCar.cpp
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(20): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(22): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(49): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(50): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(133): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _kbhit. See online help for details.
+          d:\microsoft visual studio 10.0\vc\include\conio.h(130): см. объявление "kbhit"
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(133): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+          d:\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(134): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+          d:\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(157): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(158): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\mycar.cpp(159): warning C4244: =: преобразование "int" в "float", возможна потеря данных
   game.cpp
-d:\cpp2\gta_for_luxoft\gta2\road.h(81): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\game.cpp(36): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\game.cpp(42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\game.cpp(37): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\game.cpp(43): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Создание кода...
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\gta_for_Luxoft\Debug\gta2.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\gta2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.lib" /MACHINE:X86 Debug\game.obj
   Debug\MyCar.obj
   Debug\Road.obj
-  LINK : не найден или не выполнена сборка D:\cpp2\gta_for_Luxoft\Debug\gta2.exe при последней инкрементной компоновке; выполняется полная компоновка
-  gta2.vcxproj -> D:\cpp2\gta_for_Luxoft\Debug\gta2.exe
-Manifest:
-  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\cpp2\gta_for_Luxoft\Debug\gta2.exe;#1" /manifest Debug\gta2.exe.intermediate.manifest
-FinalizeBuildStatus:
-  Файл "Debug\gta2.unsuccessfulbuild" удаляется.
-  Обращение к "Debug\gta2.lastbuildstate".
-Построение проекта "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" завершено (целевые объекты build).
+Road.obj : error LNK2005: "int roadXSize" (?roadXSize@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int roadYSize" (?roadYSize@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int screenSizeX" (?screenSizeX@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int screenSizeY" (?screenSizeY@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int ySpeedDivisor" (?ySpeedDivisor@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int xSpeedDivisor" (?xSpeedDivisor@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "float xSpeedInhibitor" (?xSpeedInhibitor@@3MA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "float maxSpeedX" (?maxSpeedX@@3MA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "float maxSpeedY" (?maxSpeedY@@3MA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int xMaxPosition" (?xMaxPosition@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int xMinPosition" (?xMinPosition@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int carXSize" (?carXSize@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int carYSize" (?carYSize@@3HA) уже определен в MyCar.obj
+Road.obj : error LNK2005: "int controlSensitivity" (?controlSensitivity@@3HA) уже определен в MyCar.obj
+D:\cpp2\gta_for_Luxoft\Debug\gta2.exe : fatal error LNK1169: обнаружен многократно определенный символ - один или более
+Построение проекта "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" завершено (целевые объекты build) с ошибкой.
 
-Построение успешно завершено.
+СБОЙ построения.
 
-Затраченное время: 00:00:02.59
+Затраченное время: 00:00:03.83
