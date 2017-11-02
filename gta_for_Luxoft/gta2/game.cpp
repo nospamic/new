@@ -1,3 +1,5 @@
+
+
 #include "iostream"
 #include <conio.h>
 #include <ctime>
@@ -6,9 +8,11 @@
 #include <sstream>
 #include "MyCar.h"
 #include "Road.h"
-#include "numbers.h"
 
-using namespace std;
+
+//#include "numbers.h"
+
+//using namespace std;
 
 
 
@@ -20,7 +24,7 @@ SetConsoleCP(1251);
 SetConsoleOutputCP(1251);
 
 
-Road road(roadXSize,roadYSize);
+Road road(40,200);
 int **roadArray=road.getRoadArray();
 
 
