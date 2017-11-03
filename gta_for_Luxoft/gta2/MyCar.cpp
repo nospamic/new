@@ -1,15 +1,32 @@
-#include "numbers.h"
+
 #include "iostream"
 #include <conio.h>
 #include <ctime>
 #include <Windows.h>
 #include <string>
 #include <sstream>
-
 #include "MyCar.h"
 
+int screenSizeX = 40;
+int screenSizeY = 25;
 
-//using namespace std;
+int ySpeedDivisor = 10;
+int xSpeedDivisor = 5;
+
+float xSpeedInhibitor = 0.5;
+
+float maxSpeedX = 5.0;
+float maxSpeedY = 15.0;
+
+int xMaxPosition = 32;
+int xMinPosition = 6;
+
+int carXSize = 4;
+int carYSize = 5;
+
+int controlSensitivity=4;
+
+
 
 MyCar::MyCar(void){}
 
@@ -73,15 +90,16 @@ void MyCar::carToScreen()
 void MyCar::printScreen(int yPosition, int *roadArray)
 {
 	int pixel;
+
 	int yIntPosition=int(yPosition);
 	for(int y=screenSizeY;y>=0;y--)
 	{
 		for(int x=0;x<=screenSizeX-1;x++)
 		{
-			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
-			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_MARKING){pixel=Char_MARKING;}
-			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
-			if (roadArray[x*roadXSize+(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
+			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
+			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_MARKING){pixel=Char_MARKING;}
+			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
+			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
 		
 			screen_[x][y]=pixel;
 		}
@@ -114,7 +132,7 @@ bool MyCar::isCrash(int *roadArray)
 		{
 		for (int x=0;x<carXSize;x++)
 			{
-			if(roadArray[(int(xPosition_)+x)*roadXSize+(int(yPosition)+y)]==Point_PIT){crash=true;}
+			if(roadArray[(int(xPosition_)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
 			}
 		}
 	return crash;

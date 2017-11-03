@@ -14,27 +14,27 @@ enum Char{Char_BORDER=219, Char_MARKING=176, Char_PIT=177, Char_EMPTY=32};
 
 enum Point{Point_PIT=13, Point_MARKING=10, Point_BORDER=11, Point_EMPTY=0};
 
-int roadXSize = 40;
-int roadYSize = 200;
+extern int roadXSize;
+extern int roadYSize;
 
-int screenSizeX = 40;
-int screenSizeY = 25;
+extern int screenSizeX;
+extern int screenSizeY;
 
-int ySpeedDivisor = 10;
-int xSpeedDivisor = 5;
+extern int ySpeedDivisor;
+extern int xSpeedDivisor;
 
-float xSpeedInhibitor = 0.5;
+extern float xSpeedInhibitor;
 
-float maxSpeedX = 5.0;
-float maxSpeedY = 15.0;
+extern float maxSpeedX;
+extern float maxSpeedY;
 
-int xMaxPosition = 32;
-int xMinPosition = 6;
+extern int xMaxPosition;
+extern int xMinPosition;
 
-int carXSize = 4;
-int carYSize = 5;
+extern int carXSize;
+extern int carYSize;
 
-int controlSensitivity=4;
+extern int controlSensitivity;
 
 
 #endif NUMBERS_H

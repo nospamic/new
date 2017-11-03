@@ -1,5 +1,5 @@
-//#ifndef MYCAR_H
-//#define MYCAR_H
+#ifndef MYCAR_H
+#define MYCAR_H
 #pragma once
 
 #include "iostream"
@@ -8,6 +8,8 @@
 #include <Windows.h>
 #include <string>
 #include <sstream>
+#include "numbers.h"
+
 
 class MyCar
 {
@@ -60,4 +62,4 @@ void SetColor(int text, int background);
 };
 
 
-//#endif MYCAR_H
+#endif MYCAR_H
