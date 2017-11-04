@@ -30,17 +30,6 @@ int controlSensitivity=4;
 
 MyCar::MyCar(void){}
 
-void MyCar::message(std::string mes)
-{
-	SetColor(15,4);
-	int startX=int((68-mes.size())/2);
-	setcur(startX,10);for(int a=0;a<mes.size()+2;a++){std::cout<<"=";}
-	setcur(startX,11);std::cout<<" "<<mes<<" ";
-	setcur(startX,12);for(int a=0;a<mes.size()+2;a++){std::cout<<"=";}
-	Sleep (200);
-	pause();
-	SetColor(15,0);
-}
 
 void MyCar::resetTime()
 {
@@ -73,56 +62,30 @@ void MyCar::control()
 
 	yPosition=yPosition+(ySpeed_/ySpeedDivisor); 
 	
-	if (xPosition_+(xSpeed/xSpeedDivisor)>=xMinPosition && xPosition_+(xSpeed/xSpeedDivisor)<=xMaxPosition)
-	{xPosition_=xPosition_+(xSpeed/xSpeedDivisor);} 
+	if (xPosition+(xSpeed/xSpeedDivisor)>=xMinPosition && xPosition+(xSpeed/xSpeedDivisor)<=xMaxPosition)
+	{xPosition=xPosition+(xSpeed/xSpeedDivisor);} 
 	
 }
 
-void MyCar::carToScreen()
+int *MyCar::getCarArray()
 {
-	screen_ [int(xPosition_)][4]=213;screen_ [int(xPosition_)+1][4]=223; screen_ [int(xPosition_)+2][4]=223;screen_ [int(xPosition_)+3][4]=184;
-	screen_ [int(xPosition_)][3]=179;screen_ [int(xPosition_)+1][3]= 32; screen_ [int(xPosition_)+2][3]= 32;screen_ [int(xPosition_)+3][3]=179;
-	screen_ [int(xPosition_)][2]=186;screen_ [int(xPosition_)+1][2]=219; screen_ [int(xPosition_)+2][2]=219;screen_ [int(xPosition_)+3][2]=186;
-	screen_ [int(xPosition_)][1]=186;screen_ [int(xPosition_)+1][1]=219; screen_ [int(xPosition_)+2][1]=219;screen_ [int(xPosition_)+3][1]=186;
-	screen_ [int(xPosition_)][0]=212;screen_ [int(xPosition_)+1][0]=205; screen_ [int(xPosition_)+2][0]=205;screen_ [int(xPosition_)+3][0]=190;
+	int*carArray=new int[carXSize*carYSize];
+	carArray [0+carXSize*4]=213;carArray [1+carXSize*4]=223; carArray [2+carXSize*4]=223;carArray [3+carXSize*4]=184;
+	carArray [0+carXSize*3]=179;carArray [1+carXSize*3]= 32; carArray [2+carXSize*3]= 32;carArray [3+carXSize*3]=179;
+	carArray [0+carXSize*2]=186;carArray [1+carXSize*2]=219; carArray [2+carXSize*2]=219;carArray [3+carXSize*2]=186;
+	carArray [0+carXSize*1]=186;carArray [1+carXSize*1]=219; carArray [2+carXSize*1]=219;carArray [3+carXSize*1]=186;
+	carArray [0+carXSize*0]=212;carArray [1+carXSize*0]=205; carArray [2+carXSize*0]=205;carArray [3+carXSize*0]=190;
+return carArray;
 }
 
-void MyCar::printScreen(int yPosition, int *roadArray)
+int MyCar::getXPosition()
 {
-	int pixel;
+	return int(xPosition);
+}
 
-	int yIntPosition=int(yPosition);
-	for(int y=screenSizeY;y>=0;y--)
-	{
-		for(int x=0;x<=screenSizeX-1;x++)
-		{
-			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
-			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_MARKING){pixel=Char_MARKING;}
-			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
-			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
-		
-			screen_[x][y]=pixel;
-		}
-	}
-	
-	carToScreen();
-	infoPanel();
-	//............................print
-	setcur(0,2);
-	for(int y=screenSizeY;y>=0;y--)
-		{
-		std::cout <<"\t      ";
-		for(int x=0;x<screenSizeX;x++)
-			{
-			if(screen_[x][y]==Char_BORDER){SetColor(Color_White,Color_White);}
-			if(screen_[x][y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
-			if(screen_[x][y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
-			std::cout << char(screen_[x][y]);	
-			if(screen_[x][y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
-			}
-		std::cout <<"\n";
-		}
-
+int MyCar::getYPosition()
+{
+	return int(yPosition);
 }
 
 bool MyCar::isCrash(int *roadArray)
@@ -132,7 +95,7 @@ bool MyCar::isCrash(int *roadArray)
 		{
 		for (int x=0;x<carXSize;x++)
 			{
-			if(roadArray[(int(xPosition_)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
+			if(roadArray[(int(xPosition)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
 			}
 		}
 	return crash;
@@ -155,7 +118,7 @@ void MyCar::pause()
 
 void MyCar::restart()
 {
-	yPosition=0;xPosition_=20;
+	yPosition=0;xPosition=20;
 	ySpeed_=0;
 	xSpeed=0;
 	resetTime();
@@ -184,11 +147,11 @@ std::string MyCar::NumberToTime(float number)
 	return fulTime;
 	}
 
-	std::string MyCar::getTime()
-	{
-		newTime_=TimeToNumber();
-		std::string fulTime=NumberToTime(float(newTime_-oldTime_));
-		return fulTime;
+std::string MyCar::getTime()
+{
+	newTime_=TimeToNumber();
+	std::string fulTime=NumberToTime(float(newTime_-oldTime_));
+	return fulTime;
 }
 
 void MyCar::setcur(int x, int y) 

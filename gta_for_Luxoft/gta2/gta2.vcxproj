@@ -64,12 +64,14 @@
     <ClInclude Include="MyCar.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="Road.h" />
+    <ClInclude Include="Show.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="MyCar.cpp" />
     <ClCompile Include="Road.cpp" />
+    <ClCompile Include="Show.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

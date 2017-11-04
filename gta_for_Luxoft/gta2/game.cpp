@@ -6,8 +6,6 @@
 #include <Windows.h>
 #include <string>
 #include <sstream>
-//#include "MyCar.h"
-//#include "Road.h"
 #include "GameLoop.h"
 
 int main()

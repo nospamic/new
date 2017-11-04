@@ -14,20 +14,15 @@
 class MyCar
 {
 public:
+float xPosition;
 float yPosition;
 MyCar();
-
-void message(std::string mes);
 
 void resetTime();
 
 void infoPanel();
 
 void control();
-
-void carToScreen();
-
-void printScreen(int yPosition, int *roadArray);
 
 bool isCrash(int *roadArray);
 
@@ -37,13 +32,17 @@ void pause();
 
 void restart();
 
+int *getCarArray();
+
+int getXPosition();
+
+int getYPosition();
 
 private:
 
 int oldTime_;
 int newTime_;
 int pauseTime_;
-float xPosition_;
 float ySpeed_;
 float xSpeed;
 int screen_ [41][31];

@@ -3,33 +3,34 @@
 
 #include "MyCar.h"
 #include "Road.h"
+#include "Show.h"
 
 Road road;
 int *roadArray=road.getRoadArray();
-
 MyCar myCar;
-
+int *carArray=myCar.getCarArray();
+Show show;
 
 void GameLoop::level(int scale)
 {
 while(true)
 {
 	myCar.restart();
-	myCar.printScreen(myCar.yPosition, roadArray);
-	myCar.pause();
+	show.printScreen(myCar.xPosition,myCar.yPosition, roadArray,carArray);
+	show.pause();
 	while(true)
 	{
 		myCar.control();
 		Sleep (10);
-		myCar.printScreen(myCar.yPosition, roadArray);
+		show.printScreen(myCar.xPosition,myCar.yPosition, roadArray,carArray);
 		if (myCar.isCrash(roadArray))
 		{
-			myCar.message("Game over!");
+			show.message("Game over!");
 			break;
 		}
 		if (myCar.isFinish())
 		{
-			myCar.message("Welcome to Luxoft!");
+			show.message("Welcome to Luxoft!");
 			break;
 		}
 	}
