@@ -16,13 +16,11 @@ class MyCar
 public:
 float xPosition;
 float yPosition;
+float ySpeed;
+
 MyCar();
 
-void resetTime();
-
-void infoPanel();
-
-void control();
+void control(int scale);
 
 bool isCrash(int *roadArray);
 
@@ -30,7 +28,7 @@ bool isFinish();
 
 void pause();
 
-void restart();
+void restart(int scale);
 
 int *getCarArray();
 
@@ -43,20 +41,9 @@ private:
 int oldTime_;
 int newTime_;
 int pauseTime_;
-float ySpeed_;
 float xSpeed;
 int screen_ [41][31];
 SYSTEMTIME st;
-
-int TimeToNumber();
-
-std::string NumberToTime(float number);
-
-std::string getTime();
-
-void setcur(int x, int y);
-
-void SetColor(int text, int background);
 
 };
 

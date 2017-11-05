@@ -4,8 +4,6 @@
 #include <conio.h>
 #include <ctime>
 #include <Windows.h>
-#include <string>
-#include <sstream>
 #include "GameLoop.h"
 
 int main()
@@ -18,8 +16,9 @@ int main()
 
 	
 
-	GameLoop game;
-	game.level(1);
+	GameLoop play;
+	play.level(1);
+	play.level(2);
 
 
 	return 0;

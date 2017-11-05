@@ -27,40 +27,25 @@ int carYSize = 5;
 int controlSensitivity=4;
 
 
-
 MyCar::MyCar(void){}
 
 
-void MyCar::resetTime()
-{
-	oldTime_=TimeToNumber();
-}
-
-void MyCar::infoPanel()
-{
-	setcur(6,0);std::cout <<"Speed - " ;std::cout <<ySpeed_*10<<" km/h  ";
-	setcur(25,0);std::cout <<"Time - "  ;std::cout <<getTime()<<"   ";
-	setcur(45,0);std::cout <<"Distance - ";std::cout <<int(yPosition)<<" m.   ";
-}
-
-void MyCar::control()
+void MyCar::control(int scale)
 {
 	int key;
 	if(_kbhit())
 	{
 		key=_getch();
 		
-		if (key == KEY_UP && ySpeed_<maxSpeedY){ySpeed_+=1;}
-  		if (key == KEY_DOWN && ySpeed_>0){ySpeed_-=1;}
-		if (key == KEY_LEFT && xSpeed>-maxSpeedX && ySpeed_!=0){xSpeed=-controlSensitivity;}
-		if (key == KEY_RIGHT && xSpeed<maxSpeedX  && ySpeed_!=0){xSpeed= controlSensitivity;}
-		if (key == KEY_ESCAPE){exit(0);}
-		if (key == KEY_ENTER){pause();}
+		if (key == KEY_UP && ySpeed<maxSpeedY){ySpeed+=1;}
+  		if (key == KEY_DOWN && ySpeed>0){ySpeed-=1;}
+		if (key == KEY_LEFT && xSpeed>-maxSpeedX && ySpeed!=0){xSpeed=-controlSensitivity;}
+		if (key == KEY_RIGHT && xSpeed<maxSpeedX  && ySpeed!=0){xSpeed= controlSensitivity;}
 	} 
 		else if (xSpeed>0){xSpeed-=xSpeedInhibitor;}
 		else if (xSpeed<0){xSpeed+=xSpeedInhibitor;}
 
-	yPosition=yPosition+(ySpeed_/ySpeedDivisor); 
+	yPosition=yPosition+(ySpeed/ySpeedDivisor); 
 	
 	if (xPosition+(xSpeed/xSpeedDivisor)>=xMinPosition && xPosition+(xSpeed/xSpeedDivisor)<=xMaxPosition)
 	{xPosition=xPosition+(xSpeed/xSpeedDivisor);} 
@@ -104,66 +89,18 @@ bool MyCar::isCrash(int *roadArray)
 bool MyCar::isFinish()
 {
 	int finishPosition=30;
-	if(yPosition>(roadYSize-finishPosition)){return 1;}else{return 0;}
+	if(yPosition>(roadYSize-finishPosition))
+		{return 1;} else {return 0;}
 }
 
-void MyCar::pause()
-{
-	pauseTime_=TimeToNumber();
-	Sleep (200);
-	if(kbhit()){while(kbhit()){int a=getch();}}//kill bufer!!
-	while(!getch()){}
-	oldTime_+=(TimeToNumber()-pauseTime_);
-}
 
-void MyCar::restart()
+void MyCar::restart(int scale)
 {
+	int minYSpeed=(scale-1)*5;
 	yPosition=0;xPosition=20;
-	ySpeed_=0;
+	ySpeed=minYSpeed;
 	xSpeed=0;
-	resetTime();
 }
 
-int MyCar::TimeToNumber()
-{
-	int Min;int Sec;int Mil;
-	GetLocalTime(&st);
-	Min=st.wMinute;Sec=st.wSecond;Mil=st.wMilliseconds;
-	return Min*60000+Sec*1000+Mil;
-}
 
-std::string MyCar::NumberToTime(float number)
-{
-	float Min;float Sec;float Mil;
-	Min=int(number/60000);
-	Sec=int((number-Min*60000)/1000);
-	Mil=int((number-Min*60000-Sec*1000)/10);
 
-	std::ostringstream sMin;sMin << Min;
-	std::ostringstream sSec;sSec << Sec;
-	std::ostringstream sMil;sMil << Mil;
-
-	std::string fulTime=sMin.str()+":"+sSec.str()+":"+sMil.str();
-	return fulTime;
-	}
-
-std::string MyCar::getTime()
-{
-	newTime_=TimeToNumber();
-	std::string fulTime=NumberToTime(float(newTime_-oldTime_));
-	return fulTime;
-}
-
-void MyCar::setcur(int x, int y) 
-{ 
-	COORD coord; 
-	coord.X = x; 
-	coord.Y = y; 
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); 
-};
-
-void MyCar::SetColor(int text, int background)
-{
-    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
-}

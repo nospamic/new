@@ -28,9 +28,9 @@ public:
 
 	void pause();
 	
-	void printScreen(int xPosition, int yPosition, int *roadArray, int *carArray);
+	void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray, int *carArray);
 
-	void message(std::string mes);
+	void message(std::string mes, int scale);
 
 	void setcur(int x, int y);
 
@@ -38,5 +38,8 @@ public:
 
 	void carToScreen(int *carArray,int carXPosition);
 
+	void infoPanel(int ySpeed, int yPosition);
+
+	void resetTime();
 };
 

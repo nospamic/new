@@ -1,8 +1,15 @@
 #include "Show.h"
 
 
+void Show::infoPanel(int ySpeed, int yPosition)
+{
+	setcur(6,0);std::cout <<"Speed - " ;std::cout <<ySpeed*10<<" km/h  ";
+	setcur(25,0);std::cout <<"Time - "  ;std::cout <<getTime()<<"   ";
+	setcur(45,0);std::cout <<"Distance - ";std::cout <<int(yPosition)<<" m.   ";
+}
 
-void Show::printScreen(int xPosition, int yPosition, int *roadArray, int *carArray)
+
+void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray, int *carArray)
 {
 	int pixel;
 
@@ -21,7 +28,7 @@ void Show::printScreen(int xPosition, int yPosition, int *roadArray, int *carArr
 	}
 	
 	carToScreen(carArray, xPosition);
-	//infoPanel();
+	infoPanel(ySpeed, yPosition);
 	//............................print
 	setcur(0,2);
 	for(int y=screenSizeY;y>=0;y--)
@@ -37,7 +44,6 @@ void Show::printScreen(int xPosition, int yPosition, int *roadArray, int *carArr
 			}
 		std::cout <<"\n";
 		}
-
 
 }
 
@@ -61,13 +67,23 @@ void Show::pause()
 	oldTime_+=(TimeToNumber()-pauseTime_);
 }
 
-void Show::message(std::string mes)
+void Show::message(std::string mes, int scale)
 {
 	SetColor(15,4);
-	int startX=int((68-mes.size())/2);
-	setcur(startX,10);for(int a=0;a<mes.size()+2;a++){std::cout<<"=";}
-	setcur(startX,11);std::cout<<" "<<mes<<" ";
-	setcur(startX,12);for(int a=0;a<mes.size()+2;a++){std::cout<<"=";}
+	if (scale==0)
+	{
+		int startX=int((68-mes.size())/2);
+		setcur(startX,10);for(int a=0;a<mes.size()+2;a++){std::cout<<"=";}
+		setcur(startX,11);std::cout<<" "<<mes<<" ";
+		setcur(startX,12);for(int a=0;a<mes.size()+2;a++){std::cout<<"=";}
+	}
+	else
+	{
+		int startX=int((68-mes.size())/2);
+		setcur(startX,10);for(int a=0;a<mes.size()+3;a++){std::cout<<"=";}
+		setcur(startX,11);std::cout<<" "<<mes<<scale<<" ";
+		setcur(startX,12);for(int a=0;a<mes.size()+3;a++){std::cout<<"=";}
+	}
 	Sleep (200);
 	pause();
 	SetColor(15,0);
@@ -85,6 +101,11 @@ void Show::SetColor(int text, int background)
 {
     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
+}
+
+void Show::resetTime()
+{
+	oldTime_=TimeToNumber();
 }
 
 int Show::TimeToNumber()

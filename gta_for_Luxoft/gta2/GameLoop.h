@@ -7,7 +7,7 @@
 class GameLoop
 {
 public:
-	
+	void control();
 	void level(int scale);
 };
 
