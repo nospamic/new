@@ -16,6 +16,7 @@ class MyCar
 public:
 float xPosition;
 float yPosition;
+float xSpeed;
 float ySpeed;
 
 MyCar();
@@ -26,8 +27,6 @@ bool isCrash(int *roadArray);
 
 bool isFinish();
 
-void pause();
-
 void restart(int scale);
 
 int *getCarArray();
@@ -37,13 +36,6 @@ int getXPosition();
 int getYPosition();
 
 private:
-
-int oldTime_;
-int newTime_;
-int pauseTime_;
-float xSpeed;
-int screen_ [41][31];
-SYSTEMTIME st;
 
 };
 

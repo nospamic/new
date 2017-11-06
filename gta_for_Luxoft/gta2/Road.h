@@ -1,26 +1,18 @@
 #ifndef ROAD_H
 #define ROAD_H
-#pragma once
-//#include "numbers.h"
-
 
 
 class Road
 {
-public:
+	public:
 	
-
-	int * getRoadArray();
+		int * getRoadArray();
 	
-	void chessMarking(int position,int *roadArray);
+	private:
 
-	void addPit(int *roadArray);
+		void chessMarking(int position,int *roadArray);
 
-
-
-
-private:
-
+		void addPit(int *roadArray);
 	
 
 };

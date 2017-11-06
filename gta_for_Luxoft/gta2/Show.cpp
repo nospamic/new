@@ -29,7 +29,7 @@ void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray,
 	
 	carToScreen(carArray, xPosition);
 	infoPanel(ySpeed, yPosition);
-	//............................print
+	//............................print & turn 180
 	setcur(0,2);
 	for(int y=screenSizeY;y>=0;y--)
 		{

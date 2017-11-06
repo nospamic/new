@@ -60,7 +60,7 @@ int *MyCar::getCarArray()
 	carArray [0+carXSize*2]=186;carArray [1+carXSize*2]=219; carArray [2+carXSize*2]=219;carArray [3+carXSize*2]=186;
 	carArray [0+carXSize*1]=186;carArray [1+carXSize*1]=219; carArray [2+carXSize*1]=219;carArray [3+carXSize*1]=186;
 	carArray [0+carXSize*0]=212;carArray [1+carXSize*0]=205; carArray [2+carXSize*0]=205;carArray [3+carXSize*0]=190;
-return carArray;
+	return carArray;
 }
 
 int MyCar::getXPosition()

@@ -1,9 +1,9 @@
-﻿Построение начато 05.11.2017 19:47:02.
+﻿Построение начато 06.11.2017 21:14:28.
 Проект "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\gta2.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
-  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GameLoop.cpp
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GameLoop.cpp Show.cpp
   GameLoop.cpp
 d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
 d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(42): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
@@ -11,6 +11,9 @@ d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(42): warning C4244: аргумент: �
 d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
 d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
 d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(48): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  Создание кода...
+  Пропуск... (изменения не обнаружены)
+  Show.cpp
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\gta_for_Luxoft\Debug\gta2.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\gta2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.lib" /MACHINE:X86 Debug\game.obj
   Debug\GameLoop.obj
@@ -28,4 +31,4 @@ FinalizeBuildStatus:
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:02.09
+Затраченное время: 00:00:02.27

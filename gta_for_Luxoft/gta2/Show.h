@@ -9,37 +9,35 @@
 
 class Show
 {
-private:
-	int oldTime_;
-	int newTime_;
-	int pauseTime_;
+	private:
+		int oldTime_;
+		int newTime_;
+		int pauseTime_;
+		int screen_ [41][31];
+		SYSTEMTIME st;
 
+		int TimeToNumber();
 
-public:
-	int screen_ [41][31];
+		std::string NumberToTime(float number);
+
+		std::string getTime();
 	
-	SYSTEMTIME st;
+		void setcur(int x, int y);
 
-	int TimeToNumber();
+		void SetColor(int text, int background);
 
-	std::string NumberToTime(float number);
+		void carToScreen(int *carArray,int carXPosition);
 
-	std::string getTime();
+	public:
 
-	void pause();
+		void pause();
 	
-	void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray, int *carArray);
+		void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray, int *carArray);
 
-	void message(std::string mes, int scale);
+		void message(std::string mes, int scale);
 
-	void setcur(int x, int y);
+		void infoPanel(int ySpeed, int yPosition);
 
-	void SetColor(int text, int background);
-
-	void carToScreen(int *carArray,int carXPosition);
-
-	void infoPanel(int ySpeed, int yPosition);
-
-	void resetTime();
+		void resetTime();
 };
 
