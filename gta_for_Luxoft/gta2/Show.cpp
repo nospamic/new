@@ -1,9 +1,11 @@
 #include "Show.h"
 
 
-void Show::setAIcar(int xPosition, int yPosition, int course)
+void Show::setAICar(int xPosition, int yPosition, int *carArray)
 {
-
+	aiXPosition.push_back(xPosition);
+	aiYPosition.push_back(yPosition);
+	aiCarArray.push_back(carArray);
 }
 
 

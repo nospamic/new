@@ -6,6 +6,7 @@
 #include <ctime>
 #include <Windows.h>
 #include <sstream>
+#include <vector>
 
 class Show
 {
@@ -29,8 +30,11 @@ class Show
 		void carToScreen(int *carArray,int carXPosition);
 
 	public:
+		std::vector<int>aiXPosition;
+		std::vector<int>aiYPosition;
+		std::vector<int*>aiCarArray;
 
-		void setAIcar(int xPosition, int yPosition, int course);
+		void setAICar(int xPosition, int yPosition, int *carArray);
 
 		void pause();
 	

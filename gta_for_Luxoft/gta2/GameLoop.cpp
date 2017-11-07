@@ -47,6 +47,10 @@ void GameLoop::level(int scale)
 	{
 		myCar.restart(scale);
 		show.resetTime();
+		
+		show.setAICar(car1.xPosition,car1.yPosition, car1Array);
+		show.setAICar(car2.xPosition,car2.yPosition, car2Array);
+
 		show.printScreen(myCar.xPosition, myCar.yPosition, myCar.ySpeed, roadArray, carArray);
 		show.message("Welcome to level ",scale);
 		while(true)
