@@ -9,11 +9,19 @@
 #include "MyCar.h"
 #include "Road.h"
 #include "Show.h"
+#include "AIcar.h"
 
 Road road;
 int *roadArray=road.getRoadArray();
 MyCar myCar;
 int *carArray=myCar.getCarArray();
+
+AIcar car1(10,5);
+int *car1Array=car1.getCarArray();
+AIcar car2(120,20);
+int *car2Array=car2.getCarArray();
+
+
 Show show;
 
 

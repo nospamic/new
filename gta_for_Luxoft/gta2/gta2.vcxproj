@@ -60,6 +60,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIcar.h" />
     <ClInclude Include="GameLoop.h" />
     <ClInclude Include="MyCar.h" />
     <ClInclude Include="numbers.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="Show.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIcar.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="MyCar.cpp" />

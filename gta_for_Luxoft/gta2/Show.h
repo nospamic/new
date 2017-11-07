@@ -30,6 +30,8 @@ class Show
 
 	public:
 
+		void setAIcar(int xPosition, int yPosition, int course);
+
 		void pause();
 	
 		void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray, int *carArray);

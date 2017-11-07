@@ -1,6 +1,12 @@
 #include "Show.h"
 
 
+void Show::setAIcar(int xPosition, int yPosition, int course)
+{
+
+}
+
+
 void Show::infoPanel(int ySpeed, int yPosition)
 {
 	setcur(6,0);std::cout <<"Speed - " ;std::cout <<ySpeed*10<<" km/h  ";
