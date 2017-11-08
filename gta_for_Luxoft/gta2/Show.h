@@ -29,6 +29,10 @@ class Show
 
 		void carToScreen(int *carArray,int carXPosition);
 
+		void aiCarToScreen(int yPosition);
+
+		bool isCarOnScreen(int aiX, int aiY, int yPosition);
+
 	public:
 		std::vector<int>aiXPosition;
 		std::vector<int>aiYPosition;

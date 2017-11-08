@@ -17,6 +17,40 @@ void Show::infoPanel(int ySpeed, int yPosition)
 }
 
 
+bool Show::isCarOnScreen(int aiX, int aiY,int yPosition)
+{
+int aiYMin=yPosition;
+int aiYMax=yPosition+screenSizeY;
+
+if(aiY>=aiYMin && aiY<=aiYMax)
+	{return true;}else{return false;}
+}
+
+
+void Show::aiCarToScreen(int yPosition)
+{
+	for (int n=0;n<aiCarArray.size();n++)
+	{
+		int aiX=aiXPosition[n];
+		int aiY=aiYPosition[n];
+
+		if (isCarOnScreen(aiX, aiY, yPosition))
+			{
+				int *aiCarArr=aiCarArray[n];
+				for (int y=0; y<carYSize;y++)
+				{
+					for (int x=0; x<carXSize;x++)
+					{
+						screen_[aiX+x][(aiY-yPosition)+y]=aiCarArr[x+carXSize*y];
+					}
+				}
+
+			}
+	}
+
+}
+
+
 void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray, int *carArray)
 {
 	int pixel;
@@ -36,6 +70,7 @@ void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray,
 	}
 	
 	carToScreen(carArray, xPosition);
+	aiCarToScreen(int(yPosition));
 	infoPanel(ySpeed, yPosition);
 	//............................print & turn 180
 	setcur(0,2);

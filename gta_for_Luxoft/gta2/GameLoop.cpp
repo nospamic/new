@@ -18,7 +18,7 @@ int *carArray=myCar.getCarArray();
 
 AIcar car1(10,5);
 int *car1Array=car1.getCarArray();
-AIcar car2(120,20);
+AIcar car2(25,8);
 int *car2Array=car2.getCarArray();
 
 
@@ -48,6 +48,7 @@ void GameLoop::level(int scale)
 		myCar.restart(scale);
 		show.resetTime();
 		
+
 		show.setAICar(car1.xPosition,car1.yPosition, car1Array);
 		show.setAICar(car2.xPosition,car2.yPosition, car2Array);
 
@@ -57,6 +58,12 @@ void GameLoop::level(int scale)
 		{
 			myCar.control(scale);
 			Sleep (10);
+			
+			
+			
+			show.setAICar(car1.xMove(roadArray),car1.yMove(), car1Array);
+			show.setAICar(car2.xMove(roadArray),car2.yMove(), car2Array);
+			
 			show.printScreen(myCar.xPosition,myCar.yPosition, myCar.ySpeed, roadArray,carArray);
 			if (myCar.isCrash(roadArray))
 			{
