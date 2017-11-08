@@ -33,10 +33,14 @@ class Show
 
 		bool isCarOnScreen(int aiX, int aiY, int yPosition);
 
+		
+
 	public:
 		std::vector<int>aiXPosition;
 		std::vector<int>aiYPosition;
 		std::vector<int*>aiCarArray;
+
+		void clearAICarVector();
 
 		void setAICar(int xPosition, int yPosition, int *carArray);
 
@@ -49,5 +53,7 @@ class Show
 		void infoPanel(int ySpeed, int yPosition);
 
 		void resetTime();
+
+		void resetScreen();
 };
 

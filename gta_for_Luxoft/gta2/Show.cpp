@@ -1,6 +1,23 @@
 #include "Show.h"
 
 
+void Show::clearAICarVector()
+{
+	aiXPosition.clear();
+	aiYPosition.clear();
+	aiCarArray.clear();
+}
+
+
+void Show::resetScreen()
+{
+	for(int y=screenSizeY;y>=0;y--)
+		{
+			for(int x=0;x<screenSizeX;x++){screen_[x][y]=Char_EMPTY;}
+		}
+}
+
+
 void Show::setAICar(int xPosition, int yPosition, int *carArray)
 {
 	aiXPosition.push_back(xPosition);
@@ -29,6 +46,7 @@ if(aiY>=aiYMin && aiY<=aiYMax)
 
 void Show::aiCarToScreen(int yPosition)
 {
+	
 	for (int n=0;n<aiCarArray.size();n++)
 	{
 		int aiX=aiXPosition[n];
@@ -54,7 +72,7 @@ void Show::aiCarToScreen(int yPosition)
 void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray, int *carArray)
 {
 	int pixel;
-
+	resetScreen();
 	int yIntPosition=int(yPosition);
 	for(int y=screenSizeY;y>=0;y--)
 	{
@@ -69,8 +87,9 @@ void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray,
 		}
 	}
 	
-	carToScreen(carArray, xPosition);
 	aiCarToScreen(int(yPosition));
+	carToScreen(carArray, xPosition);
+	
 	infoPanel(ySpeed, yPosition);
 	//............................print & turn 180
 	setcur(0,2);
