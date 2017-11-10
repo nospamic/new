@@ -5,7 +5,7 @@
 #include <ctime>
 
 int roadXSize=40;
-int roadYSize=200;
+int roadYSize=100;
 
 	void Road::chessMarking(int position,int *roadArray)
 	{

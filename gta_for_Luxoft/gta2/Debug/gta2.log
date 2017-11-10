@@ -1,19 +1,34 @@
-﻿Построение начато 08.11.2017 22:43:00.
+﻿Построение начато 10.11.2017 21:02:24.
 Проект "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\gta2.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
-  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt GameLoop.cpp
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt AIcar.cpp GameLoop.cpp
   GameLoop.cpp
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(55): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(52): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(53): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(54): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
 d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(56): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(57): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(59): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(59): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(59): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(72): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(72): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(72): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(56): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(56): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(68): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(68): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\gameloop.cpp(68): warning C4244: аргумент: преобразование "float" в "int", возможна потеря данных
+  AIcar.cpp
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(9): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(29): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(31): warning C4553: ==: оператор не имеет результата; возможно, имелся в виду "="
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(44): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(55): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(67): warning C4244: +=: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(70): warning C4244: -=: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(72): warning C4244: +=: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(89): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(100): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(120): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(136): warning C4244: инициализация: преобразование "float" в "int", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\aicar.cpp(160): warning C4244: return: преобразование "float" в "int", возможна потеря данных
+  Создание кода...
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\gta_for_Luxoft\Debug\gta2.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\gta2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.lib" /MACHINE:X86 Debug\AIcar.obj
   Debug\game.obj
@@ -32,4 +47,4 @@ FinalizeBuildStatus:
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:02.49
+Затраченное время: 00:00:02.78

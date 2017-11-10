@@ -17,6 +17,8 @@ class Show
 		int screen_ [41][31];
 		SYSTEMTIME st;
 
+		int *getCarArray(int course);
+
 		int TimeToNumber();
 
 		std::string NumberToTime(float number);
@@ -38,15 +40,15 @@ class Show
 	public:
 		std::vector<int>aiXPosition;
 		std::vector<int>aiYPosition;
-		std::vector<int*>aiCarArray;
+		std::vector<int>aiCarCourse;
 
 		void clearAICarVector();
 
-		void setAICar(int xPosition, int yPosition, int *carArray);
+		void setAICar(int xPosition, int yPosition, int course);
 
 		void pause();
 	
-		void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray, int *carArray);
+		void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray);
 
 		void message(std::string mes, int scale);
 

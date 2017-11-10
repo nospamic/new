@@ -14,14 +14,10 @@
 Road road;
 int *roadArray=road.getRoadArray();
 MyCar myCar;
-int *carArray=myCar.getCarArray();
 
 AIcar car1(10,5);
-int *car1Array=car1.getCarArray();
-AIcar car2(14,160);
-int *car2Array=car2.getCarArray();
+AIcar car2(14,90);
 AIcar car3(30,40);
-int *car3Array=car3.getCarArray();
 
 Show show;
 
@@ -51,25 +47,25 @@ void GameLoop::level(int scale)
 		
 		car1.reset();
 		car2.reset();
+		car3.reset();
 		show.clearAICarVector();
-		show.setAICar(car1.xPosition,car1.yPosition, car1.getCarArray());
-		show.setAICar(car2.xPosition,car2.yPosition, car2.getCarArray());
-		show.setAICar(car3.xPosition,car3.yPosition, car3.getCarArray());
+		show.setAICar(car1.xPosition,car1.yPosition, car1.course);
+		show.setAICar(car2.xPosition,car2.yPosition, car2.course);
+		show.setAICar(car3.xPosition,car3.yPosition, car3.course);
 
-		show.printScreen(myCar.xPosition, myCar.yPosition, myCar.ySpeed, roadArray, carArray);
+		show.printScreen(myCar.xPosition, myCar.yPosition, myCar.ySpeed, roadArray);
 		show.message("Welcome to level ",scale);
 		while(true)
 		{
 			myCar.control(scale);
 			Sleep (10);
 			
-			
 			show.clearAICarVector();
-			show.setAICar(car1.xMove(roadArray),car1.yMove(), car1.getCarArray());
-			show.setAICar(car2.xMove(roadArray),car2.yMove(), car2.getCarArray());
-			show.setAICar(car3.xMove(roadArray),car3.yMove(), car3.getCarArray());
+			show.setAICar(car1.xMove(roadArray),car1.yMove(roadArray), car1.course);
+			show.setAICar(car2.xMove(roadArray),car2.yMove(roadArray), car2.course);
+			show.setAICar(car3.xMove(roadArray),car3.yMove(roadArray), car3.course);
 			
-			show.printScreen(myCar.xPosition,myCar.yPosition, myCar.ySpeed, roadArray,carArray);
+			show.printScreen(myCar.xPosition,myCar.yPosition, myCar.ySpeed, roadArray);
 			if (myCar.isCrash(roadArray))
 			{
 				show.message("Game over!",0); break;

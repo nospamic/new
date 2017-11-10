@@ -1,28 +1,50 @@
 #include "Show.h"
 
 
+int *Show::getCarArray(int course)
+{
+	int*carArray=new int[carXSize*carYSize];
+	if (course==1)
+	{
+		carArray [0+carXSize*4]=213;carArray [1+carXSize*4]=223; carArray [2+carXSize*4]=223;carArray [3+carXSize*4]=184;
+		carArray [0+carXSize*3]=179;carArray [1+carXSize*3]= 32; carArray [2+carXSize*3]= 32;carArray [3+carXSize*3]=179;
+		carArray [0+carXSize*2]=186;carArray [1+carXSize*2]=219; carArray [2+carXSize*2]=219;carArray [3+carXSize*2]=186;
+		carArray [0+carXSize*1]=186;carArray [1+carXSize*1]=219; carArray [2+carXSize*1]=219;carArray [3+carXSize*1]=186;
+		carArray [0+carXSize*0]=212;carArray [1+carXSize*0]=205; carArray [2+carXSize*0]=205;carArray [3+carXSize*0]=190;
+	}else{
+		carArray [0+carXSize*0]=212;carArray [1+carXSize*0]=223; carArray [2+carXSize*0]=223;carArray [3+carXSize*0]=190;
+		carArray [0+carXSize*1]=179;carArray [1+carXSize*1]= 32; carArray [2+carXSize*1]= 32;carArray [3+carXSize*1]=179;
+		carArray [0+carXSize*2]=186;carArray [1+carXSize*2]=219; carArray [2+carXSize*2]=219;carArray [3+carXSize*2]=186;
+		carArray [0+carXSize*3]=186;carArray [1+carXSize*3]=219; carArray [2+carXSize*3]=219;carArray [3+carXSize*3]=186;
+		carArray [0+carXSize*4]=213;carArray [1+carXSize*4]=205; carArray [2+carXSize*4]=205;carArray [3+carXSize*4]=184;
+	}
+		
+		return carArray;
+}
+
+
 void Show::clearAICarVector()
 {
 	aiXPosition.clear();
 	aiYPosition.clear();
-	aiCarArray.clear();
+	aiCarCourse.clear();
 }
 
 
 void Show::resetScreen()
 {
 	for(int y=screenSizeY;y>=0;y--)
-		{
-			for(int x=0;x<screenSizeX;x++){screen_[x][y]=Char_EMPTY;}
-		}
+	{
+		for(int x=0;x<screenSizeX;x++){screen_[x][y]=Char_EMPTY;}
+	}
 }
 
 
-void Show::setAICar(int xPosition, int yPosition, int *carArray)
+void Show::setAICar(int xPosition, int yPosition, int course)
 {
 	aiXPosition.push_back(xPosition);
 	aiYPosition.push_back(yPosition);
-	aiCarArray.push_back(carArray);
+	aiCarCourse.push_back(course);
 }
 
 
@@ -36,42 +58,44 @@ void Show::infoPanel(int ySpeed, int yPosition)
 
 bool Show::isCarOnScreen(int aiX, int aiY,int yPosition)
 {
-int aiYMin=yPosition;
-int aiYMax=yPosition+screenSizeY;
+	int aiYMin=yPosition;
+	int aiYMax=yPosition+screenSizeY;
 
-if(aiY>=aiYMin && aiY<=aiYMax)
-	{return true;}else{return false;}
+	if(aiY>=aiYMin && aiY<=aiYMax)
+		{return true;}else{return false;}
 }
 
 
 void Show::aiCarToScreen(int yPosition)
 {
 	
-	for (int n=0;n<aiCarArray.size();n++)
+	for (int n=0;n<aiCarCourse.size();n++)
 	{
 		int aiX=aiXPosition[n];
 		int aiY=aiYPosition[n];
 
 		if (isCarOnScreen(aiX, aiY, yPosition))
+		{
+			int course=aiCarCourse[n];
+			int *aiCarArr=getCarArray(course);
+			for (int y=0; y<carYSize;y++)
 			{
-				int *aiCarArr=aiCarArray[n];
-				for (int y=0; y<carYSize;y++)
+				for (int x=0; x<carXSize;x++)
 				{
-					for (int x=0; x<carXSize;x++)
-					{
-						screen_[aiX+x][(aiY-yPosition)+y]=aiCarArr[x+carXSize*y];
-					}
+					screen_[aiX+x][(aiY-yPosition)+y]=aiCarArr[x+carXSize*y];
 				}
-
 			}
+
+		}
 	}
 
 }
 
 
-void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray, int *carArray)
+void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray)
 {
 	int pixel;
+	int *carArray=getCarArray(1);
 	resetScreen();
 	int yIntPosition=int(yPosition);
 	for(int y=screenSizeY;y>=0;y--)
