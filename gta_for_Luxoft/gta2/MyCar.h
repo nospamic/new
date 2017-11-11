@@ -19,7 +19,7 @@ float yPosition;
 float xSpeed;
 float ySpeed;
 
-MyCar();
+
 
 void control(int scale);
 
