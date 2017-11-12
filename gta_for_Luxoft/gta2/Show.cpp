@@ -1,6 +1,35 @@
 #include "Show.h"
 
 
+
+void Show::makeVolume()
+{
+	setcur(0,2);
+	float xExpand=0.6;
+	float x2=0;
+	for(int y=screenSizeY;y>=0;y--)
+		{
+		
+		for(int x=0;x<screenSizeX;x++)
+			{
+			for(int n=0;n<2;n++)
+			{
+					if(screen_[x][y]==Char_BORDER){SetColor(Color_White,Color_White);}
+					if(screen_[x][y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
+					if(screen_[x][y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
+					if (int(x2+xExpand)>int(x2))std::cout << char(screen_[x][y]);
+					if(screen_[x][y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+			x2+=xExpand;
+			}
+			
+			
+			}
+		std::cout <<xExpand<<"\n";
+		xExpand+=0.015;
+		}
+}
+
+
 int *Show::getCarArray(int course)
 {
 	int*carArray=new int[carXSize*carYSize];
@@ -115,21 +144,22 @@ void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray)
 	carToScreen(carArray, xPosition);
 	
 	infoPanel(ySpeed, yPosition);
+	makeVolume();
 	//............................print & turn 180
-	setcur(0,2);
-	for(int y=screenSizeY;y>=0;y--)
-		{
-		std::cout <<"\t      ";
-		for(int x=0;x<screenSizeX;x++)
-			{
-			if(screen_[x][y]==Char_BORDER){SetColor(Color_White,Color_White);}
-			if(screen_[x][y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
-			if(screen_[x][y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
-			std::cout << char(screen_[x][y]);	
-			if(screen_[x][y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
-			}
-		std::cout <<"\n";
-		}
+	//setcur(0,2);
+	//for(int y=screenSizeY;y>=0;y--)
+	//	{
+	//	std::cout <<"\t      ";
+	//	for(int x=0;x<screenSizeX;x++)
+	//		{
+	//		if(screen_[x][y]==Char_BORDER){SetColor(Color_White,Color_White);}
+	//		if(screen_[x][y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
+	//		if(screen_[x][y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
+	//		std::cout << char(screen_[x][y]);	
+	//		if(screen_[x][y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+	//		}
+	//	std::cout <<"\n";
+	//	}
 
 }
 

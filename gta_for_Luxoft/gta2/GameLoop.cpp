@@ -1,9 +1,3 @@
-#include "iostream"
-#include <conio.h>
-#include <ctime>
-#include <Windows.h>
-#include <string>
-#include <sstream>
 
 #include "GameLoop.h"
 #include "MyCar.h"
@@ -91,6 +85,7 @@ void GameLoop::level(int scale)
 				show.message("Level completed.",0);
 				myCar.restart(scale);
 				isDone=true;
+				roadArray=road.getRoadArray();
 				break;
 			}
 			control();

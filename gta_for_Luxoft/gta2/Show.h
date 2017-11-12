@@ -15,7 +15,10 @@ class Show
 		int newTime_;
 		int pauseTime_;
 		int screen_ [41][31];
+		int volume_[41][31];
 		SYSTEMTIME st;
+
+		void makeVolume();
 
 		int *getCarArray(int course);
 

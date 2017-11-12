@@ -9,7 +9,7 @@
 int main()
 {
 	setlocale (LC_ALL,"Russian");
-	system("mode con lines=29 cols=70");
+	system("mode con lines=29 cols=90");
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 

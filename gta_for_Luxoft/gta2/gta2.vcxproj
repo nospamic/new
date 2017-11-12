@@ -72,6 +72,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameLoop.cpp" />
     <ClCompile Include="MyCar.cpp" />
+    <ClCompile Include="numbers.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="Show.cpp" />
   </ItemGroup>
