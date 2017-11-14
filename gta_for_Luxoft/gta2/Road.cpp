@@ -2,12 +2,28 @@
 #include "Road.h"
 
 
-	void Road::chessMarking(int position,int *roadArray)
-	{
+
+Road::Road()
+{
+	markingSizeY=10;
+	pitStart=20;
+	pitEnd=40;
+	lineLength=6;
+}
+
+
+Road::~Road()
+{
+
+}
+	
+
+void Road::chessMarking(int position,int *roadArray)
+{
 		bool isSolid;
 		int squareSize=2;
 		int n=0;
-		int markingSizeY=10;
+		
 		for(int y=0;y<markingSizeY;y++)
 		{
 			n=0;
@@ -20,7 +36,7 @@
 			}
 		}
 
-	}
+}
 
 	
 
@@ -35,20 +51,23 @@
 			for (int x=0;x<roadXSize;x++){roadArray[x+roadXSize*y]=0;}
 		}
 
-		int lineLength=6;
+		
 		int n=0;
 		roadArray[0+roadXSize*0]=1;
 		
 		for (int y=0;y<roadYSize;y++)
 		{
-			roadArray[4+roadXSize*y]=10;roadArray[5+roadXSize*y]=11;roadArray[(roadXSize-5)+roadXSize*y]=11;roadArray[(roadXSize-4)+roadXSize*y]=10;
-			if (n<lineLength) {roadArray[(roadXSize/2)+roadXSize*y]=10;}
+			roadArray[4+roadXSize*y]=Point_MARKING;
+			roadArray[5+roadXSize*y]=Point_BORDER;
+			roadArray[(roadXSize-5)+roadXSize*y]=Point_BORDER;
+			roadArray[(roadXSize-4)+roadXSize*y]=Point_MARKING;
+			if (n<lineLength) {roadArray[(roadXSize/2)+roadXSize*y]=Point_MARKING;}
 			if (n==lineLength*2){n=0;}
 			n++;
 		}
 
 		chessMarking(0,roadArray);
-		chessMarking(roadYSize-30,roadArray);
+		chessMarking(roadYSize-screenSizeY,roadArray);
 		addPit(roadArray);
 
 		
@@ -60,10 +79,9 @@
 
 	
 
-	void Road::addPit(int *roadArray)
-	{
-		int pitStart=20;
-		int pitEnd=40;
+void Road::addPit(int *roadArray)
+{
+		
 		srand(time(0));
 		for (int y=pitStart;y<(roadYSize-pitEnd);y++)
 		{
@@ -72,13 +90,13 @@
 				int randomNumber=int(rand() % 100);
 				if (randomNumber==1)
 				{
-					roadArray[x+roadXSize*y]=13;roadArray[(x+1)+roadXSize*y]=13;
-					roadArray[x+roadXSize*(y+1)]=13;roadArray[(x+1)+roadXSize*(y+1)]=13;
+					roadArray[x+roadXSize*y]=Point_PIT;roadArray[(x+1)+roadXSize*y]=Point_PIT;
+					roadArray[x+roadXSize*(y+1)]=Point_PIT;roadArray[(x+1)+roadXSize*(y+1)]=Point_PIT;
 					y+=5;
 				}
 			}
 	
 		}
 
-	}
+}
 

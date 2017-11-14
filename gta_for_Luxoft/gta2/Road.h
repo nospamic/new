@@ -10,9 +10,16 @@ class Road
 {
 	public:
 	
-		int * getRoadArray();
-	
+		int *getRoadArray();
+		
+		Road();
+		~Road();
+
 	private:
+		int pitStart;
+		int pitEnd;
+		int markingSizeY;
+		int lineLength;
 
 		void chessMarking(int position,int *roadArray);
 

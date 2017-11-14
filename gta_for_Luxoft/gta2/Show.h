@@ -20,6 +20,8 @@ class Show
 
 		void makeVolume();
 
+		void printRotate180();
+
 		int *getCarArray(int course);
 
 		int TimeToNumber();
@@ -37,6 +39,7 @@ class Show
 		void aiCarToScreen(int yPosition);
 
 		bool isCarOnScreen(int aiX, int aiY, int yPosition);
+
 
 		
 

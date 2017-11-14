@@ -29,8 +29,6 @@ bool isFinish();
 
 void restart(int scale);
 
-int *getCarArray();
-
 int getXPosition();
 
 int getYPosition();

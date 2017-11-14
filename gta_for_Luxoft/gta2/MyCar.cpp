@@ -34,10 +34,12 @@ int MyCar::getXPosition()
 	return int(xPosition);
 }
 
+
 int MyCar::getYPosition()
 {
 	return int(yPosition);
 }
+
 
 bool MyCar::isCrash(int *roadArray)
 {
@@ -52,9 +54,10 @@ bool MyCar::isCrash(int *roadArray)
 	return crash;
 }
 
+
 bool MyCar::isFinish()
 {
-	int finishPosition=30;
+	int finishPosition=26;
 	if(yPosition>(roadYSize-finishPosition))
 		{return 1;} else {return 0;}
 }
