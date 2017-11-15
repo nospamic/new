@@ -24,6 +24,8 @@ class Road
 		void chessMarking(int position,int *roadArray);
 
 		void addPit(int *roadArray);
+
+		void borderLineMarking(int *roadArray);
 	
 
 };

@@ -66,6 +66,7 @@
     <ClInclude Include="MyCar.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="Road.h" />
+    <ClInclude Include="Rotate.h" />
     <ClInclude Include="Show.h" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +77,7 @@
     <ClCompile Include="MyCar.cpp" />
     <ClCompile Include="numbers.cpp" />
     <ClCompile Include="Road.cpp" />
+    <ClCompile Include="Rotate.cpp" />
     <ClCompile Include="Show.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

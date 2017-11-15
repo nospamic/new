@@ -20,21 +20,10 @@ extern int roadYSize;
 extern int screenSizeX;
 extern int screenSizeY;
 
-extern int ySpeedDivisor;
-extern int xSpeedDivisor;
-
-extern float xSpeedInhibitor;
-
-extern float maxSpeedX;
-extern float maxSpeedY;
-
-extern int xMaxPosition;
-extern int xMinPosition;
-
 extern int carXSize;
 extern int carYSize;
 
-extern int controlSensitivity;
+
 
 
 #endif NUMBERS_H

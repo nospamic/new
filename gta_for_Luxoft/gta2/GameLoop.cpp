@@ -1,19 +1,6 @@
 
 #include "GameLoop.h"
-#include "MyCar.h"
-#include "Road.h"
-#include "Show.h"
-#include "AIcar.h"
 
-Road road;
-int *roadArray=road.getRoadArray();
-MyCar myCar;
-
-AIcar car1(30,0);
-AIcar car2(14,90);
-AIcar car3(30,40);
-
-Show show;
 
 
 void GameLoop::control()
@@ -33,6 +20,12 @@ void GameLoop::control()
 
 void GameLoop::level(int scale)
 {
+	int *roadArray=road.getRoadArray();
+	
+	AIcar car1(30,0);
+	AIcar car2(14,90);
+	AIcar car3(30,40);
+
 	bool isDone=false;
 	while(!isDone)
 	{

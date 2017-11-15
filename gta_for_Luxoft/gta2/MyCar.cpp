@@ -1,7 +1,16 @@
-
 #include "MyCar.h"
 
 
+MyCar::MyCar()
+{
+	controlSensitivity = 4;
+	maxSpeedX = 5.0;
+	maxSpeedY = 15.0;
+	ySpeedDivisor = 10;
+	xSpeedDivisor = 5;
+	xSpeedInhibitor = 0.5;
+	course=1;
+}
 
 
 
@@ -23,7 +32,7 @@ void MyCar::control(int scale)
 	yPosition=yPosition+(ySpeed/ySpeedDivisor); 
 	
 	if (xPosition+(xSpeed/xSpeedDivisor)>=xMinPosition && xPosition+(xSpeed/xSpeedDivisor)<=xMaxPosition)
-	{xPosition=xPosition+(xSpeed/xSpeedDivisor);} 
+		{xPosition=xPosition+(xSpeed/xSpeedDivisor);} 
 	
 }
 
@@ -48,7 +57,7 @@ bool MyCar::isCrash(int *roadArray)
 		{
 		for (int x=0;x<xSize;x++)
 			{
-			if(roadArray[(int(xPosition)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
+				if(roadArray[(int(xPosition)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
 			}
 		}
 	return crash;
@@ -66,9 +75,10 @@ bool MyCar::isFinish()
 void MyCar::restart(int scale)
 {
 	int minYSpeed=(scale-1)*5;
-	yPosition=0;xPosition=20;
+	yPosition=0.0;
+	xPosition=20.0;
 	ySpeed=minYSpeed;
-	xSpeed=0;
+	xSpeed=0.0;
 }
 
 

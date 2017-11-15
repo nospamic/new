@@ -15,6 +15,18 @@
 class MyCar : public Car
 {
 public:
+MyCar();
+
+int controlSensitivity;
+
+float maxSpeedX;
+float maxSpeedY;
+
+int ySpeedDivisor;
+int xSpeedDivisor;
+
+float xSpeedInhibitor;
+
 
 void control(int scale);
 
@@ -29,6 +41,8 @@ int getXPosition();
 int getYPosition();
 
 private:
+
+
 
 };
 

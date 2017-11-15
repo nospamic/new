@@ -18,6 +18,31 @@ Road::~Road()
 }
 	
 
+void Road::borderLineMarking(int *roadArray)
+{
+	int n=0;
+	int lineLengthBorder=lineLength/2;
+	for (int y=0;y<roadYSize;y++)
+		{
+			if (n<lineLengthBorder) 
+			{
+				roadArray[4+roadXSize*y]=Point_MARKING;
+				roadArray[3+roadXSize*y]=Point_MARKING;
+				roadArray[2+roadXSize*y]=Point_MARKING;
+				roadArray[1+roadXSize*y]=Point_MARKING;
+
+				roadArray[(roadXSize-4)+roadXSize*y]=Point_MARKING;
+				roadArray[(roadXSize-3)+roadXSize*y]=Point_MARKING;
+				roadArray[(roadXSize-2)+roadXSize*y]=Point_MARKING;
+				roadArray[(roadXSize-1)+roadXSize*y]=Point_MARKING;
+			}
+			if (n==lineLengthBorder){n=0;}
+			n++;
+		}
+
+}
+
+
 void Road::chessMarking(int position,int *roadArray)
 {
 		bool isSolid;
@@ -53,14 +78,14 @@ void Road::chessMarking(int position,int *roadArray)
 
 		
 		int n=0;
-		roadArray[0+roadXSize*0]=1;
+		
 		
 		for (int y=0;y<roadYSize;y++)
 		{
-			roadArray[4+roadXSize*y]=Point_MARKING;
+			
 			roadArray[5+roadXSize*y]=Point_BORDER;
 			roadArray[(roadXSize-5)+roadXSize*y]=Point_BORDER;
-			roadArray[(roadXSize-4)+roadXSize*y]=Point_MARKING;
+			
 			if (n<lineLength) {roadArray[(roadXSize/2)+roadXSize*y]=Point_MARKING;}
 			if (n==lineLength*2){n=0;}
 			n++;
@@ -68,6 +93,7 @@ void Road::chessMarking(int position,int *roadArray)
 
 		chessMarking(0,roadArray);
 		chessMarking(roadYSize-screenSizeY,roadArray);
+		borderLineMarking(roadArray);
 		addPit(roadArray);
 
 		
