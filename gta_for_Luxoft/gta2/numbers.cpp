@@ -11,9 +11,6 @@ float xSpeedInhibitor = 0.5;
 float maxSpeedX = 5.0;
 float maxSpeedY = 15.0;
 
-int xMaxPosition = 32;
-int xMinPosition = 6;
-
 int carXSize = 4;
 int carYSize = 5;
 

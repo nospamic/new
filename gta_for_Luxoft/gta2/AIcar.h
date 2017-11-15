@@ -1,16 +1,13 @@
 #pragma once
 #include <vector>
+#include "car.h"
 
-class AIcar
+class AIcar : public Car
 {
 	private:
-
-		int xSize;
-		int ySize;
+		
 		std::vector<int>roadSnapshot;
 
-		float ySpeed;
-	
 		bool isPit(int *roadArray);
 
 		bool isPitRight(int *roadArray);
@@ -19,14 +16,10 @@ class AIcar
 	
 
 	public:
-		int xPosition;
-		float yPosition;
-		float xSpeed;
+		
 		int viewDistance;
 		int xStartPosition;
 		int yStartPosition;
-		int course;
-		int finishPosition;
 
 	
 

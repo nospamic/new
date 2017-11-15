@@ -9,17 +9,12 @@
 #include <string>
 #include <sstream>
 #include "numbers.h"
+#include "car.h"
 
 
-class MyCar
+class MyCar : public Car
 {
 public:
-float xPosition;
-float yPosition;
-float xSpeed;
-float ySpeed;
-
-
 
 void control(int scale);
 

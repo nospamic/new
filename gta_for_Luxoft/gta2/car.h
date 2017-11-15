@@ -23,7 +23,8 @@ class Car
 		
 		int finishPosition;
 
-
+		int xMaxPosition;
+		int xMinPosition;
 
 		
 

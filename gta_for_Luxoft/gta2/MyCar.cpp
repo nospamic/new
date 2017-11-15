@@ -44,9 +44,9 @@ int MyCar::getYPosition()
 bool MyCar::isCrash(int *roadArray)
 {
 	bool crash=false;
-	for (int y=0;y<carYSize;y++)
+	for (int y=0;y<ySize;y++)
 		{
-		for (int x=0;x<carXSize;x++)
+		for (int x=0;x<xSize;x++)
 			{
 			if(roadArray[(int(xPosition)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
 			}
@@ -57,8 +57,8 @@ bool MyCar::isCrash(int *roadArray)
 
 bool MyCar::isFinish()
 {
-	int finishPosition=26;
-	if(yPosition>(roadYSize-finishPosition))
+	
+	if(int(yPosition)>=(roadYSize-screenSizeY-1))
 		{return 1;} else {return 0;}
 }
 
