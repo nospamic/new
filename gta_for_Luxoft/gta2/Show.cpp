@@ -4,17 +4,20 @@
 void Show::printRotate180()
 {
 	setcur(0,2);
-	for(int y=screenSizeY;y>=0;y--)
+	for(int y=screenSizeY-1;y>=0;y--)
 	{
 		std::cout <<"\t      ";
 		for(int x=0;x<screenSizeX;x++)
 			{
-				if(screen_[x][y]==Char_BORDER){SetColor(Color_White,Color_White);}
-				if(screen_[x][y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
-				if(screen_[x][y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
-				std::cout << char(screen_[x][y]);	
-				if(screen_[x][y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+				if(screen_[x+screenSizeX*y]==Char_BORDER){SetColor(Color_White,Color_White);}
+				if(screen_[x+screenSizeX*y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
+				if(screen_[x+screenSizeX*y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
+				std::cout << char(screen_[x+screenSizeX*y]);	
+				
+				if(screen_[x+screenSizeX*y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+				//std::cout <<x<<" "<<y<<"["<<x+screenSizeX*y<<"]";
 			}
+		
 		std::cout <<"\n";
 	}
 }
@@ -25,17 +28,17 @@ void Show::makeVolume()
 	setcur(0,2);
 	float xExpand=0.6;
 	float x2=0;
-	for(int y=screenSizeY;y>=0;y--)
+	for(int y=screenSizeY-1;y>=0;y--)
 		{
 			for(int x=0;x<screenSizeX;x++)
 			{
 				for(int n=0;n<2;n++)
 				{
-					if(screen_[x][y]==Char_BORDER){SetColor(Color_White,Color_White);}
-					if(screen_[x][y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
-					if(screen_[x][y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
-					if (int(x2+xExpand)>int(x2))std::cout << char(screen_[x][y]);
-					if(screen_[x][y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+					if(screen_[x*screenSizeX*y]==Char_BORDER){SetColor(Color_White,Color_White);}
+					if(screen_[x*screenSizeX*y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
+					if(screen_[x*screenSizeX*y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
+					if (int(x2+xExpand)>int(x2))std::cout << char(screen_[x*screenSizeX*y]);
+					if(screen_[x*screenSizeX*y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
 					x2+=xExpand;
 				}
 			}
@@ -77,10 +80,7 @@ void Show::clearAICarVector()
 
 void Show::resetScreen()
 {
-	for(int y=screenSizeY;y>=0;y--)
-	{
-		for(int x=0;x<screenSizeX;x++){screen_[x][y]=Char_EMPTY;}
-	}
+	screen_.clear();
 }
 
 
@@ -126,7 +126,7 @@ void Show::aiCarToScreen(int yPosition)
 			{
 				for (int x=0; x<carXSize;x++)
 				{
-					screen_[aiX+x][(aiY-yPosition)+y]=aiCarArr[x+carXSize*y];
+					screen_[(aiX+x)+screenSizeX*((aiY-yPosition)+y)]=aiCarArr[x+carXSize*y];
 				}
 			}
 
@@ -142,22 +142,23 @@ void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray)
 	int *carArray=getCarArray(1);
 	resetScreen();
 	int yIntPosition=int(yPosition);
-	for(int y=screenSizeY;y>=0;y--)
+	for(int y=0; y<screenSizeY; y++)
 	{
-		for(int x=0;x<=screenSizeX-1;x++)
+		for(int x=0; x<screenSizeX; x++)
 		{
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_MARKING){pixel=Char_MARKING;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
 		
-			screen_[x][y]=pixel;
+			screen_.push_back(pixel);
 		}
 	}
+	//std::cout << screen_.size();
 	
 	aiCarToScreen(int(yPosition));
+	//rotate.rotateArray(screenSizeX,screenSizeY,xPosition,0,&screen_[0],10);
 	carToScreen(carArray, xPosition);
-	
 	infoPanel(ySpeed, yPosition);
 	//makeVolume();
 	printRotate180();
@@ -171,10 +172,11 @@ void Show::carToScreen(int *carArray,int carXPosition)
 	{
 		for (int x=0; x<carXSize;x++)
 		{
-		screen_[carXPosition+x][y]=carArray[x+carXSize*y];
+			screen_[(carXPosition+x)+screenSizeX*y]=carArray[x+carXSize*y];
 		}
 	}
 }
+
 
 void Show::pause()
 {
@@ -184,6 +186,7 @@ void Show::pause()
 	while(!getch()){}
 	oldTime_+=(TimeToNumber()-pauseTime_);
 }
+
 
 void Show::message(std::string mes, int scale)
 {
@@ -207,6 +210,7 @@ void Show::message(std::string mes, int scale)
 	SetColor(15,0);
 }
 
+
 void Show::setcur(int x, int y) 
 { 
 	COORD coord; 
@@ -215,16 +219,19 @@ void Show::setcur(int x, int y)
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); 
 };
 
+
 void Show::SetColor(int text, int background)
 {
     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hStdOut, (WORD)((background << 4) | text));
 }
 
+
 void Show::resetTime()
 {
 	oldTime_=TimeToNumber();
 }
+
 
 int Show::TimeToNumber()
 {
@@ -233,6 +240,7 @@ int Show::TimeToNumber()
 	Min=st.wMinute;Sec=st.wSecond;Mil=st.wMilliseconds;
 	return Min*60000+Sec*1000+Mil;
 }
+
 
 std::string Show::NumberToTime(float number)
 {
@@ -248,6 +256,7 @@ std::string Show::NumberToTime(float number)
 	std::string fulTime=sMin.str()+":"+sSec.str()+":"+sMil.str();
 	return fulTime;
 }
+
 
 std::string Show::getTime()
 {

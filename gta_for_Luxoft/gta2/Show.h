@@ -7,14 +7,17 @@
 #include <Windows.h>
 #include <sstream>
 #include <vector>
+#include "Rotate.h"
 
 class Show
 {
+	Rotate rotate;
+
 	private:
 		int oldTime_;
 		int newTime_;
 		int pauseTime_;
-		int screen_ [41][31];
+		
 		int volume_[41][31];
 		SYSTEMTIME st;
 
@@ -44,6 +47,9 @@ class Show
 		
 
 	public:
+		
+		std::vector <int> screen_;
+		
 		std::vector<int>aiXPosition;
 		std::vector<int>aiYPosition;
 		std::vector<int>aiCarCourse;

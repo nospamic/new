@@ -7,20 +7,20 @@ class Rotate
 {
 private:
 
-	int round(double a);
+	int round(float a);
 	
-	double angle(int x, int y, int centerX, int centerY);
+	float angle(int x, int y, int centerX, int centerY);
 	
-	double radius(double x, double y, int centerX, int centerY);
+	float radius(float x, float y, int centerX, int centerY);
 
-	int rotateX(double x, double y, int centerX, int centerY, double fi); 
+	int rotateX(float x, float y, int centerX, int centerY, float fi); 
 
-	int rotateY(double x, double y, int centerX, int centerY, double fi);
+	int rotateY(float x, float y, int centerX, int centerY, float fi);
 
 
 public:
 	
-	int *rotateArray(int sizeX, int sizeY, int centerX, int centerY, int *arr, double alpha);
+	int *rotateArray(int sizeX, int sizeY, int centerX, int centerY, int *arr, float alpha);
 
 	void print(int sizeX, int sizeY, int *arr);
 
