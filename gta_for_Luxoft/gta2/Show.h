@@ -47,7 +47,9 @@ class Show
 		
 
 	public:
-		
+		Show();
+
+		int *screen;
 		std::vector <int> screen_;
 		
 		std::vector<int>aiXPosition;
@@ -60,7 +62,7 @@ class Show
 
 		void pause();
 	
-		void printScreen(int xPosition, int yPosition, int ySpeed,  int *roadArray);
+		void printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed,  int *roadArray);
 
 		void message(std::string mes, int scale);
 

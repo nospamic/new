@@ -1,6 +1,12 @@
 #include "Show.h"
 
 
+Show::Show()
+{
+		screen = new int [screenSizeX*screenSizeY];
+}
+
+
 void Show::printRotate180()
 {
 	setcur(0,2);
@@ -9,12 +15,11 @@ void Show::printRotate180()
 		std::cout <<"\t      ";
 		for(int x=0;x<screenSizeX;x++)
 			{
-				if(screen_[x+screenSizeX*y]==Char_BORDER){SetColor(Color_White,Color_White);}
-				if(screen_[x+screenSizeX*y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
-				if(screen_[x+screenSizeX*y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
-				std::cout << char(screen_[x+screenSizeX*y]);	
-				
-				if(screen_[x+screenSizeX*y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+				if(screen[x+screenSizeX*y]==Char_BORDER){SetColor(Color_White,Color_White);}
+				if(screen[x+screenSizeX*y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
+				if(screen[x+screenSizeX*y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
+				std::cout << char(screen[x+screenSizeX*y]);	
+				if(screen[x+screenSizeX*y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
 				//std::cout <<x<<" "<<y<<"["<<x+screenSizeX*y<<"]";
 			}
 		
@@ -34,11 +39,11 @@ void Show::makeVolume()
 			{
 				for(int n=0;n<2;n++)
 				{
-					if(screen_[x*screenSizeX*y]==Char_BORDER){SetColor(Color_White,Color_White);}
-					if(screen_[x*screenSizeX*y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
-					if(screen_[x*screenSizeX*y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
-					if (int(x2+xExpand)>int(x2))std::cout << char(screen_[x*screenSizeX*y]);
-					if(screen_[x*screenSizeX*y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
+					if(screen[x+screenSizeX*y]==Char_BORDER){SetColor(Color_White,Color_White);}
+					if(screen[x+screenSizeX*y]==Char_MARKING){SetColor(Color_White,Color_DarkGray);}
+					if(screen[x+screenSizeX*y]==Char_PIT){SetColor(Color_White,Color_LightGray);}
+					if (int(x2+xExpand)>int(x2))std::cout << char(screen[x+screenSizeX*y]);
+					if(screen[x+screenSizeX*y]!=Char_EMPTY){SetColor(Color_White,Color_Black);}
 					x2+=xExpand;
 				}
 			}
@@ -80,7 +85,7 @@ void Show::clearAICarVector()
 
 void Show::resetScreen()
 {
-	screen_.clear();
+	for(int n=0; n<screenSizeX*screenSizeY; n++){screen[n]=0;}	
 }
 
 
@@ -126,7 +131,8 @@ void Show::aiCarToScreen(int yPosition)
 			{
 				for (int x=0; x<carXSize;x++)
 				{
-					screen_[(aiX+x)+screenSizeX*((aiY-yPosition)+y)]=aiCarArr[x+carXSize*y];
+					
+					screen[(aiX+x)+screenSizeX*((aiY-yPosition)+y)]=aiCarArr[x+carXSize*y];
 				}
 			}
 
@@ -136,7 +142,7 @@ void Show::aiCarToScreen(int yPosition)
 }
 
 
-void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray)
+void Show::printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed, int *roadArray)
 {
 	int pixel;
 	int *carArray=getCarArray(1);
@@ -146,18 +152,17 @@ void Show::printScreen(int xPosition, int yPosition, int ySpeed, int *roadArray)
 	{
 		for(int x=0; x<screenSizeX; x++)
 		{
+			
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_MARKING){pixel=Char_MARKING;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
 		
-			screen_.push_back(pixel);
+			screen[x+screenSizeX*y]=pixel;
 		}
 	}
-	//std::cout << screen_.size();
-	
 	aiCarToScreen(int(yPosition));
-	//rotate.rotateArray(screenSizeX,screenSizeY,xPosition,0,&screen_[0],10);
+	rotate.rotateArray(screenSizeX,screenSizeY,xPosition,0,&screen[0],int(xSpeed*2));
 	carToScreen(carArray, xPosition);
 	infoPanel(ySpeed, yPosition);
 	//makeVolume();
@@ -172,7 +177,8 @@ void Show::carToScreen(int *carArray,int carXPosition)
 	{
 		for (int x=0; x<carXSize;x++)
 		{
-			screen_[(carXPosition+x)+screenSizeX*y]=carArray[x+carXSize*y];
+			
+			screen[(carXPosition+x)+screenSizeX*y]=carArray[x+carXSize*y];
 		}
 	}
 }

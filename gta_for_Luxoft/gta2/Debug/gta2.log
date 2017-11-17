@@ -1,26 +1,27 @@
-﻿Построение начато 16.11.2017 19:05:19.
+﻿Построение начато 17.11.2017 10:42:01.
 Проект "D:\cpp2\gta_for_Luxoft\gta2\gta2.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\gta2.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
   D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Show.cpp
   Show.cpp
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(29): warning C4305: инициализация: усечение из "double" к "float"
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(46): warning C4305: +=: усечение из "double" к "float"
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(116): warning C4018: <: несоответствие типов со знаком и без знака
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(185): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _kbhit. See online help for details.
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(34): warning C4305: инициализация: усечение из "double" к "float"
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(51): warning C4305: +=: усечение из "double" к "float"
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(121): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(165): warning C4244: аргумент: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(191): warning C4996: 'kbhit': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _kbhit. See online help for details.
           d:\microsoft visual studio 10.0\vc\include\conio.h(130): см. объявление "kbhit"
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(185): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(191): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
           d:\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(186): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(192): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C++ conformant name: _getch. See online help for details.
           d:\microsoft visual studio 10.0\vc\include\conio.h(128): см. объявление "getch"
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(197): warning C4018: <: несоответствие типов со знаком и без знака
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(199): warning C4018: <: несоответствие типов со знаком и без знака
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(204): warning C4018: <: несоответствие типов со знаком и без знака
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(206): warning C4018: <: несоответствие типов со знаком и без знака
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(248): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(249): warning C4244: =: преобразование "int" в "float", возможна потеря данных
-d:\cpp2\gta_for_luxoft\gta2\show.cpp(250): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(203): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(205): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(210): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(212): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(254): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(255): warning C4244: =: преобразование "int" в "float", возможна потеря данных
+d:\cpp2\gta_for_luxoft\gta2\show.cpp(256): warning C4244: =: преобразование "int" в "float", возможна потеря данных
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\gta_for_Luxoft\Debug\gta2.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\gta2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\gta_for_Luxoft\Debug\gta2.lib" /MACHINE:X86 Debug\AIcar.obj
   Debug\car.obj
@@ -42,4 +43,4 @@ FinalizeBuildStatus:
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:02.62
+Затраченное время: 00:00:02.47

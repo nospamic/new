@@ -44,7 +44,7 @@ void GameLoop::level(int scale)
 		show.setAICar(car3.xPosition,car3.yPosition, car3.course);
 		car3.carShadow(roadArray);
 
-		show.printScreen(myCar.xPosition, myCar.yPosition, myCar.ySpeed, roadArray);
+		show.printScreen(myCar.xPosition, myCar.yPosition, myCar.xSpeed, myCar.ySpeed, roadArray);
 		show.message("Welcome to level ",scale);
 		while(true)
 		{
@@ -65,7 +65,7 @@ void GameLoop::level(int scale)
 			show.setAICar(car3.xMove(roadArray),car3.yMove(roadArray), car3.course);
 			car3.carShadow(roadArray);
 
-			show.printScreen(myCar.xPosition,myCar.yPosition, myCar.ySpeed, roadArray);
+			show.printScreen(myCar.xPosition,myCar.yPosition, myCar.xSpeed, myCar.ySpeed, roadArray);
 			if (myCar.isCrash(roadArray))
 			{
 				show.message("Game over!",0); 
