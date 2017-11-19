@@ -6,6 +6,7 @@
 class Rotate
 {
 private:
+	float pi;
 
 	int round(float a);
 	
@@ -19,7 +20,9 @@ private:
 
 
 public:
-	
+	Rotate();
+	~Rotate();
+
 	int *rotateArray(int sizeX, int sizeY, int centerX, int centerY, int *arr, float alpha);
 
 	void print(int sizeX, int sizeY, int *arr);

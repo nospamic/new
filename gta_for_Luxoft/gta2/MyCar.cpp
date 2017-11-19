@@ -66,7 +66,6 @@ bool MyCar::isCrash(int *roadArray)
 
 bool MyCar::isFinish()
 {
-	
 	if(int(yPosition)>=(roadYSize-screenSizeY-1))
 		{return 1;} else {return 0;}
 }

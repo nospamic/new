@@ -4,11 +4,36 @@
 Show::Show()
 {
 		screen = new int [screenSizeX*screenSizeY];
+		
+		screenExpand = 0;
+		expScreenSizeX=screenSizeX;
+		expScreenSizeY=screenSizeY+(screenExpand*2);
+		expandedScreen = new int [expScreenSizeX*expScreenSizeY];
+}
+
+Show::~Show()
+{
+	delete [] screen;
+	delete [] expandedScreen;
+}
+
+
+void Show::expandedToScreen()
+{
+	for(int y=0; y<screenSizeY; y++)
+	{
+		for(int x=0; x<screenSizeX; x++)
+		{
+			screen[x+screenSizeX*y]=expandedScreen[x+expScreenSizeX*(y+screenExpand)];
+		}
+	}
+
 }
 
 
 void Show::printRotate180()
 {
+	expandedToScreen();
 	setcur(0,2);
 	for(int y=screenSizeY-1;y>=0;y--)
 	{
@@ -86,6 +111,7 @@ void Show::clearAICarVector()
 void Show::resetScreen()
 {
 	for(int n=0; n<screenSizeX*screenSizeY; n++){screen[n]=0;}	
+	for(int n=0; n<expScreenSizeX*expScreenSizeY; n++){expandedScreen[n]=0;}
 }
 
 
@@ -108,7 +134,7 @@ void Show::infoPanel(int ySpeed, int yPosition)
 bool Show::isCarOnScreen(int aiX, int aiY,int yPosition)
 {
 	int aiYMin=yPosition;
-	int aiYMax=yPosition+screenSizeY;
+	int aiYMax=yPosition+expScreenSizeY-screenExpand;
 
 	if(aiY>=aiYMin && aiY<=aiYMax)
 		{return true;}else{return false;}
@@ -132,7 +158,7 @@ void Show::aiCarToScreen(int yPosition)
 				for (int x=0; x<carXSize;x++)
 				{
 					
-					screen[(aiX+x)+screenSizeX*((aiY-yPosition)+y)]=aiCarArr[x+carXSize*y];
+					expandedScreen[(aiX+x)+expScreenSizeX*((aiY-yPosition)+y)]=aiCarArr[x+carXSize*y];
 				}
 			}
 
@@ -148,9 +174,9 @@ void Show::printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed, int
 	int *carArray=getCarArray(1);
 	resetScreen();
 	int yIntPosition=int(yPosition);
-	for(int y=0; y<screenSizeY; y++)
+	for(int y=0; y<expScreenSizeY; y++)
 	{
-		for(int x=0; x<screenSizeX; x++)
+		for(int x=0; x<expScreenSizeX; x++)
 		{
 			
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_BORDER){pixel=Char_BORDER;}
@@ -158,11 +184,11 @@ void Show::printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed, int
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_PIT){pixel=Char_PIT;}
 			if (roadArray[x+roadXSize*(y+yIntPosition)]==Point_EMPTY){pixel=Char_EMPTY;}
 		
-			screen[x+screenSizeX*y]=pixel;
+			expandedScreen[(x)+expScreenSizeX*y]=pixel;
 		}
 	}
-	aiCarToScreen(int(yPosition));
-	rotate.rotateArray(screenSizeX,screenSizeY,xPosition,0,&screen[0],int(xSpeed*2));
+	//aiCarToScreen(int(yPosition));
+	rotate.rotateArray(expScreenSizeX,expScreenSizeY,xPosition,0,&expandedScreen[0],int(xSpeed*2));
 	carToScreen(carArray, xPosition);
 	infoPanel(ySpeed, yPosition);
 	//makeVolume();
@@ -178,7 +204,7 @@ void Show::carToScreen(int *carArray,int carXPosition)
 		for (int x=0; x<carXSize;x++)
 		{
 			
-			screen[(carXPosition+x)+screenSizeX*y]=carArray[x+carXSize*y];
+			expandedScreen[(carXPosition+x)+expScreenSizeX*y]=carArray[x+carXSize*y];
 		}
 	}
 }

@@ -11,18 +11,18 @@ AIcar::AIcar(int xStart, int yStart)
 	yStartPosition=yStart;
 
 	if (yStartPosition<(roadYSize/2))
-		{course=1; ySpeed=.5; finishPosition=roadYSize-carYSize;}
+		{course=1; ySpeed=.5; finishPosition=roadYSize-ySize;}
 	else
-		{course=-1; ySpeed=-.5; finishPosition=carYSize;}
+		{course=-1; ySpeed=-.5; finishPosition=ySize;}
 }
 
 
 void AIcar::carShadow(int *roadArray)
 {
 	roadSnapshot.clear();
-	for(int y=0; y<carYSize;y++)
+	for(int y=0; y<ySize;y++)
 		{
-			for(int x=0; x<carXSize; x++)
+			for(int x=0; x<xSize; x++)
 			{
 				int xMarking=x+xPosition;
 				int yMarking=y+(yPosition);
@@ -35,9 +35,9 @@ void AIcar::carShadow(int *roadArray)
 
 void AIcar::carShadowRemove(int *roadArray)
 {
-	for(int y=0; y<carYSize;y++)
+	for(int y=0; y<ySize;y++)
 		{
-			for(int x=0; x<carXSize; x++)
+			for(int x=0; x<xSize; x++)
 			{
 				int xMarking=x+xPosition;
 				int yMarking=y+(yPosition);
@@ -62,9 +62,9 @@ int AIcar::xMove(int *roadArray)
 	if(isPit(roadArray) && course==-1) {xSpeed=1;}
 	
 
-	if (course==-1 && !isPit(roadArray) && xPosition>xMinPosition+carXSize/2 && !isPitLeft(roadArray))
+	if (course==-1 && !isPit(roadArray) && xPosition>xMinPosition+xSize/2 && !isPitLeft(roadArray))
 		{xSpeed=-1;}
-	if (course==1 && !isPit(roadArray) && xPosition<xMaxPosition-carXSize && !isPitRight(roadArray))
+	if (course==1 && !isPit(roadArray) && xPosition<xMaxPosition-xSize && !isPitRight(roadArray))
 		{xSpeed=1;}
 	//carShadowRemove(roadArray);
 	
@@ -81,9 +81,9 @@ bool AIcar::isPit(int *roadArray)
 	viewDistance=10;
 	if (course==1)
 	{
-		for(int y=carYSize; y<viewDistance;y++)
+		for(int y=ySize; y<viewDistance;y++)
 		{
-			for(int x=0; x<carXSize; x++)
+			for(int x=0; x<xSize; x++)
 			{
 				int xTesting=x+xPosition;
 				int yTesting=y+(yPosition);
@@ -92,9 +92,9 @@ bool AIcar::isPit(int *roadArray)
 			}
 		}
 	}else{
-		for(int y=-1; y>(-viewDistance+carYSize);y--)
+		for(int y=-1; y>(-viewDistance+ySize);y--)
 			{
-				for(int x=0; x<carXSize; x++)
+				for(int x=0; x<xSize; x++)
 				{
 					int xTesting=x+xPosition;
 					int yTesting=y+(yPosition);
@@ -112,7 +112,7 @@ return isPit;
 bool AIcar::isPitLeft(int *roadArray)
 {
 	bool isPit=false;
-	viewDistance=carYSize;
+	viewDistance=ySize;
 	for(int y=0; y<viewDistance;y++)
 	{
 		
@@ -129,10 +129,10 @@ bool AIcar::isPitLeft(int *roadArray)
 bool AIcar::isPitRight(int *roadArray)
 {
 	bool isPit=false;
-	viewDistance=carYSize;
+	viewDistance=ySize;
 	for(int y=0; y<viewDistance;y++)
 	{
-			int xTesting=xPosition+carXSize+1;
+			int xTesting=xPosition+xSize+1;
 			int yTesting=y+(yPosition);
 			
 			if(roadArray[xTesting+roadXSize*yTesting]==Point_PIT) {isPit=true;}
@@ -145,8 +145,8 @@ int AIcar::yMove(int *roadArray)
 {
 	if(course==1 && yPosition+ySpeed>=finishPosition || course==-1 && yPosition+ySpeed<=finishPosition)
 	{
-		if (course==1){finishPosition=carYSize;}
-		else{finishPosition=roadYSize-carYSize;}
+		if (course==1){finishPosition=ySize;}
+		else{finishPosition=roadYSize-ySize;}
 		
 		yPosition-=ySpeed;
 		ySpeed=ySpeed*(-1);

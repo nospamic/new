@@ -14,12 +14,19 @@ class Show
 	Rotate rotate;
 
 	private:
+		int *expandedScreen;
+		int screenExpand;
+		int expScreenSizeX;
+		int expScreenSizeY;
+		
 		int oldTime_;
 		int newTime_;
 		int pauseTime_;
 		
 		int volume_[41][31];
 		SYSTEMTIME st;
+
+		void expandedToScreen();
 
 		void makeVolume();
 
@@ -48,9 +55,10 @@ class Show
 
 	public:
 		Show();
+		~Show();
 
 		int *screen;
-		std::vector <int> screen_;
+		
 		
 		std::vector<int>aiXPosition;
 		std::vector<int>aiYPosition;

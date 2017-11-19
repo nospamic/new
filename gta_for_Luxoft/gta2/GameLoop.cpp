@@ -29,6 +29,7 @@ void GameLoop::level(int scale)
 	bool isDone=false;
 	while(!isDone)
 	{
+		//system("pause");
 		myCar.restart(scale);
 		show.resetTime();
 		
@@ -79,10 +80,10 @@ void GameLoop::level(int scale)
 				myCar.restart(scale);
 				isDone=true;
 				roadArray=road.getRoadArray();
+				
 				break;
 			}
 			control();
-			
 		}
 	}
 	if (scale==2 && isDone){show.message("--== Welcome to Luxoft ==--",0);}

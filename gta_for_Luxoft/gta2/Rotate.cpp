@@ -1,9 +1,12 @@
 #include "Rotate.h"
 
 
+Rotate::Rotate()
+{
+	pi=3.1415;
+}
 
-
-const float PI=3.1415;
+Rotate::~Rotate(){}
 
 int Rotate::round(float a)
 {
@@ -40,7 +43,7 @@ float Rotate::angle(int x, int y, int centerX, int centerY)
 {
 	
 	float dx=x-centerX;float dy=y-centerY;
-	float alpha = ((atan(dx/dy))/PI*180);
+	float alpha = ((atan(dx/dy))/pi*180);
 	if (dx<0&&dy<0){alpha=360-alpha;}
 	if (dx<0&&dy>=0){alpha=180-alpha;}
 	if (dx>=0&&dy>0){alpha=180-alpha;}
@@ -69,7 +72,7 @@ int Rotate::rotateX(float x, float y, int centerX, int centerY, float fi)
 	float dx=x-centerX;
 	float dy=y-centerY;
 	alpha = angle(x, y, centerX, centerY);
-	x=((cos((alpha+fi-90) * PI / 180))*r)+centerX;
+	x=((cos((alpha+fi-90) * pi / 180))*r)+centerX;
 	x=round(x);
 	return x;
 }
@@ -82,7 +85,7 @@ int Rotate::rotateY(float x, float y, int centerX, int centerY, float fi)
 	float dx=x-centerX; 
 	float dy=y-centerY;
 	float alpha = angle(x, y, centerX, centerY);
-	y=((sin((alpha+fi-90) * PI / 180))*r)+centerY;
+	y=((sin((alpha+fi-90) * pi / 180))*r)+centerY;
 	y=round(y);
 	return y;
 }
