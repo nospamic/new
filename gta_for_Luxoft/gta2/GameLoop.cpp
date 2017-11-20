@@ -22,14 +22,13 @@ void GameLoop::level(int scale)
 {
 	int *roadArray=road.getRoadArray();
 	
-	AIcar car1(30,0);
+	AIcar car1(30,10);
 	AIcar car2(14,90);
 	AIcar car3(30,40);
 
 	bool isDone=false;
 	while(!isDone)
 	{
-		//system("pause");
 		myCar.restart(scale);
 		show.resetTime();
 		

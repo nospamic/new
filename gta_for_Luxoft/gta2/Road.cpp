@@ -6,7 +6,7 @@
 Road::Road()
 {
 	markingSizeY=10;
-	pitStart=20;
+	pitStart=30;
 	pitEnd=40;
 	lineLength=6;
 }

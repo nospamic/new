@@ -3,6 +3,9 @@
 
 MyCar::MyCar()
 {
+	yPosition=carYSize;
+	xPosition=20.0;
+	
 	controlSensitivity = 4;
 	maxSpeedX = 5.0;
 	maxSpeedY = 15.0;
@@ -57,7 +60,7 @@ bool MyCar::isCrash(int *roadArray)
 		{
 		for (int x=0;x<xSize;x++)
 			{
-				if(roadArray[(int(xPosition)+x)+roadXSize*(int(yPosition)+y)]==Point_PIT){crash=true;}
+				if(roadArray[(int(xPosition)+x)+roadXSize*(int(yPosition)+y+carYSize)]==Point_PIT){crash=true;}
 			}
 		}
 	return crash;
@@ -66,7 +69,7 @@ bool MyCar::isCrash(int *roadArray)
 
 bool MyCar::isFinish()
 {
-	if(int(yPosition)>=(roadYSize-screenSizeY-1))
+	if(int(yPosition)>=(roadYSize-screenSizeY-carYSize-1))
 		{return 1;} else {return 0;}
 }
 
@@ -74,7 +77,7 @@ bool MyCar::isFinish()
 void MyCar::restart(int scale)
 {
 	int minYSpeed=(scale-1)*5;
-	yPosition=0.0;
+	yPosition=carYSize;
 	xPosition=20.0;
 	ySpeed=minYSpeed;
 	xSpeed=0.0;

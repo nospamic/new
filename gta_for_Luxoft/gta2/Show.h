@@ -19,6 +19,8 @@ class Show
 		int expScreenSizeX;
 		int expScreenSizeY;
 		
+		int *carArray;
+
 		int oldTime_;
 		int newTime_;
 		int pauseTime_;
@@ -32,7 +34,7 @@ class Show
 
 		void printRotate180();
 
-		int *getCarArray(int course);
+		void getCarArray(int course);
 
 		int TimeToNumber();
 
@@ -44,7 +46,7 @@ class Show
 
 		void SetColor(int text, int background);
 
-		void carToScreen(int *carArray,int carXPosition);
+		void carToScreen(int carXPosition);
 
 		void aiCarToScreen(int yPosition);
 

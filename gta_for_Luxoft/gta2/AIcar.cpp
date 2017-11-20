@@ -88,7 +88,7 @@ bool AIcar::isPit(int *roadArray)
 				int xTesting=x+xPosition;
 				int yTesting=y+(yPosition);
 			
-				if(roadArray[xTesting+roadXSize*yTesting]==Point_PIT) {isPit=true;}
+				if(roadArray[xTesting+roadXSize*yTesting]==Point_PIT && yTesting<roadYSize) {isPit=true;}
 			}
 		}
 	}else{
@@ -99,7 +99,7 @@ bool AIcar::isPit(int *roadArray)
 					int xTesting=x+xPosition;
 					int yTesting=y+(yPosition);
 			
-					if(roadArray[xTesting+roadXSize*yTesting]==Point_PIT) {isPit=true;}
+					if(roadArray[xTesting+roadXSize*yTesting]==Point_PIT && yTesting>=0) {isPit=true;}
 						//else{roadArray[xTesting+roadXSize*yTesting]=Point_MARKING;}
 				}
 			}
@@ -108,6 +108,7 @@ bool AIcar::isPit(int *roadArray)
 	}
 return isPit;
 }
+
 
 bool AIcar::isPitLeft(int *roadArray)
 {

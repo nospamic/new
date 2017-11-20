@@ -5,10 +5,12 @@ Show::Show()
 {
 		screen = new int [screenSizeX*screenSizeY];
 		
-		screenExpand = 0;
+		screenExpand = carYSize;
 		expScreenSizeX=screenSizeX;
 		expScreenSizeY=screenSizeY+(screenExpand*2);
 		expandedScreen = new int [expScreenSizeX*expScreenSizeY];
+
+		carArray=new int[carXSize*carYSize];
 }
 
 Show::~Show()
@@ -78,9 +80,8 @@ void Show::makeVolume()
 }
 
 
-int *Show::getCarArray(int course)
+void Show::getCarArray(int course)
 {
-	int*carArray=new int[carXSize*carYSize];
 	if (course==1)
 	{
 		carArray [0+carXSize*4]=213;carArray [1+carXSize*4]=223; carArray [2+carXSize*4]=223;carArray [3+carXSize*4]=184;
@@ -95,8 +96,6 @@ int *Show::getCarArray(int course)
 		carArray [0+carXSize*3]=186;carArray [1+carXSize*3]=219; carArray [2+carXSize*3]=219;carArray [3+carXSize*3]=186;
 		carArray [0+carXSize*4]=213;carArray [1+carXSize*4]=205; carArray [2+carXSize*4]=205;carArray [3+carXSize*4]=184;
 	}
-		
-		return carArray;
 }
 
 
@@ -134,7 +133,7 @@ void Show::infoPanel(int ySpeed, int yPosition)
 bool Show::isCarOnScreen(int aiX, int aiY,int yPosition)
 {
 	int aiYMin=yPosition;
-	int aiYMax=yPosition+expScreenSizeY-screenExpand;
+	int aiYMax=yPosition+screenSizeY+screenExpand;//-carYSize;//+screenExpand;
 
 	if(aiY>=aiYMin && aiY<=aiYMax)
 		{return true;}else{return false;}
@@ -152,13 +151,12 @@ void Show::aiCarToScreen(int yPosition)
 		if (isCarOnScreen(aiX, aiY, yPosition))
 		{
 			int course=aiCarCourse[n];
-			int *aiCarArr=getCarArray(course);
+			getCarArray(course);
 			for (int y=0; y<carYSize;y++)
 			{
 				for (int x=0; x<carXSize;x++)
 				{
-					
-					expandedScreen[(aiX+x)+expScreenSizeX*((aiY-yPosition)+y)]=aiCarArr[x+carXSize*y];
+					expandedScreen[(aiX+x)+expScreenSizeX*((aiY-yPosition)+y)]=carArray[x+carXSize*y];
 				}
 			}
 
@@ -171,7 +169,6 @@ void Show::aiCarToScreen(int yPosition)
 void Show::printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed, int *roadArray)
 {
 	int pixel;
-	int *carArray=getCarArray(1);
 	resetScreen();
 	int yIntPosition=int(yPosition);
 	for(int y=0; y<expScreenSizeY; y++)
@@ -187,9 +184,9 @@ void Show::printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed, int
 			expandedScreen[(x)+expScreenSizeX*y]=pixel;
 		}
 	}
-	//aiCarToScreen(int(yPosition));
+	aiCarToScreen(int(yPosition));
 	rotate.rotateArray(expScreenSizeX,expScreenSizeY,xPosition,0,&expandedScreen[0],int(xSpeed*2));
-	carToScreen(carArray, xPosition);
+	carToScreen(xPosition);
 	infoPanel(ySpeed, yPosition);
 	//makeVolume();
 	printRotate180();
@@ -197,14 +194,14 @@ void Show::printScreen(int xPosition, int yPosition, int xSpeed, int ySpeed, int
 
 }
 
-void Show::carToScreen(int *carArray,int carXPosition)
+void Show::carToScreen(int carXPosition)
 {
+	getCarArray(1);
 	for (int y=0; y<carYSize;y++)
 	{
 		for (int x=0; x<carXSize;x++)
 		{
-			
-			expandedScreen[(carXPosition+x)+expScreenSizeX*y]=carArray[x+carXSize*y];
+			expandedScreen[(carXPosition+x)+expScreenSizeX*(y+carYSize)]=carArray[x+carXSize*y];
 		}
 	}
 }
