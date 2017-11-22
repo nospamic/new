@@ -8,6 +8,7 @@
 #include <Windows.h>
 #include <string>
 #include <sstream>
+#include <vector>
 #include "numbers.h"
 #include "car.h"
 
@@ -15,35 +16,38 @@
 class MyCar : public Car
 {
 public:
-MyCar();
+	MyCar();
 
-int controlSensitivity;
+	int controlSensitivity;
 
-float maxSpeedX;
-float maxSpeedY;
+	float maxSpeedX;
+	float maxSpeedY;
 
-int ySpeedDivisor;
-int xSpeedDivisor;
+	int ySpeedDivisor;
+	int xSpeedDivisor;
 
-float xSpeedInhibitor;
+	float xSpeedInhibitor;
 
 
-void control(int scale);
+	void move(int scale);
 
-bool isCrash(int *roadArray);
+	bool isCrash(int *roadArray);
 
-bool isFinish();
+	bool isFinish();
 
-void restart(int scale);
+	void restart(int scale);
 
-int getXPosition();
+	int getXPosition();
 
-int getYPosition();
+	int getYPosition();
 
 private:
+	std::vector<unsigned>keys;
+	int xMove;
+	int yMove;
 
-
-
+	void getKeyVector();
+	void control();
 };
 
 

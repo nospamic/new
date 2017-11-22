@@ -16,21 +16,45 @@ MyCar::MyCar()
 }
 
 
-
-void MyCar::control(int scale)
+void MyCar::getKeyVector()
 {
-	int key;
-	if(_kbhit())
+	if(kbhit())
 	{
-		key=_getch();
-		
-		if (key == KEY_UP && ySpeed<maxSpeedY){ySpeed+=1;}
-  		if (key == KEY_DOWN && ySpeed>0){ySpeed-=1;}
-		if (key == KEY_LEFT && xSpeed>-maxSpeedX && ySpeed!=0){xSpeed=-controlSensitivity;}
-		if (key == KEY_RIGHT && xSpeed<maxSpeedX  && ySpeed!=0){xSpeed= controlSensitivity;}
-	} 
-		else if (xSpeed>0){xSpeed-=xSpeedInhibitor;}
-		else if (xSpeed<0){xSpeed+=xSpeedInhibitor;}
+		while(kbhit()){keys.push_back(getch());}
+	}
+}
+
+
+void MyCar::control()
+{
+	getKeyVector();
+	
+	for(int n=0;n<keys.size();n++)
+	{
+		if (keys[n]==KEY_UP){yMove=1;}
+		if (keys[n]==KEY_DOWN){yMove=-1;}
+		if (keys[n]==KEY_LEFT){xMove=-1;}
+		if (keys[n]==KEY_RIGHT){xMove=1;}
+	}
+	if (keys.size()==0)
+	{
+		xMove=0;
+		yMove=0;
+	}
+	keys.clear();
+}
+
+
+void MyCar::move(int scale)
+{
+		control();
+		if (yMove == 1 && ySpeed<maxSpeedY){ySpeed+=1;}
+  		if (yMove == -1 && ySpeed>0){ySpeed-=1;}
+		if (xMove == -1 && xSpeed>-maxSpeedX && ySpeed!=0){xSpeed=-controlSensitivity;}
+		if (xMove == 1 && xSpeed<maxSpeedX  && ySpeed!=0){xSpeed= controlSensitivity;}
+	 
+		if (xSpeed>0 && xMove==0){xSpeed-=xSpeedInhibitor;}
+		if (xSpeed<0 && xMove==0){xSpeed+=xSpeedInhibitor;}
 
 	yPosition=yPosition+(ySpeed/ySpeedDivisor); 
 	
@@ -81,6 +105,8 @@ void MyCar::restart(int scale)
 	xPosition=20.0;
 	ySpeed=minYSpeed;
 	xSpeed=0.0;
+	keys.clear();
+	if(kbhit()){while(kbhit()){int a=getch();}}//kill bufer!!
 }
 
 

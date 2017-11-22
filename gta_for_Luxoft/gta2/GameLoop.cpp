@@ -6,7 +6,7 @@
 void GameLoop::control()
 {
 	
-	int key1;
+	unsigned key1;
 	if(_kbhit())
 	{
 		key1=_getch();
@@ -48,7 +48,7 @@ void GameLoop::level(int scale)
 		show.message("Welcome to level ",scale);
 		while(true)
 		{
-			myCar.control(scale);
+			myCar.move(scale);
 			Sleep (10);
 			
 			show.clearAICarVector();
