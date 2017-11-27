@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nospamic_commander", "nospamic_commander\nospamic_commander.vcxproj", "{966C9D78-134E-40BC-B435-7FDDFA3D7780}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{966C9D78-134E-40BC-B435-7FDDFA3D7780}.Debug|Win32.ActiveCfg = Debug|Win32
+		{966C9D78-134E-40BC-B435-7FDDFA3D7780}.Debug|Win32.Build.0 = Debug|Win32
+		{966C9D78-134E-40BC-B435-7FDDFA3D7780}.Release|Win32.ActiveCfg = Release|Win32
+		{966C9D78-134E-40BC-B435-7FDDFA3D7780}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
