@@ -3,14 +3,20 @@
 #include <vector>
 #include <direct.h>
 #include "acces.h"
-
+#include "Box.h"
 
 
 
 
 int main()
 {
-	Acces acces;
+
+
+	Box box1(1);
+	Box box2(2);
+	box1.showBox();
+	box2.showBox();
+	/*Acces acces;
 	acces.changeDir("D:\\html_temp");
 	acces.setUnits();
 	
@@ -22,7 +28,7 @@ int main()
 	std::cout<<"\n\n";
 	
 	std::cout<<"\n"<<acces.getCurrentDir();
-	std::cout << "\n Current drive is-"<< acces.getCurrentDrive()<<"\n";
+	std::cout << "\n Current drive is - "<< acces.getCurrentDrive()<<"\n";*/
 
 	system("pause");
 	return 0;

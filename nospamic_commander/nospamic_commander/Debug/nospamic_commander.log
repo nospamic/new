@@ -1,13 +1,15 @@
-﻿Построение начато 27.11.2017 22:24:57.
+﻿Построение начато 28.11.2017 13:23:01.
 Проект "D:\cpp2\nospamic_commander\nospamic_commander\nospamic_commander.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\nospamic_commander.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
-  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt nc.cpp
-  nc.cpp
-d:\cpp2\nospamic_commander\nospamic_commander\nc.cpp(17): warning C4018: <: несоответствие типов со знаком и без знака
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Box.cpp
+  Box.cpp
+d:\cpp2\nospamic_commander\nospamic_commander\box.cpp(36): warning C4018: <: несоответствие типов со знаком и без знака
+d:\cpp2\nospamic_commander\nospamic_commander\box.cpp(52): warning C4018: <: несоответствие типов со знаком и без знака
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\nospamic_commander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.lib" /MACHINE:X86 Debug\acces.obj
+  Debug\Box.obj
   Debug\nc.obj
   LINK : не найден или не выполнена сборка D:\cpp2\nospamic_commander\Debug\nospamic_commander.exe при последней инкрементной компоновке; выполняется полная компоновка
   nospamic_commander.vcxproj -> D:\cpp2\nospamic_commander\Debug\nospamic_commander.exe
@@ -20,4 +22,4 @@ FinalizeBuildStatus:
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:01.61
+Затраченное время: 00:00:02.31
