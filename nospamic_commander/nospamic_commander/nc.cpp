@@ -2,33 +2,30 @@
 #include <windows.h>
 #include <vector>
 #include <direct.h>
-#include "acces.h"
-#include "Box.h"
+#include "Loop.h"
+
 
 
 
 
 int main()
 {
+	setlocale (LC_ALL,"Russian");
+	system("mode con lines=31 cols=80");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
 
-	Box box1(1);
-	Box box2(2);
-	box1.showBox();
-	box2.showBox();
-	/*Acces acces;
-	acces.changeDir("D:\\html_temp");
-	acces.setUnits();
-	
-	for (int i=0; i<acces.unit.size();i++)
-	{
-		std::cout<<"\n"<<acces.unit[i];
-		acces.isFolder(acces.unit[i]);
-	}
-	std::cout<<"\n\n";
-	
-	std::cout<<"\n"<<acces.getCurrentDir();
-	std::cout << "\n Current drive is - "<< acces.getCurrentDrive()<<"\n";*/
+	Loop loop;
+	loop.go();
+
+	/*Acces acc;
+
+	Box boxLeft(1);
+	Box boxRight(2);
+	boxLeft.showBox();
+	acc.changeDir("..");
+	boxRight.showBox();*/
 
 	system("pause");
 	return 0;

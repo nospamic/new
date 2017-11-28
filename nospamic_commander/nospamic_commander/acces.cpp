@@ -15,7 +15,7 @@ bool Acces::isFolder(char* dir)
 {
 	if((FILE_ATTRIBUTE_DIRECTORY & GetFileAttributes(dir)) == FILE_ATTRIBUTE_DIRECTORY)
 	{
-		std::cout<<"   <FOLDER>";
+		std::cout<<"<DIR>";
 		return true;
 	}else
 	{
@@ -26,6 +26,7 @@ bool Acces::isFolder(char* dir)
 
 void Acces::setUnits()
 {
+	unit.clear();
 	WIN32_FIND_DATA f;
 	HANDLE h = FindFirstFile("./*", &f);
 	if(h != INVALID_HANDLE_VALUE)
