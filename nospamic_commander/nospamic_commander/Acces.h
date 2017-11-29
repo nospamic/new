@@ -14,7 +14,7 @@ public:
 	~Acces(void);
 
 	bool isFolder(char*path);
-	void setUnits();
+	void setUnits(char*path);
 	char* getCurrentDir();
 	unsigned int getCurrentDrive();
 	void changeDir(char*newDir);

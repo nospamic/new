@@ -24,9 +24,10 @@ bool Acces::isFolder(char* dir)
 }
 
 
-void Acces::setUnits()
+void Acces::setUnits(char*path)
 {
 	unit.clear();
+	changeDir(path);
 	WIN32_FIND_DATA f;
 	HANDLE h = FindFirstFile("./*", &f);
 	if(h != INVALID_HANDLE_VALUE)
