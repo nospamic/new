@@ -62,14 +62,12 @@
   <ItemGroup>
     <ClCompile Include="acces.cpp" />
     <ClCompile Include="Box.cpp" />
-    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="nc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="acces.h" />
     <ClInclude Include="Box.h" />
-    <ClInclude Include="Controller.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="numbers.h" />
   </ItemGroup>

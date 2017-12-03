@@ -11,6 +11,15 @@ Acces::~Acces(void)
 }
 
 
+char* Acces::getExtantion (char * path) 
+{
+	char*ext=nullptr;
+
+	return ext;
+}
+
+
+
 bool Acces::isFolder(char* dir)
 {
 	if((FILE_ATTRIBUTE_DIRECTORY & GetFileAttributes(dir)) == FILE_ATTRIBUTE_DIRECTORY)
@@ -44,7 +53,11 @@ void Acces::setUnits(char*path)
 				un++;
 			}
 			unit.push_back(constructUnit);
+			//delete[] constructUnit;
+			constructUnit = nullptr;
 		} 
+		//delete un;
+		un=nullptr;
 	}
 	else
 	{
