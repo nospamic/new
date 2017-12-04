@@ -22,6 +22,6 @@ public:
 	void changeDrive(unsigned int drive);
 	char* getExtantion (char * path);
 private:
-
+	void clearUnit();
 };
 

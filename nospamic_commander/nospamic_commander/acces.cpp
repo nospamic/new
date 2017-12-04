@@ -13,10 +13,20 @@ Acces::~Acces(void)
 
 char* Acces::getExtantion (char * path) 
 {
-	char*ext=nullptr;
+	char*pext;
+	char ext[4];
+	unsigned length=strlen(path);
+	
+	for (int i=length-3, n=0;i<length;i++,n++) ext[n]=path[i];
+	
+	ext[3]='\0';
+	
+	pext=&ext[0];
 
-	return ext;
+	return pext;
 }
+
+
 
 
 
@@ -33,31 +43,37 @@ bool Acces::isFolder(char* dir)
 }
 
 
+void Acces::clearUnit()
+{
+if(unit.size()>0)
+	{
+		for(unsigned i=0; i<unit.size();i++)
+		{
+			char * ptr = unit[i]; delete [] ptr;
+		}
+	}
+	unit.clear();
+}
+
+
 void Acces::setUnits(char*path)
 {
-	unit.clear();
+	clearUnit();
 	changeDir(path);
 	WIN32_FIND_DATA f;
 	HANDLE h = FindFirstFile("./*", &f);
 	if(h != INVALID_HANDLE_VALUE)
 	{
-		char *un = new char;
+		
 		while(FindNextFile(h, &f))
 		{
-			un=f.cFileName;
+			const char *un =f.cFileName;
 			int length=strlen(un);
-			char * constructUnit = new char[length];
-			for (int i=0; i<=length;i++)
-			{
-				constructUnit[i]=*un;
-				un++;
-			}
+			char * constructUnit = new char[length+1];
+			strcpy( constructUnit, un );
 			unit.push_back(constructUnit);
-			//delete[] constructUnit;
 			constructUnit = nullptr;
 		} 
-		//delete un;
-		un=nullptr;
 	}
 	else
 	{
