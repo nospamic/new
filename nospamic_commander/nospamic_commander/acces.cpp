@@ -11,18 +11,15 @@ Acces::~Acces(void)
 }
 
 
-char* Acces::getExtantion (char * path) 
+char * Acces::getExtantion (char * const path) 
 {
 	char*pext;
-	char ext[4];
+	static char ext[4];
 	unsigned length=strlen(path);
-	
-	for (int i=length-3, n=0;i<length;i++,n++) ext[n]=path[i];
-	
+	for (unsigned i=length-3, n=0;i<length;i++,n++) ext[n]=path[i];
 	ext[3]='\0';
-	
-	pext=&ext[0];
-
+	pext=ext;
+	//std::cout<<pext;
 	return pext;
 }
 
@@ -34,7 +31,7 @@ bool Acces::isFolder(char* dir)
 {
 	if((FILE_ATTRIBUTE_DIRECTORY & GetFileAttributes(dir)) == FILE_ATTRIBUTE_DIRECTORY)
 	{
-		std::cout<<"<DIR>";
+		
 		return true;
 	}else
 	{
@@ -58,6 +55,7 @@ if(unit.size()>0)
 
 void Acces::setUnits(char*path)
 {
+	//std::cout<<getExtantion("asd.exe")<<"\n";system("pause");
 	clearUnit();
 	changeDir(path);
 	WIN32_FIND_DATA f;

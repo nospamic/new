@@ -9,8 +9,9 @@
 
 
 
-int main()
+int main(int argc, char **argv)
 {
+	//glutInit(&argc, argv);
 	setlocale (LC_ALL,"Russian");
 	system("mode con lines=31 cols=80");
 	SetConsoleCP(1251);

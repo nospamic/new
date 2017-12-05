@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <vector>
 #include <direct.h>
+#include <string.h>
 
 
 
@@ -20,7 +21,7 @@ public:
 	unsigned int getCurrentDrive();
 	void changeDir(char*newDir);
 	void changeDrive(unsigned int drive);
-	char* getExtantion (char * path);
+	char * getExtantion (char * path);
 private:
 	void clearUnit();
 };

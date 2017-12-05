@@ -27,6 +27,9 @@
     <ClCompile Include="Loop.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="Glue.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="acces.h">
@@ -39,6 +42,9 @@
       <Filter>Файлы исходного кода</Filter>
     </ClInclude>
     <ClInclude Include="Loop.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Glue.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
