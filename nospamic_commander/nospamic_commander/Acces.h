@@ -4,7 +4,7 @@
 #include <vector>
 #include <direct.h>
 #include <string.h>
-
+#include <fstream>
 
 
 class Acces
@@ -22,6 +22,7 @@ public:
 	void changeDir(char*newDir);
 	void changeDrive(unsigned int drive);
 	char * getExtantion (char * path);
+	int fileSize(char*path);
 private:
 	void clearUnit();
 };

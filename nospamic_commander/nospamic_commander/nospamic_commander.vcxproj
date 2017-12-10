@@ -65,13 +65,16 @@
     <ClCompile Include="Glue.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="nc.cpp" />
+    <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="acces.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="console_tools.h" />
     <ClInclude Include="Glue.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="numbers.h" />
+    <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,6 +10,17 @@ Acces::~Acces(void)
 {
 }
 
+int Acces::fileSize(char* path)
+{
+	std::fstream file(path);
+    int size = 0;
+    file.seekg (0, std::ios::end);
+    size = file.tellg();
+    std::cout << "File size: " << size << " byte" ;
+    file.close();
+	return size;
+}
+
 
 char * Acces::getExtantion (char * const path) 
 {

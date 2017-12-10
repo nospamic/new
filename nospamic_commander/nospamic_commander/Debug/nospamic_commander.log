@@ -1,12 +1,10 @@
-﻿Построение начато 05.12.2017 20:57:28.
+﻿Построение начато 10.12.2017 21:15:06.
 Проект "D:\cpp2\nospamic_commander\nospamic_commander\nospamic_commander.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\nospamic_commander.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
-  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Glue.cpp nc.cpp
-  nc.cpp
-  Glue.cpp
-  Создание кода...
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Loop.cpp
+  Loop.cpp
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\nospamic_commander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.lib" /MACHINE:X86 Debug\acces.obj
   Debug\Box.obj
@@ -24,4 +22,4 @@ FinalizeBuildStatus:
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:03.75
+Затраченное время: 00:00:02.77
