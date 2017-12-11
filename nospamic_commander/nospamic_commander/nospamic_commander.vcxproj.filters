@@ -33,6 +33,9 @@
     <ClCompile Include="Viewer.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
+    <ClCompile Include="console_lools.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="acces.h">
@@ -54,7 +57,7 @@
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
     <ClInclude Include="console_tools.h">
-      <Filter>Файлы исходного кода</Filter>
+      <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
