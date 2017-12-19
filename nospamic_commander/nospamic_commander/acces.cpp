@@ -10,6 +10,22 @@ Acces::~Acces(void)
 {
 }
 
+
+//Acces::Acces(const Acces &other)
+//{
+//	
+//	
+//	for(int i=0; i<other.unitSize; i++)
+//	{
+//		int length= std::strlen(other.unit[i]);
+//		char*un = new char[length+1];
+//		std::strcpy(un,other.unit[i]);
+//		this->unit.push_back(un);
+//		std::cout<<&other.unit[i]<<"-->"<<this->unit[i]<<"\n";
+//	}
+//}
+
+
 int Acces::fileSize(char* path)
 {
 	std::fstream file(path);
@@ -20,6 +36,8 @@ int Acces::fileSize(char* path)
     file.close();
 	return size;
 }
+
+
 
 
 char * Acces::getExtantion (char * const path) 
@@ -76,13 +94,14 @@ void Acces::setUnits(char*path)
 		
 		while(FindNextFile(h, &f))
 		{
-			const char *un =f.cFileName;
+			const char *un = f.cFileName;
 			int length=strlen(un);
 			char * constructUnit = new char[length+1];
 			strcpy( constructUnit, un );
 			unit.push_back(constructUnit);
 			constructUnit = nullptr;
-		} 
+		}
+		unitSize=unit.size();
 	}
 	else
 	{

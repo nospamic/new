@@ -14,6 +14,7 @@ public:
 	
 	Acces(void);
 	~Acces(void);
+	//Acces(const Acces &other);
 
 	bool isFolder(char*path);
 	void setUnits(char*path);
@@ -24,6 +25,7 @@ public:
 	char * getExtantion (char * path);
 	int fileSize(char*path);
 private:
+	int unitSize;
 	void clearUnit();
 };
 
