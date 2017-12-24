@@ -66,6 +66,7 @@
     <ClCompile Include="Glue.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="nc.cpp" />
+    <ClCompile Include="SelectDrive.cpp" />
     <ClCompile Include="Viewer.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -75,6 +76,7 @@
     <ClInclude Include="Glue.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="numbers.h" />
+    <ClInclude Include="SelectDrive.h" />
     <ClInclude Include="Viewer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

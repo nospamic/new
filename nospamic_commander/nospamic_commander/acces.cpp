@@ -142,3 +142,17 @@ unsigned int Acces::getCurrentDrive()
 {
 return _getdrive ();
 }
+
+void Acces::getAllDrives()
+{
+	char buf[26];
+    GetLogicalDriveStringsA(sizeof(buf),buf);
+    
+	char *DRF [] = {"Unknown" , "Invalid path",
+        "Removable", "Fixed" , "Network drive","CD-ROM", "RAM disk"};
+    
+	for(char *s=buf; *s; s+=strlen(s)+1)
+	{
+         std::cout<<s<<"   "<<DRF[GetDriveTypeA(s)]<<"\n";
+	}
+}

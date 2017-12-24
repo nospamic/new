@@ -5,7 +5,7 @@
 #include <direct.h>
 #include <string.h>
 #include <fstream>
-
+#include <conio.h>
 
 class Acces
 {
@@ -24,6 +24,7 @@ public:
 	void changeDrive(unsigned int drive);
 	char * getExtantion (char * path);
 	int fileSize(char*path);
+	void getAllDrives();
 private:
 	int unitSize;
 	void clearUnit();
