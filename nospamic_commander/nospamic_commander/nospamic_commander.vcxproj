@@ -63,7 +63,6 @@
     <ClCompile Include="acces.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="console_lools.cpp" />
-    <ClCompile Include="Glue.cpp" />
     <ClCompile Include="Loop.cpp" />
     <ClCompile Include="nc.cpp" />
     <ClCompile Include="SelectDrive.cpp" />
@@ -73,7 +72,6 @@
     <ClInclude Include="acces.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="console_tools.h" />
-    <ClInclude Include="Glue.h" />
     <ClInclude Include="Loop.h" />
     <ClInclude Include="numbers.h" />
     <ClInclude Include="SelectDrive.h" />

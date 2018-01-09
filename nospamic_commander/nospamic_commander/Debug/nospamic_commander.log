@@ -1,23 +1,14 @@
-﻿Построение начато 24.12.2017 22:12:16.
+﻿Построение начато 09.01.2018 17:46:34.
 Проект "D:\cpp2\nospamic_commander\nospamic_commander\nospamic_commander.vcxproj" в узле 2 (целевые объекты build).
 InitializeBuildStatus:
   Создание "Debug\nospamic_commander.unsuccessfulbuild", так как было задано "AlwaysCreate".
 ClCompile:
-  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Box.cpp
-  Box.cpp
-d:\cpp2\nospamic_commander\nospamic_commander\box.cpp(84): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-          d:\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
-d:\cpp2\nospamic_commander\nospamic_commander\box.cpp(86): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-          d:\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
-d:\cpp2\nospamic_commander\nospamic_commander\box.cpp(87): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-          d:\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
-d:\cpp2\nospamic_commander\nospamic_commander\box.cpp(88): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-          d:\microsoft visual studio 10.0\vc\include\string.h(110): см. объявление "strcat"
+  D:\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Viewer.cpp
+  Viewer.cpp
 Link:
   D:\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\nospamic_commander.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\cpp2\nospamic_commander\Debug\nospamic_commander.lib" /MACHINE:X86 Debug\acces.obj
   Debug\Box.obj
   Debug\console_lools.obj
-  Debug\Glue.obj
   Debug\Loop.obj
   Debug\nc.obj
   Debug\SelectDrive.obj
@@ -33,4 +24,4 @@ FinalizeBuildStatus:
 
 Построение успешно завершено.
 
-Затраченное время: 00:00:02.52
+Затраченное время: 00:00:02.70

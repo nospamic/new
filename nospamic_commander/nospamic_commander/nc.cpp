@@ -4,7 +4,6 @@
 #include <vector>
 #include <direct.h>
 #include "Loop.h"
-#include "Glue.h"
 
 
 
@@ -17,8 +16,7 @@ int main(int argc, char **argv)
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	//Glue glu;
-	//glu.scr(640,480);
+	
 	Loop loop;
 	loop.go();
 
