@@ -23,12 +23,12 @@ human::~human(void)
 {
 }
 
-
+void human::setName(std::string name){this->name=name;}
 void human::setAge(int age){this->age=age;}
 void human::setweight(int weight){this->weight=weight;}
 void human::setMarried(bool married){this->isMarried=married;}
 
-char*human::getName(){return name;}
+std::string human::getName(){return name;}
 unsigned human::getAge(){return age;}
 unsigned human::getWeight(){return weight;}
 bool human::getIsMarried(){return isMarried;}

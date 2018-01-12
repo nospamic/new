@@ -1,15 +1,17 @@
 #pragma once
 #include <iostream>
+#include <string>
 class human
 {
 public:
 	human(char*name);
 	human();
 	~human(void);
+	void setName(std::string name);
 	void setAge(int);
 	void setweight(int);
 	void setMarried(bool);
-	char*getName();
+	std::string getName();
 	unsigned getAge();
 	unsigned getWeight();
 	bool getIsMarried();
@@ -17,7 +19,7 @@ public:
 private:
 	unsigned age;
 	unsigned weight;
-	char* name;
+	std::string name;
 	bool isMarried;
 	
 	friend std::ostream& operator<<(std::ostream& os, const human& hum);
