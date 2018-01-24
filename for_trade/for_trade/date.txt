@@ -1,0 +1,5 @@
+0 100000 Noname 0 0 0 No_description No_section No_group 0 0
+1 100001 Noname 0 0 0 No_description No_section No_group 0 0
+2 100002 Самый_третий_товар 0 0 0 No_description No_section No_group 0 0
+3 100003 Самый_третий_товар 0 0 0 No_description No_section No_group 0 0
+4 100004 Самый_five_товар 12.5 0 0 No_description No_section No_group 0 0
