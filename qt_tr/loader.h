@@ -23,15 +23,17 @@ public:
 
     unsigned objQuantity(char*path);
     Unit* createArr(unsigned size);
-    Unit* fileToArr(char* path);
-    void ArrToFile(char* path, Unit* arry,un length);
+    Unit* fileToArr(char*path);
+    void ArrToFile(char*path, Unit* arry, un length);
     void makeNewDateFile(char*path, un size);
     void printArr();
     void addUnitToFile(char*path, std::string name, float price, int qantity);
     std::string removeSpaces(std::string);
-
+    void edit(un code, un barcode, int qantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth);
+    Unit getUnit(un code);
 
 private:
+    char*path;
 
 
 

@@ -28,13 +28,15 @@ SOURCES += \
         mainwindow.cpp \
     unit.cpp \
     loader.cpp \
-    add.cpp
+    add2.cpp \
+    editform.cpp
 
 HEADERS += \
         mainwindow.h \
     unit.h \
     loader.h \
-    add.h
+    add2.h \
+    editform.h
 
 FORMS += \
         mainwindow.ui

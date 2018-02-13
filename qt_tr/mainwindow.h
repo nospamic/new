@@ -8,7 +8,8 @@
 #include <QWidget>
 #include "loader.h"
 #include "unit.h"
-#include "add.h"
+#include "add2.h"
+#include "editform.h"
 
 namespace Ui {
 class MainWindow;
@@ -24,11 +25,7 @@ public:
 
 private slots:
     void on_list_currentRowChanged(int currentRow);
-
-    void on_addUnit_clicked();
-
     void on_list_doubleClicked(const QModelIndex &index);
-
     void on_pushAdd2_clicked();
 
 

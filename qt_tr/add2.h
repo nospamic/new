@@ -1,9 +1,6 @@
-#ifndef ADD_H
-#define ADD_H
+#ifndef ADD2_H
+#define ADD2_H
 
-#include <QMainWindow>
-#include <QObject>
-#include <QWidget>
 #include <QDialog>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -13,12 +10,13 @@
 #include <QLabel>
 
 
-class Add : QDialog
+class Add2 : public QDialog
 {
     Q_OBJECT
-public:
-    Add(QWidget * parent=0);
 
+public:
+    Add2(QWidget *parent = 0);
+    ~Add2();
 private:
 
     QLineEdit * lineName;
@@ -30,4 +28,4 @@ public slots:
     void itsOk();
 };
 
-#endif // ADD_H
+#endif // ADD2_H

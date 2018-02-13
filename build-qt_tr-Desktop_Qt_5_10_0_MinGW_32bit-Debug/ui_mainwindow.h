@@ -15,11 +15,9 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,13 +31,6 @@ public:
     QListWidget *list;
     QListWidget *listCode;
     QListWidget *listPrice;
-    QLabel *label_2;
-    QLineEdit *lineNewName;
-    QLineEdit *lineNewPrice;
-    QLabel *label_3;
-    QSpinBox *spinQuant;
-    QLabel *label_4;
-    QPushButton *addUnit;
     QLabel *label_size;
     QPushButton *pushAdd2;
 
@@ -47,7 +38,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(536, 367);
+        MainWindow->resize(488, 290);
         actionOpen_data = new QAction(MainWindow);
         actionOpen_data->setObjectName(QStringLiteral("actionOpen_data"));
         centralWidget = new QWidget(MainWindow);
@@ -64,33 +55,12 @@ public:
         listPrice = new QListWidget(centralWidget);
         listPrice->setObjectName(QStringLiteral("listPrice"));
         listPrice->setGeometry(QRect(410, 50, 71, 201));
-        label_2 = new QLabel(centralWidget);
-        label_2->setObjectName(QStringLiteral("label_2"));
-        label_2->setGeometry(QRect(10, 260, 47, 13));
-        lineNewName = new QLineEdit(centralWidget);
-        lineNewName->setObjectName(QStringLiteral("lineNewName"));
-        lineNewName->setGeometry(QRect(10, 280, 261, 20));
-        lineNewPrice = new QLineEdit(centralWidget);
-        lineNewPrice->setObjectName(QStringLiteral("lineNewPrice"));
-        lineNewPrice->setGeometry(QRect(280, 280, 91, 20));
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QStringLiteral("label_3"));
-        label_3->setGeometry(QRect(280, 260, 47, 13));
-        spinQuant = new QSpinBox(centralWidget);
-        spinQuant->setObjectName(QStringLiteral("spinQuant"));
-        spinQuant->setGeometry(QRect(380, 280, 61, 22));
-        label_4 = new QLabel(centralWidget);
-        label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(380, 260, 47, 13));
-        addUnit = new QPushButton(centralWidget);
-        addUnit->setObjectName(QStringLiteral("addUnit"));
-        addUnit->setGeometry(QRect(450, 280, 75, 23));
         label_size = new QLabel(centralWidget);
         label_size->setObjectName(QStringLiteral("label_size"));
         label_size->setGeometry(QRect(10, 20, 151, 16));
         pushAdd2 = new QPushButton(centralWidget);
         pushAdd2->setObjectName(QStringLiteral("pushAdd2"));
-        pushAdd2->setGeometry(QRect(450, 310, 75, 23));
+        pushAdd2->setGeometry(QRect(10, 260, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -103,10 +73,6 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
         actionOpen_data->setText(QApplication::translate("MainWindow", "Open data..", nullptr));
         label->setText(QApplication::translate("MainWindow", "Path", nullptr));
-        label_2->setText(QApplication::translate("MainWindow", "Add unit:", nullptr));
-        label_3->setText(QApplication::translate("MainWindow", "Price:", nullptr));
-        label_4->setText(QApplication::translate("MainWindow", "Quantity", nullptr));
-        addUnit->setText(QApplication::translate("MainWindow", "Add unit", nullptr));
         label_size->setText(QApplication::translate("MainWindow", "Size", nullptr));
         pushAdd2->setText(QApplication::translate("MainWindow", "Add Unit", nullptr));
     } // retranslateUi

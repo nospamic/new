@@ -18,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //------------------------------------------------------------------
     //QString qa=QString::fromStdString(a);
     //QString s = QString::number(i);
-    // QString name=QString::fromLocal8Bit((arry[n].getName()).c_str());
+    // QString name=QString::fromLocal8Bit((str).c_str());
+    //float price = linePrice->text().toFloat();
     //-----------------------------------------------------------------
 
 
@@ -40,28 +41,8 @@ void MainWindow::on_list_currentRowChanged(int currentRow)
 }
 
 
-void MainWindow::on_addUnit_clicked()
-{
-
-    Loader loader;
-    std::string name = ui->lineNewName->text().toLocal8Bit().constData();
-    name = loader.removeSpaces(name);
-    int qantity = ui->spinQuant->value();
-    float price = ui->lineNewPrice->text().toFloat();
-    if(name != "")
-    {
-        loader.addUnitToFile(path, name, price, qantity);
-        getUnitList();
-        ui->lineNewName->clear();
-        ui->lineNewPrice->clear();
-        ui->spinQuant->clear();
-    }
-}
-
-
 void MainWindow::getUnitList()
 {
-
 
     ui->list->clear();
     ui->listCode->clear();
@@ -70,7 +51,7 @@ void MainWindow::getUnitList()
 
     Loader loader;
     un size=loader.objQuantity(path);
-    ui->label_size->setText("К-во товаров" + QString::number(size));
+    ui->label_size->setText("К-во товаров: " + QString::number(size));
     if(size>0)
     {
         Unit *arry=new Unit[size];
@@ -91,20 +72,25 @@ void MainWindow::getUnitList()
 
 }
 
+
 void MainWindow::on_list_doubleClicked(const QModelIndex &index)
 {
-    QMessageBox msg;
-    msg.setText("Yes it is some unit");
-    msg.exec();
+    QString str = ui->listCode->currentItem()->text();
+    un code = str.toInt();
+    EditForm * unit = new EditForm(code);
+    unit->show();
+    unit->exec();
+    this->getUnitList();
 }
+
 
 void MainWindow::on_pushAdd2_clicked()
 {
-   //AddUnit * unit = new AddUnit;
-    Add * unit = new Add(0);
-    //unit->show();
 
-
+    Add2 * unit = new Add2;
+    unit->show();
+    unit->exec();
+    this->getUnitList();
 }
 
 

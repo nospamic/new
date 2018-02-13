@@ -2,6 +2,7 @@
 
 Loader::Loader(void)
 {
+    path="date.txt";
 }
 
 
@@ -33,10 +34,7 @@ unsigned Loader::objQuantity(char*path)
 Unit* Loader::createArr(unsigned size)
 {
     Unit *arry = new Unit[size];
-    //std::shared_ptr<Unit[]>arr(new Unit[size]);
-
     return &arry[0];
-
 }
 
 
@@ -92,7 +90,7 @@ void Loader::makeNewDateFile(char*path, un size)
 void Loader::printArr()
 {
 
-    char*path="date.txt";
+
     Loader loader;
     Unit*arry=loader.fileToArr(path);
 
@@ -137,4 +135,53 @@ std::string Loader::removeSpaces(std::string str)
         if (str[a]==' ') {result.push_back('_');}else {result.push_back(str[a]);}
     }
     return result;
+}
+
+void Loader::edit(un code, un barcode, int qantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth)
+{
+    un size = objQuantity(path);
+    Unit * base = fileToArr(path);
+    int position = -1;
+    for (un n=0; n<size; n++)
+    {
+        if(base[n].getCode() == code)
+        {
+            position = n;
+            break;
+        }
+    }
+    std::cout <<"Write to position: "<<position;
+    if(position>=0)
+    {
+        base[position].setBarcode(barcode);
+        base[position].setQantity(qantity);
+        base[position].setPrice(price);
+        base[position].setEcharge(echarge);
+        base[position].setName(name);
+        base[position].setSection(section);
+        base[position].setGroup(group);
+        base[position].setDescription(description);
+        base[position].setSalesPerMonth(salesPerMonth);
+
+        ArrToFile(path, &base[0], size);
+    }
+    delete[] base;
+}
+
+Unit Loader::getUnit(un code)
+{
+    un size = objQuantity(path);
+    Unit * base = fileToArr(path);
+    int position = -1;
+    for (un n=0; n<size; n++)
+    {
+        if(base[n].getCode() == code)
+        {
+            position = n;
+            break;
+        }
+    }
+    std::cout <<"Write to position: "<<position;
+
+    return base[position];
 }
