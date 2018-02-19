@@ -17,8 +17,8 @@ public:
 
     void setId(un id);
     void setCode(long code);
-    void setBarcode(un barcode);
-    void setQantity(int qantity);
+    void setBarcode(std::string barcode);
+    void setQuantity(int quantity);
     void setPrice(float price);
     void setEcharge(float echarge);
     void setName(std::string name);
@@ -29,8 +29,8 @@ public:
 
     un getId();
     un getCode();
-    un getBarcode();
-    int getQantity();
+    std::string getBarcode();
+    int getQuantity();
     float getPrice();
     float getEcharge();
     std::string  getName();
@@ -42,8 +42,8 @@ public:
 private:
     unsigned id;
     unsigned code;
-    unsigned barcode;
-    int qantity;
+    std::string barcode;
+    int quantity;
     float price;
     float echarge;
     std::string name;

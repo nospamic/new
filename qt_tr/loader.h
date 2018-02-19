@@ -27,10 +27,11 @@ public:
     void ArrToFile(char*path, Unit* arry, un length);
     void makeNewDateFile(char*path, un size);
     void printArr();
-    void addUnitToFile(char*path, std::string name, float price, int qantity);
+    void addUnitToFile(char*path, std::string name, float price, int quantity);
     std::string removeSpaces(std::string);
-    void edit(un code, un barcode, int qantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth);
+    void edit(un code, std::string barcode, int quantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth);
     Unit getUnit(un code);
+    Unit* selectFromFile(std::string word, int &size);
 
 private:
     char*path;

@@ -39,15 +39,15 @@ Add2::~Add2()
 
 void Add2::itsOk()
 {
-    char*path="date.txt";
+    char*path="data.txt";
     Loader loader;
     std::string name = lineName->text().toLocal8Bit().constData();
     name = loader.removeSpaces(name);
-    int qantity = spinQuant->value();
+    int quantity = spinQuant->value();
     float price = linePrice->text().toFloat();
     if(name != "")
     {
-        loader.addUnitToFile(path, name, price, qantity);
+        loader.addUnitToFile(path, name, price, quantity);
         this->close();
     }
 }

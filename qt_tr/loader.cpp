@@ -2,7 +2,7 @@
 
 Loader::Loader(void)
 {
-    path="date.txt";
+    path="data.txt";
 }
 
 
@@ -40,18 +40,13 @@ Unit* Loader::createArr(unsigned size)
 
 Unit* Loader::fileToArr(char* path)
 {
-
     unsigned size = objQuantity(path);
     Unit* arry(createArr(size));
-    Unit u=arry[0];
     std::fstream fs;
     fs.open(path, std::fstream::in | std::fstream::out | std::fstream::app);
-
-    Unit a=arry[0];
     for(un a=0; a<size; a++)
     {
         fs>>arry[a];
-        //std::cout<<arry[a];
     }
     fs.close();
     return &arry[0];
@@ -105,7 +100,7 @@ void Loader::printArr()
 }
 
 
-void Loader::addUnitToFile(char*path, std::string name = "noname", float price = 0, int qantity = 1)
+void Loader::addUnitToFile(char*path, std::string name = "noname", float price = 0, int quantity = 1)
 {
     Unit*base=fileToArr(path);
     un size=objQuantity(path);
@@ -121,7 +116,7 @@ void Loader::addUnitToFile(char*path, std::string name = "noname", float price =
     unit.setCode(lastCode+1);
     unit.setName(name);
     unit.setPrice(price);
-    unit.setQantity(qantity);
+    unit.setQuantity(quantity);
     fs<<unit;
     fs.close();
     delete[] base;
@@ -132,12 +127,12 @@ std::string Loader::removeSpaces(std::string str)
     std::string result="";
     for(un a=0; a<str.size();a++)
     {
-        if (str[a]==' ') {result.push_back('_');}else {result.push_back(str[a]);}
+        if (str[a]==' ' || str[a]=='\n') {result.push_back('_');}else {result.push_back(str[a]);}
     }
     return result;
 }
 
-void Loader::edit(un code, un barcode, int qantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth)
+void Loader::edit(un code, std::string barcode, int quantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth)
 {
     un size = objQuantity(path);
     Unit * base = fileToArr(path);
@@ -150,11 +145,11 @@ void Loader::edit(un code, un barcode, int qantity, float price, float echarge, 
             break;
         }
     }
-    std::cout <<"Write to position: "<<position;
+    std::cout <<"Write to position: "<<position<<"\n";
     if(position>=0)
     {
         base[position].setBarcode(barcode);
-        base[position].setQantity(qantity);
+        base[position].setQuantity(quantity);
         base[position].setPrice(price);
         base[position].setEcharge(echarge);
         base[position].setName(name);
@@ -181,7 +176,30 @@ Unit Loader::getUnit(un code)
             break;
         }
     }
-    std::cout <<"Write to position: "<<position;
+    Unit result = base[position];
+    delete[] base;
+    std::cout<<result<<"\n";
+    return result;
+}
 
-    return base[position];
+Unit *Loader::selectFromFile(std::string word, int &size)
+{
+    std::cout<<"word = "<< word <<"  size = "<<size<<"\n";
+
+    int newPos = 0;
+    Unit* arry = fileToArr(path);
+    for(int n=0; n<size; n++)
+    {
+        std::string name=arry[n].getName();
+        if(name.find(word)<name.size())
+        {
+            arry[newPos] = arry[n];
+            newPos++;
+            //result.push_back(arry[n]);
+            std::cout<<"find()= "<<name.find(word)<<"   ";
+            std::cout<<arry[n]<<"   ";
+        }
+    }
+    size = newPos;
+    return &arry[0];
 }

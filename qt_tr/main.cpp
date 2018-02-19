@@ -17,7 +17,7 @@ std::ostream& operator<<(std::ostream& os, const Unit& un)
     un.code<<" "<<
     un.name<<" "<<
     un.price<<" "<<
-    un.qantity<<" "<<
+    un.quantity<<" "<<
     un.echarge<<" "<<
     un.description<<" "<<
     un.section<<" "<<
@@ -35,7 +35,7 @@ std::istream& operator>>(std::istream& is,  Unit& un)
     un.code>>
     un.name>>
     un.price>>
-    un.qantity>>
+    un.quantity>>
     un.echarge>>
     un.description>>
     un.section>>

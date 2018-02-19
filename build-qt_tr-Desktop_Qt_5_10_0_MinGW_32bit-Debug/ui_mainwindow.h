@@ -13,8 +13,10 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
@@ -32,7 +34,11 @@ public:
     QListWidget *listCode;
     QListWidget *listPrice;
     QLabel *label_size;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout;
     QPushButton *pushAdd2;
+    QPushButton *pushEdit;
+    QLineEdit *lineSelect;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -58,9 +64,29 @@ public:
         label_size = new QLabel(centralWidget);
         label_size->setObjectName(QStringLiteral("label_size"));
         label_size->setGeometry(QRect(10, 20, 151, 16));
-        pushAdd2 = new QPushButton(centralWidget);
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QStringLiteral("widget"));
+        widget->setGeometry(QRect(10, 260, 297, 25));
+        horizontalLayout = new QHBoxLayout(widget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        pushAdd2 = new QPushButton(widget);
         pushAdd2->setObjectName(QStringLiteral("pushAdd2"));
-        pushAdd2->setGeometry(QRect(10, 260, 75, 23));
+
+        horizontalLayout->addWidget(pushAdd2);
+
+        pushEdit = new QPushButton(widget);
+        pushEdit->setObjectName(QStringLiteral("pushEdit"));
+
+        horizontalLayout->addWidget(pushEdit);
+
+        lineSelect = new QLineEdit(widget);
+        lineSelect->setObjectName(QStringLiteral("lineSelect"));
+
+        horizontalLayout->addWidget(lineSelect);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -75,6 +101,9 @@ public:
         label->setText(QApplication::translate("MainWindow", "Path", nullptr));
         label_size->setText(QApplication::translate("MainWindow", "Size", nullptr));
         pushAdd2->setText(QApplication::translate("MainWindow", "Add Unit", nullptr));
+        pushEdit->setText(QApplication::translate("MainWindow", "Edit selected", nullptr));
+        lineSelect->setText(QString());
+        lineSelect->setPlaceholderText(QApplication::translate("MainWindow", "\320\235\320\260\320\271\321\202\320\270...", nullptr));
     } // retranslateUi
 
 };

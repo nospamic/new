@@ -36,8 +36,8 @@ private:
 
     QPushButton * ok;
 
-    unsigned barcode;
-    int qantity;
+    std::string barcode;
+    int quantity;
     float price;
     float echarge;
     std::string name;

@@ -1,0 +1,5 @@
+0 100000 Noname111 0 0 1.5 no_dscrpt no_sect no_group 0 1
+1 100001 Фигня 2.55 10 1.5 no_dscrpt no_sect no_group 1234567 1
+2 100002 СЃРѕРјРµ_РЅР°РјРµ_---Это_лажа_с_кодировкой 2.5 10 1.5 no_dscrpt no_sect no_group 2222223233 1
+3 100003 Самый_третий_товар 26 0 1.5 no_dscrpt no_sect no_group 000000000000000 1
+4 100004 Самый_five_товар 12.5 0 0 No_description No_section No_group 0 0
