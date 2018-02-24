@@ -9,6 +9,7 @@
 #include <QSpinBox>
 #include <QLabel>
 #include <QTextEdit>
+#include <QMessageBox>
 
 class EditForm : public QDialog
 {

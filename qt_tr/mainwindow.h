@@ -8,6 +8,7 @@
 #include <QWidget>
 #include <direct.h>
 #include "loader.h"
+#include "textbutor.h"
 #include "unit.h"
 #include "add2.h"
 #include "editform.h"
@@ -30,9 +31,7 @@ private slots:
     void on_pushAdd2_clicked();
     void setEditable();
     void on_pushEdit_clicked();
-
     void on_lineSelect_editingFinished();
-
     void on_lineSelect_returnPressed();
 
 private:
@@ -40,6 +39,9 @@ private:
     QStandardItemModel *model;
 
     void getUnitList();
+    Loader loader;
+    Textbutor textbutor;
+    char *path;
 
 };
 

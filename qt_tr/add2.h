@@ -8,6 +8,7 @@
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QLabel>
+#include <QMessageBox>
 
 
 class Add2 : public QDialog
@@ -22,6 +23,7 @@ private:
     QLineEdit * lineName;
     QLineEdit * linePrice;
     QSpinBox * spinQuant;
+    QLineEdit *lineBarcode;
     QPushButton * ok;
 
 public slots:

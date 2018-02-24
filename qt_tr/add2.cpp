@@ -23,6 +23,10 @@ Add2::Add2(QWidget *parent)
     hor1->addWidget(spinQuant);
     vert->addLayout(hor1);
 
+    lineBarcode = new QLineEdit;
+    lineBarcode->setPlaceholderText("Штрихкод..");
+    vert->addWidget(lineBarcode);
+
     ok = new QPushButton("Add");
     vert->addWidget(ok);
     //this->show();
@@ -43,11 +47,20 @@ void Add2::itsOk()
     Loader loader;
     std::string name = lineName->text().toLocal8Bit().constData();
     name = loader.removeSpaces(name);
+    std::string barcode = lineBarcode->text().toLocal8Bit().constData();
+    barcode = loader.removeSpaces(barcode);
     int quantity = spinQuant->value();
     float price = linePrice->text().toFloat();
-    if(name != "")
+    if(name != "" && loader.nameByBarcode(barcode)=="")
     {
-        loader.addUnitToFile(path, name, price, quantity);
+        loader.addUnitToFile(path, name, price, quantity, barcode);
         this->close();
+    }
+    else
+    {
+        QString message=QString::fromLocal8Bit(loader.nameByBarcode(barcode).c_str());
+        QMessageBox msg;
+        msg.setText("Товар с таким кодом уже есть в базе: " + message);
+        msg.exec();
     }
 }

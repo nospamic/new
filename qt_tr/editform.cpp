@@ -135,9 +135,16 @@ void EditForm::itsOk()
 
     un sales = spinSales->value();
 
-    if(name != "")
+    if(loader.nameByBarcode(barcode)==name || loader.nameByBarcode(barcode)=="")
     {
         loader.edit(code, barcode, quantity, price, echarge, name, section, group, description, sales);
         this->close();
+    }
+    else
+    {
+        QString message=QString::fromLocal8Bit(loader.nameByBarcode(barcode).c_str());
+        QMessageBox msg;
+        msg.setText("Товар с таким кодом уже есть в базе: " + message);
+        msg.exec();
     }
 }

@@ -2,17 +2,25 @@
 #include "ui_mainwindow.h"
 
 
-char*path="data.txt";
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    path="data.txt";
     ui->setupUi(this);
 
     QString cPath= "Current path - " + QDir::currentPath();
-    ui->label->setText(cPath);
+    std::cout<<cPath.toLocal8Bit().constData()<<"\n";
 
+    if ( ! QFile::exists(path) )
+    {
+        QMessageBox msg;
+        msg.setText("Файл data.txt не существует. Создаю новый.");
+        msg.exec();
+        loader.makeNewDateFile(path, 1);
+    }
     //------------------------------------------------------------------
     //QString qa=QString::fromStdString(a);
     //QString s = QString::number(i);
@@ -48,8 +56,6 @@ void MainWindow::getUnitList()
     ui->listCode->clear();
     ui->listPrice->clear();
 
-
-    Loader loader;
     un size=loader.objQuantity(path);
     ui->label_size->setText("К-во товаров: " + QString::number(size));
     if(size>0)
@@ -122,7 +128,7 @@ void MainWindow::on_lineSelect_returnPressed()
     ui->listCode->clear();
     ui->listPrice->clear();
 
-    Loader loader;
+
     int size=loader.objQuantity(path);
     std::string word = ui->lineSelect->text().toLocal8Bit().constData();
     std::cout<<"word = "<<word<<"  size = "<<size<<"\n";
