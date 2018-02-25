@@ -12,6 +12,7 @@
 #include "unit.h"
 #include "add2.h"
 #include "editform.h"
+#include "seller.h"
 
 namespace Ui {
 class MainWindow;
@@ -33,6 +34,8 @@ private slots:
     void on_pushEdit_clicked();
     void on_lineSelect_editingFinished();
     void on_lineSelect_returnPressed();
+
+    void on_buttonSaller_clicked();
 
 private:
     Ui::MainWindow *ui;

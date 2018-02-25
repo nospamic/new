@@ -150,3 +150,10 @@ void MainWindow::on_lineSelect_returnPressed()
     delete[] arry;
 
 }
+
+void MainWindow::on_buttonSaller_clicked()
+{
+    Seller * shop = new Seller;
+    shop->show();
+    shop->exec();
+}

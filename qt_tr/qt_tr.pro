@@ -30,7 +30,8 @@ SOURCES += \
     loader.cpp \
     add2.cpp \
     editform.cpp \
-    textbutor.cpp
+    textbutor.cpp \
+    seller.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,7 +39,8 @@ HEADERS += \
     loader.h \
     add2.h \
     editform.h \
-    textbutor.h
+    textbutor.h \
+    seller.h
 
 FORMS += \
         mainwindow.ui

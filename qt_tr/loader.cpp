@@ -183,6 +183,27 @@ Unit Loader::getUnit(un code)
     return result;
 }
 
+
+Unit Loader::getUnit(std::string barcode)
+{
+    un size = objQuantity(path);
+    Unit * base = fileToArr(path);
+    int position = -1;
+    for (un n=0; n<size; n++)
+    {
+        if(base[n].getBarcode() == barcode)
+        {
+            position = n;
+            break;
+        }
+    }
+    Unit result = base[position];
+    delete[] base;
+    std::cout<<result<<"\n";
+    return result;
+}
+
+
 Unit *Loader::selectFromFile(std::string word, int &size)
 {
     std::cout<<"word = "<< word <<"  size = "<<size<<"\n";

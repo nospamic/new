@@ -31,8 +31,10 @@ public:
     std::string removeSpaces(std::string);
     void edit(un code, std::string barcode, int quantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth);
     Unit getUnit(un code);
+    Unit getUnit(std::string barcode);
     Unit* selectFromFile(std::string word, int &size);
     std::string nameByBarcode(std::string barcode);
+
 
 private:
     char*path;

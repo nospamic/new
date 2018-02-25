@@ -42,13 +42,20 @@ private:
     Textbutor textbutor;
     char *path;
     std::vector<Unit>check;
+    std::vector<int>quantity;
+    float exchange;
 
 
 
     void getListSelect(QString word);
+    void checkShow();
+    bool isUah(Unit unit);
 
 private slots:
     void addToCheck();
+    void setSpinQuantity();
+    void changeQuantity();
+    void barcodeScanned();
 
 };
 
