@@ -188,6 +188,7 @@ Unit Loader::getUnit(std::string barcode)
 {
     un size = objQuantity(path);
     Unit * base = fileToArr(path);
+    Unit result;
     int position = -1;
     for (un n=0; n<size; n++)
     {
@@ -197,7 +198,15 @@ Unit Loader::getUnit(std::string barcode)
             break;
         }
     }
-    Unit result = base[position];
+    if(position != -1)
+    {
+        result = base[position];
+    }
+    else
+    {
+
+        result.setName("nullUnit");
+    }
     delete[] base;
     std::cout<<result<<"\n";
     return result;
@@ -240,4 +249,20 @@ std::string Loader::nameByBarcode(std::string barcode)
     delete[] arry;
     return "";
 
+}
+
+un Loader::getPosition(un code)
+{
+    un size = objQuantity(path);
+    Unit* arry = fileToArr(path);
+    for(int n=0; n<size; n++)
+    {
+        if (arry[n].getCode()==code)
+        {
+            delete[] arry;
+            return n;
+        }
+    }
+    delete[] arry;
+    return 100000;
 }

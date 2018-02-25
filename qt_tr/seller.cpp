@@ -11,7 +11,6 @@ Seller::Seller(QWidget *parent)
     QVBoxLayout *vert = new QVBoxLayout;
     listSearsh = new QListWidget;
     listSearsh->setFont(font);
-    getListSelect("");
     vert->addWidget(listSearsh);
 
 
@@ -59,6 +58,10 @@ Seller::Seller(QWidget *parent)
     connect(listCheck, SIGNAL(clicked(QModelIndex)), this, SLOT(setSpinQuantity()));
     connect(spinQuantity, SIGNAL(valueChanged(int)), this, SLOT(changeQuantity()));
     connect(lineBarcod, SIGNAL(returnPressed()), this, SLOT(barcodeScanned()));
+    connect(lineSearsh, SIGNAL(returnPressed()), this, SLOT(getListSelect()));
+    connect(linePay, SIGNAL(returnPressed()), this, SLOT(sold()));
+
+    getListSelect();
     lineBarcod->setFocus();
 }
 
@@ -67,32 +70,69 @@ Seller::~Seller()
 
 }
 
-void Seller::getListSelect(QString word = "")
+void Seller::getListSelect()
 {
-    if (word=="")
+    listSearsh->clear();
+    QString word = lineSearsh->text();
+    int size = loader.objQuantity(path);
+    Unit *base = loader.fileToArr(path);
+
+    if (word.isEmpty())
     {
-        int size = loader.objQuantity(path);
-        Unit *base = loader.fileToArr(path);
         for(int n=0; n<size; n++)
         {
             QString code = QString::number(base[n].getCode());
             QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
-
             QString price = QString::number(base[n].getPrice());
             QString quantity = QString::number(base[n].getQuantity());
             listSearsh->addItem(code+"   "+name+" "+price+"\t   "+quantity);
-
         }
-
     }
     else
     {
+        word = word.toLower();
+        for(int n=0; n<size; n++)
+        {
+            QString code = QString::number(base[n].getCode());
+            QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
+            QString price = QString::number(base[n].getPrice());
+            QString quantity = QString::number(base[n].getQuantity());
+            if (name.contains(word, Qt::CaseInsensitive))
+            {
+                listSearsh->addItem(code+"   "+name+" "+price+"\t   "+quantity);
+            }
+        }
 
     }
+    delete[] base;
 }
+
+
+void Seller::sold()
+{
+    int size = loader.objQuantity(path);
+    Unit *base = loader.fileToArr(path);
+    for(unsigned n=0; n<check.size(); n++)
+    {
+        unsigned position = loader.getPosition(check[n].getCode());
+        base[position].setQuantity(base[position].getQuantity() - quantity[n]);
+    }
+    loader.ArrToFile(path, base, size);
+    delete[] base;
+    check.clear();
+    quantity.clear();
+    listCheck->clear();
+    labelSumm->setText("К оплате: --");
+    linePay->clear();
+    labelChange->setText("Сдача: --");
+    getListSelect();
+    lineBarcod->setFocus();
+}
+
 
 void Seller::checkShow()
 {
+    findRepeat();
     listCheck->clear();
     float checkSumm = 0;
     for(int n=0; n<check.size(); n++)
@@ -132,6 +172,23 @@ bool Seller::isUah(Unit unit)
     }
 }
 
+
+void Seller::findRepeat()
+{
+    Unit item = check[check.size()-1];
+    for(unsigned n=0; n<(check.size()-1); n++)
+    {
+        if(item.getCode()==check[n].getCode())
+        {
+            quantity[n]++;
+            check.pop_back();
+            quantity.pop_back();
+        }
+    }
+
+}
+
+
 void Seller::addToCheck()
 {
     QString strCode = listSearsh->currentItem()->text();
@@ -168,6 +225,7 @@ void Seller::barcodeScanned()
     lineBarcod->clear();
     checkShow();
     lineBarcod->setFocus();
+
 }
 
 

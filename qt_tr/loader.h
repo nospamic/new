@@ -34,6 +34,7 @@ public:
     Unit getUnit(std::string barcode);
     Unit* selectFromFile(std::string word, int &size);
     std::string nameByBarcode(std::string barcode);
+    un getPosition(un code);
 
 
 private:

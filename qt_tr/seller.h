@@ -47,15 +47,18 @@ private:
 
 
 
-    void getListSelect(QString word);
+
     void checkShow();
     bool isUah(Unit unit);
+    void findRepeat();
 
 private slots:
     void addToCheck();
     void setSpinQuantity();
     void changeQuantity();
     void barcodeScanned();
+    void getListSelect();
+    void sold();
 
 };
 
