@@ -3,11 +3,14 @@
 Seller::Seller(QWidget *parent)
     : QDialog(parent)
 {
+    QRegExp intager("[0-9]{10,14}");
+    QRegExp money("[0-9]{1,4}[.]{0,1}[0-9]{0,2}");
     path="data.txt";
     exchange = loader.getUnit(100000).getPrice();
 
-    QFont font("Lucida Console",9);
+    QFont font("Lucida Console",10);
     this->setFont(font);
+    this->setFixedWidth(500);
     QVBoxLayout *vert = new QVBoxLayout;
     listSearsh = new QListWidget;
     listSearsh->setFont(font);
@@ -18,12 +21,13 @@ Seller::Seller(QWidget *parent)
 
     lineBarcod = new QLineEdit;
     lineBarcod->setPlaceholderText("Штрихкод...");
+    lineBarcod->setValidator(new QRegExpValidator(intager, this));
     hor1->addWidget(lineBarcod);
     lineSearsh = new QLineEdit;
     lineSearsh->setPlaceholderText("Найти...");
     hor1->addWidget(lineSearsh);
     buttonSearsh = new QPushButton(">>");
-    hor1->addWidget(buttonSearsh);
+    //hor1->addWidget(buttonSearsh);
 
     vert->addLayout(hor1);
 
@@ -34,7 +38,10 @@ Seller::Seller(QWidget *parent)
 
     QVBoxLayout *vert2 = new QVBoxLayout;
     spinQuantity = new QSpinBox;
+    spinQuantity->setMaximum(999);
+    spinQuantity->setEnabled(false);
     buttonDel = new QPushButton("X");
+    buttonDel->setEnabled(false);
     vert2->addWidget(spinQuantity);
     vert2->addWidget(buttonDel);
     hor2->addLayout(vert2);
@@ -44,6 +51,7 @@ Seller::Seller(QWidget *parent)
     QHBoxLayout *hor3 = new QHBoxLayout;
     labelSumm = new QLabel("Сумма: --");
     linePay = new QLineEdit;
+    linePay->setValidator(new QRegExpValidator(money, this));
     linePay->setPlaceholderText("Оплачено...");
     labelChange = new QLabel("Сдача: --");
     hor3->addWidget(labelSumm);
@@ -60,6 +68,9 @@ Seller::Seller(QWidget *parent)
     connect(lineBarcod, SIGNAL(returnPressed()), this, SLOT(barcodeScanned()));
     connect(lineSearsh, SIGNAL(returnPressed()), this, SLOT(getListSelect()));
     connect(linePay, SIGNAL(returnPressed()), this, SLOT(sold()));
+    connect(linePay, SIGNAL(textChanged(QString)), this, SLOT(showChange()));
+    connect(buttonDel, SIGNAL(clicked(bool)), this, SLOT(delFromCheck()));
+    connect(listCheck, SIGNAL(clicked(QModelIndex)), this, SLOT(delEnable()));
 
     getListSelect();
     lineBarcod->setFocus();
@@ -110,59 +121,105 @@ void Seller::getListSelect()
 
 void Seller::sold()
 {
-    int size = loader.objQuantity(path);
-    Unit *base = loader.fileToArr(path);
-    for(unsigned n=0; n<check.size(); n++)
+    if(check.size()>0 && linePay->text() != "")
     {
-        unsigned position = loader.getPosition(check[n].getCode());
-        base[position].setQuantity(base[position].getQuantity() - quantity[n]);
+        int size = loader.objQuantity(path);
+        Unit *base = loader.fileToArr(path);
+        for(unsigned n=0; n<check.size(); n++)
+        {
+            unsigned position = loader.getPosition(check[n].getCode());
+            base[position].setQuantity(base[position].getQuantity() - quantity[n]);
+        }
+        loader.ArrToFile(path, base, size);
+        delete[] base;
+        check.clear();
+        quantity.clear();
+        listCheck->clear();
+        labelSumm->setText("К оплате: --");
+        linePay->clear();
+        labelChange->setText("Сдача: --");
+        getListSelect();
+        lineBarcod->setFocus();
     }
-    loader.ArrToFile(path, base, size);
-    delete[] base;
-    check.clear();
-    quantity.clear();
-    listCheck->clear();
-    labelSumm->setText("К оплате: --");
-    linePay->clear();
-    labelChange->setText("Сдача: --");
-    getListSelect();
-    lineBarcod->setFocus();
+}
+
+void Seller::showChange()
+{
+    float change = linePay->text().toFloat() - checkSumm;
+    QString qchange = "Сдача: " + QString::number(change) + " грн.";
+    labelChange->setText(qchange);
+}
+
+void Seller::delFromCheck()
+{
+    if(check.size()>1)
+    {
+        int position = listCheck->currentRow();
+        check.erase(check.begin()+position);
+        quantity.erase(quantity.begin()+position);
+    }
+    else
+    {
+        check.clear();
+        quantity.clear();
+    }
+    checkShow();
+}
+
+void Seller::delEnable()
+{
+    buttonDel->setEnabled(true);
+    spinQuantity->setEnabled(true);
 }
 
 
 void Seller::checkShow()
 {
-    findRepeat();
-    listCheck->clear();
-    float checkSumm = 0;
-    for(int n=0; n<check.size(); n++)
+    if(check.size()==0)
     {
-        QString QCode = QString::number(check[n].getCode());
-        QString QName = textbutor.cutter(QString::fromLocal8Bit((check[n].getName()).c_str()), 20);
-        QString QQuantity = QString::number(quantity[n]);
-        int price;
-        if(isUah(check[n]))
-        {
-            price = check[n].getPrice();
-        }
-        else
-        {
-            price = check[n].getPrice() * exchange;
-        }
-        QString QPrice = QString::number(price);
-        QString QPriceXQuantity = QString::number(price * quantity[n]);
-
-        QString toList = QName + "  " + QQuantity + " x " + QPrice + "\t= " + QPriceXQuantity;
-        listCheck->addItem(toList);
-        checkSumm += price * quantity[n];
+        buttonDel->setEnabled(false);
+        spinQuantity->setEnabled(false);
+        listCheck->clear();
+        checkSumm = 0;
+        labelSumm->setText("К оплате: --");
+        labelChange->setText("Сдача: --");
     }
-    QString summ = "К оплате: " + QString::number(checkSumm) + " грн.";
-    labelSumm->setText(summ);
+    else
+    {
+        //buttonDel->setEnabled(true);
+        findRepeat();
+        listCheck->clear();
+        checkSumm = 0;
+        for(unsigned n=0; n<check.size(); n++)
+        {
+            QString QCode = QString::number(check[n].getCode());
+            QString QName = textbutor.cutter(QString::fromLocal8Bit((check[n].getName()).c_str()), 20);
+            QString QQuantity = textbutor.cutter(QString::number(quantity[n]), 3);
+            float price;
+            if(isUah(check[n]))
+            {
+                price = check[n].getPrice();
+            }
+            else
+            {
+                price = check[n].getPrice() * exchange;
+            }
+            QString QPrice = textbutor.cutter(QString::number(price),10);
+            QString QPriceXQuantity = QString::number(price * quantity[n]);
+
+            QString toList = QName + "  " + QQuantity + "x " + QPrice + " = " + QPriceXQuantity;
+            listCheck->addItem(toList);
+            checkSumm += price * quantity[n];
+        }
+        QString summ = "К оплате: " + QString::number(checkSumm) + " грн.";
+        labelSumm->setText(summ);
+        showChange();
+    }
 }
 
 bool Seller::isUah(Unit unit)
 {
-    if (unit.getDescription().substr(0,1)=="#" || unit.getDescription().substr(0,1)=="№")
+    if (unit.getDescription().substr(0,1)=="+" || unit.getDescription().substr(0,1)=="#")
     {
         return true;
     }

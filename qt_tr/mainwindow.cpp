@@ -62,7 +62,7 @@ void MainWindow::getUnitList()
     {
         Unit *arry=new Unit[size];
         arry=loader.fileToArr(path);
-        for (int n=0; n<size; n++)
+        for (unsigned n=0; n<size; n++)
         {
             QString id = QString::number(arry[n].getId());
             QString code = QString::number(arry[n].getCode());

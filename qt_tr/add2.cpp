@@ -9,18 +9,22 @@ Add2::Add2(QWidget *parent)
 
     lineName = new QLineEdit;
     lineName->setPlaceholderText("Наименование товара");
-    lineName->setFixedWidth(200);
+    //lineName->setFixedWidth(200);
     vert->addWidget(lineName);
 
+    QHBoxLayout *hor = new QHBoxLayout;
     linePrice = new QLineEdit;
     linePrice->setPlaceholderText("Цена (USD)");
-    vert->addWidget(linePrice);
+    checkUah = new QCheckBox("- цена в грн.");
+    hor->addWidget(linePrice);
+    hor->addWidget(checkUah);
+    vert->addLayout(hor);
 
     QHBoxLayout * hor1 = new QHBoxLayout;
-    QLabel * lab1 = new QLabel("Количество ");
+    QLabel * lab1 = new QLabel("- количество");
     spinQuant = new QSpinBox;
-    hor1->addWidget(lab1);
     hor1->addWidget(spinQuant);
+    hor1->addWidget(lab1);
     vert->addLayout(hor1);
 
     lineBarcode = new QLineEdit;
@@ -33,6 +37,7 @@ Add2::Add2(QWidget *parent)
     setLayout(vert);
 
     connect(ok, SIGNAL(clicked(bool)), this, SLOT(itsOk()));
+    connect(checkUah, SIGNAL(clicked(bool)), this, SLOT(currencySwich()));
 }
 
 Add2::~Add2()
@@ -51,9 +56,19 @@ void Add2::itsOk()
     barcode = loader.removeSpaces(barcode);
     int quantity = spinQuant->value();
     float price = linePrice->text().toFloat();
+    QString description;
+    if(checkUah->isChecked())
+    {
+        description = "#";
+    }
+    else
+    {
+        description = "no_description";
+    }
+    std::string stdDescription = description.toLocal8Bit().constData();
     if(name != "" && loader.nameByBarcode(barcode)=="")
     {
-        loader.addUnitToFile(path, name, price, quantity, barcode);
+        loader.addUnitToFile(path, name, price, quantity, barcode, stdDescription);
         this->close();
     }
     else
@@ -62,5 +77,17 @@ void Add2::itsOk()
         QMessageBox msg;
         msg.setText("Товар с таким кодом уже есть в базе: " + message);
         msg.exec();
+    }
+}
+
+void Add2::currencySwich()
+{
+    if(checkUah->isChecked())
+    {
+        linePrice->setPlaceholderText("Цена (грн.)");
+    }
+    else
+    {
+        linePrice->setPlaceholderText("Цена (USD)");
     }
 }

@@ -1,6 +1,7 @@
 #ifndef SELLER_H
 #define SELLER_H
 
+#include <QValidator>
 #include <QDialog>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -44,6 +45,7 @@ private:
     std::vector<Unit>check;
     std::vector<int>quantity;
     float exchange;
+    float checkSumm;
 
 
 
@@ -59,6 +61,9 @@ private slots:
     void barcodeScanned();
     void getListSelect();
     void sold();
+    void showChange();
+    void delFromCheck();
+    void delEnable();
 
 };
 

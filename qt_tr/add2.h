@@ -9,6 +9,7 @@
 #include <QSpinBox>
 #include <QLabel>
 #include <QMessageBox>
+#include <QCheckBox>
 
 
 class Add2 : public QDialog
@@ -22,12 +23,15 @@ private:
 
     QLineEdit * lineName;
     QLineEdit * linePrice;
+    QLabel *labelUah;
+    QCheckBox *checkUah;
     QSpinBox * spinQuant;
     QLineEdit *lineBarcode;
     QPushButton * ok;
 
 public slots:
     void itsOk();
+    void currencySwich();
 };
 
 #endif // ADD2_H

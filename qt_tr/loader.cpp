@@ -100,7 +100,7 @@ void Loader::printArr()
 }
 
 
-void Loader::addUnitToFile(char*path, std::string name = "noname", float price = 0, int quantity = 1, std::string barcode = "-")
+void Loader::addUnitToFile(char*path, std::string name = "noname", float price = 0, int quantity = 1, std::string barcode = "-", std::string description = "no_description")
 {
     Unit*base=fileToArr(path);
     un size=objQuantity(path);
@@ -118,6 +118,7 @@ void Loader::addUnitToFile(char*path, std::string name = "noname", float price =
     unit.setPrice(price);
     unit.setQuantity(quantity);
     unit.setBarcode(barcode);
+    unit.setDescription(description);
     fs<<unit;
     fs.close();
     delete[] base;
