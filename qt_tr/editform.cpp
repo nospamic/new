@@ -8,6 +8,8 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     QFont font("Lucida Console",12);
     this->setFont(font);
 
+    this->setFixedWidth(400);
+
     this->code = code;
     if(code < 100000)this->close();
     getFields();

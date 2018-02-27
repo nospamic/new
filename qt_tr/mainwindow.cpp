@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     getListSelect();
     //getUnitList();
     ui->pushEdit->setEnabled(false);
+    ui->pushButton->setEnabled(false);
     connect (ui->list, SIGNAL(itemSelectionChanged()), this, SLOT(setEditable()));
 }
 
@@ -73,6 +74,7 @@ void MainWindow::on_pushAdd2_clicked()
 void MainWindow::setEditable()
 {
     ui->pushEdit->setEnabled(true);
+    ui->pushButton->setEnabled(true);
 }
 
 
@@ -139,6 +141,9 @@ void MainWindow::getListSelect()
 
         }
         delete[] base;
+        ui->lineSelect->clear();
+        ui->pushEdit->setEnabled(false);
+        ui->pushButton->setEnabled(false);
 
 }
 

@@ -29,9 +29,14 @@ Add2::Add2(QWidget *parent)
     hor1->addWidget(lab1);
     vert->addLayout(hor1);
 
+    QHBoxLayout * hor2 = new QHBoxLayout;
     lineBarcode = new QLineEdit;
     lineBarcode->setPlaceholderText("Штрихкод..");
-    vert->addWidget(lineBarcode);
+    buttonGen = new QPushButton("Сгенерировать");
+    hor2->addWidget(lineBarcode);
+    hor2->addWidget(buttonGen);
+    vert->addLayout(hor2);
+
 
     ok = new QPushButton("Add");
     vert->addWidget(ok);
@@ -40,6 +45,7 @@ Add2::Add2(QWidget *parent)
 
     connect(ok, SIGNAL(clicked(bool)), this, SLOT(itsOk()));
     connect(checkUah, SIGNAL(clicked(bool)), this, SLOT(currencySwich()));
+    connect(buttonGen, SIGNAL(clicked(bool)), this, SLOT(setBarcode()));
 }
 
 Add2::~Add2()
@@ -91,5 +97,13 @@ void Add2::currencySwich()
     else
     {
         linePrice->setPlaceholderText("Цена (USD)");
+    }
+}
+
+void Add2::setBarcode()
+{
+    if(lineBarcode->text().isEmpty())
+    {
+        lineBarcode->setText(textbutor.makeBarcode(loader.getLastCode()+1));
     }
 }

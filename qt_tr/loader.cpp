@@ -290,6 +290,21 @@ bool Loader::unitExists(un code)
     return false;
 }
 
+bool Loader::unitExists(std::string barcode)
+{
+    un size = objQuantity();
+    Unit* arry = fileToArr();
+    for(un n=0; n<size; n++)
+    {
+        if (arry[n].getBarcode()==barcode)
+        {
+            delete[] arry; return true;
+        }
+    }
+    delete[] arry;
+    return false;
+}
+
 void Loader::delUnit(un code)
 {
     if (unitExists(code))
@@ -310,4 +325,11 @@ void Loader::delUnit(un code)
     delete[] arry;
     delete[] arryNew;
     }
+}
+
+un Loader::getLastCode()
+{
+    un size = objQuantity();
+    Unit* arry = fileToArr();
+    return arry[size-1].getCode();
 }

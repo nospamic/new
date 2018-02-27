@@ -10,6 +10,8 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QCheckBox>
+#include "textbutor.h"
+#include "loader.h"
 
 
 class Add2 : public QDialog
@@ -27,11 +29,16 @@ private:
     QCheckBox *checkUah;
     QSpinBox * spinQuant;
     QLineEdit *lineBarcode;
+    QPushButton *buttonGen;
     QPushButton * ok;
+
+    Textbutor textbutor;
+    Loader loader;
 
 public slots:
     void itsOk();
     void currencySwich();
+    void setBarcode();
 };
 
 #endif // ADD2_H

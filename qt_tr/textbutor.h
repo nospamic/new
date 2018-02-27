@@ -8,6 +8,7 @@ class Textbutor
 public:
     Textbutor();
     QString cutter(QString str, int size);
+    QString makeBarcode(unsigned code);
 
 };
 

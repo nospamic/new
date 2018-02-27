@@ -38,7 +38,9 @@ public:
     un getPosition(un code);
     bool fileExists();
     bool unitExists(un code);
+    bool unitExists(std::string barcode);
     void delUnit(un code);
+    un getLastCode();
 
 
 private:

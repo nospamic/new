@@ -21,3 +21,9 @@ QString Textbutor::cutter(QString str, int size)
     }
     return str;
 }
+
+QString Textbutor::makeBarcode(unsigned code)
+{
+    QString barcode = "4820000" + QString::number(code);
+    return barcode;
+}
