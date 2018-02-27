@@ -5,12 +5,11 @@ Seller::Seller(QWidget *parent)
 {
     QRegExp intager("[0-9]{10,14}");
     QRegExp money("[0-9]{1,4}[.]{0,1}[0-9]{0,2}");
-    path="data.txt";
     exchange = loader.getUnit(100000).getPrice();
 
-    QFont font("Lucida Console",10);
+    QFont font("Lucida Console",12);
     this->setFont(font);
-    this->setFixedWidth(500);
+    this->setFixedWidth(600);
     QVBoxLayout *vert = new QVBoxLayout;
     listSearsh = new QListWidget;
     listSearsh->setFont(font);
@@ -85,12 +84,12 @@ void Seller::getListSelect()
 {
     listSearsh->clear();
     QString word = lineSearsh->text();
-    int size = loader.objQuantity(path);
-    Unit *base = loader.fileToArr(path);
+    int size = loader.objQuantity();
+    Unit *base = loader.fileToArr();
 
     if (word.isEmpty())
     {
-        for(int n=0; n<size; n++)
+        for(int n=1; n<size; n++)
         {
             QString code = QString::number(base[n].getCode());
             QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
@@ -123,14 +122,14 @@ void Seller::sold()
 {
     if(check.size()>0 && linePay->text() != "")
     {
-        int size = loader.objQuantity(path);
-        Unit *base = loader.fileToArr(path);
+        int size = loader.objQuantity();
+        Unit *base = loader.fileToArr();
         for(unsigned n=0; n<check.size(); n++)
         {
             unsigned position = loader.getPosition(check[n].getCode());
             base[position].setQuantity(base[position].getQuantity() - quantity[n]);
         }
-        loader.ArrToFile(path, base, size);
+        loader.ArrToFile(base, size);
         delete[] base;
         check.clear();
         quantity.clear();
@@ -146,7 +145,17 @@ void Seller::sold()
 void Seller::showChange()
 {
     float change = linePay->text().toFloat() - checkSumm;
-    QString qchange = "Сдача: " + QString::number(change) + " грн.";
+    change = round(change*100)/100;
+    QString qchange;
+    if(linePay->text().isEmpty() || linePay->text().toFloat() <= checkSumm)
+    {
+        qchange = "Сдача: --";
+    }
+    else
+    {
+        qchange = "Сдача: " + QString::number(change) + " грн.";
+    }
+
     labelChange->setText(qchange);
 }
 
@@ -163,6 +172,7 @@ void Seller::delFromCheck()
         check.clear();
         quantity.clear();
     }
+    buttonDel->setEnabled(false);
     checkShow();
 }
 
@@ -192,7 +202,7 @@ void Seller::checkShow()
         checkSumm = 0;
         for(unsigned n=0; n<check.size(); n++)
         {
-            QString QCode = QString::number(check[n].getCode());
+            //QString QCode = QString::number(check[n].getCode());
             QString QName = textbutor.cutter(QString::fromLocal8Bit((check[n].getName()).c_str()), 20);
             QString QQuantity = textbutor.cutter(QString::number(quantity[n]), 3);
             float price;

@@ -27,21 +27,23 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_list_currentRowChanged(int currentRow);
-    void on_list_doubleClicked(const QModelIndex &index);
+
+    void on_list_doubleClicked();
     void on_pushAdd2_clicked();
     void setEditable();
     void on_pushEdit_clicked();
     void on_lineSelect_editingFinished();
     void on_lineSelect_returnPressed();
-
     void on_buttonSaller_clicked();
+    void getListSelect();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
 
-    void getUnitList();
+
     Loader loader;
     Textbutor textbutor;
     char *path;

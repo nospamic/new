@@ -13,6 +13,7 @@
 #include <QListWidget>
 #include <QFont>
 #include <vector>
+#include <cmath>
 
 #include "loader.h"
 #include "unit.h"
@@ -41,7 +42,6 @@ private:
 
     Loader loader;
     Textbutor textbutor;
-    char *path;
     std::vector<Unit>check;
     std::vector<int>quantity;
     float exchange;

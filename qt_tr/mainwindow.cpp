@@ -8,18 +8,22 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    path="data.txt";
+
     ui->setupUi(this);
 
     QString cPath= "Current path - " + QDir::currentPath();
     std::cout<<cPath.toLocal8Bit().constData()<<"\n";
 
-    if ( ! QFile::exists(path) )
+    QFont font("Lucida Console",10);
+    this->setFont(font);
+
+
+    if(!loader.fileExists())
     {
         QMessageBox msg;
         msg.setText("Файл data.txt не существует. Создаю новый.");
         msg.exec();
-        loader.makeNewDateFile(path, 1);
+        loader.makeNewDateFile(1);
     }
     //------------------------------------------------------------------
     //QString qa=QString::fromStdString(a);
@@ -29,8 +33,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //std::string word = ui->lineSelect->text().toLocal8Bit().constData();
     //-----------------------------------------------------------------
 
-
-    getUnitList();
+    getListSelect();
+    //getUnitList();
     ui->pushEdit->setEnabled(false);
     connect (ui->list, SIGNAL(itemSelectionChanged()), this, SLOT(setEditable()));
 }
@@ -40,53 +44,18 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_list_currentRowChanged(int currentRow)
+
+
+
+
+void MainWindow::on_list_doubleClicked()
 {
-    ui->listCode->setCurrentRow(currentRow);
-    ui->listPrice->setCurrentRow(currentRow);
-
-
-}
-
-
-void MainWindow::getUnitList()
-{
-
-    ui->list->clear();
-    ui->listCode->clear();
-    ui->listPrice->clear();
-
-    un size=loader.objQuantity(path);
-    ui->label_size->setText("К-во товаров: " + QString::number(size));
-    if(size>0)
-    {
-        Unit *arry=new Unit[size];
-        arry=loader.fileToArr(path);
-        for (unsigned n=0; n<size; n++)
-        {
-            QString id = QString::number(arry[n].getId());
-            QString code = QString::number(arry[n].getCode());
-            QString name=QString::fromLocal8Bit((arry[n].getName()).c_str());
-            QString price = QString::number(arry[n].getPrice());
-
-            ui->list->addItem(name);
-            ui->listCode->addItem(code);
-            ui->listPrice->addItem(price);
-        }
-        delete[] arry;
-    }
-
-}
-
-
-void MainWindow::on_list_doubleClicked(const QModelIndex &index)
-{
-    QString str = ui->listCode->currentItem()->text();
+    QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
     EditForm * unit = new EditForm(code);
     unit->show();
     unit->exec();
-    this->getUnitList();
+    this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
 
@@ -97,7 +66,7 @@ void MainWindow::on_pushAdd2_clicked()
     Add2 * unit = new Add2;
     unit->show();
     unit->exec();
-    this->getUnitList();
+    this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
 
@@ -109,12 +78,12 @@ void MainWindow::setEditable()
 
 void MainWindow::on_pushEdit_clicked()
 {
-    QString str = ui->listCode->currentItem()->text();
+    QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
     EditForm * unit = new EditForm(code);
     unit->show();
     unit->exec();
-    this->getUnitList();
+    this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
 
@@ -124,31 +93,7 @@ void MainWindow::on_lineSelect_editingFinished(){}
 
 void MainWindow::on_lineSelect_returnPressed()
 {
-    ui->list->clear();
-    ui->listCode->clear();
-    ui->listPrice->clear();
-
-
-    int size=loader.objQuantity(path);
-    std::string word = ui->lineSelect->text().toLocal8Bit().constData();
-    std::cout<<"word = "<<word<<"  size = "<<size<<"\n";
-
-
-    Unit * arry = loader.selectFromFile(word, size);
-    ui->lineSelect->clear();
-
-    for (int n=0; n<size; n++)
-    {
-        QString code = QString::number(arry[n].getCode());
-        QString name=QString::fromLocal8Bit((arry[n].getName()).c_str());
-        QString price = QString::number(arry[n].getPrice());
-
-        ui->list->addItem(name);
-        ui->listCode->addItem(code);
-        ui->listPrice->addItem(price);
-    }
-    delete[] arry;
-
+    getListSelect();
 }
 
 void MainWindow::on_buttonSaller_clicked()
@@ -156,4 +101,53 @@ void MainWindow::on_buttonSaller_clicked()
     Seller * shop = new Seller;
     shop->show();
     shop->exec();
+}
+
+void MainWindow::getListSelect()
+{
+
+        ui->list->clear();
+        QString word = ui->lineSelect->text();
+        int size = loader.objQuantity();
+        Unit *base = loader.fileToArr();
+
+        if (word.isEmpty())
+        {
+            for(int n=1; n<size; n++)
+            {
+                QString code = QString::number(base[n].getCode());
+                QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
+                QString price = QString::number(base[n].getPrice());
+                QString quantity = QString::number(base[n].getQuantity());
+                ui->list->addItem(code+"   "+name+" "+price+"\t   "+quantity);
+            }
+        }
+        else
+        {
+            word = word.toLower();
+            for(int n=0; n<size; n++)
+            {
+                QString code = QString::number(base[n].getCode());
+                QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
+                QString price = textbutor.cutter(QString::number(base[n].getPrice()),7);
+                QString quantity = QString::number(base[n].getQuantity());
+                if (name.contains(word, Qt::CaseInsensitive))
+                {
+                    ui->list->addItem(code+"   "+name+" "+price+" "+quantity);
+                }
+            }
+
+        }
+        delete[] base;
+
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    if(!ui->list->currentItem()->text().isEmpty())
+    {
+        unsigned code = ui->list->currentItem()->text().left(6).toInt();
+        loader.delUnit(code);
+        getListSelect();
+    }
 }

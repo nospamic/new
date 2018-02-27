@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <io.h>
 #include "Unit.h"
 
 typedef unsigned int un;
@@ -21,13 +22,13 @@ public:
     Loader(void);
     ~Loader(void);
 
-    unsigned objQuantity(char*path);
+    unsigned objQuantity();
     Unit* createArr(unsigned size);
-    Unit* fileToArr(char*path);
-    void ArrToFile(char*path, Unit* arry, un length);
-    void makeNewDateFile(char*path, un size);
+    Unit* fileToArr();
+    void ArrToFile(Unit* arry, un length);
+    void makeNewDateFile(un size);
     void printArr();
-    void addUnitToFile(char*path, std::string name, float price, int quantity, std::string barcode, std::string description);
+    void addUnitToFile(std::string name, float price, int quantity, std::string barcode, std::string description);
     std::string removeSpaces(std::string);
     void edit(un code, std::string barcode, int quantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth);
     Unit getUnit(un code);
@@ -35,10 +36,13 @@ public:
     Unit* selectFromFile(std::string word, int &size);
     std::string nameByBarcode(std::string barcode);
     un getPosition(un code);
+    bool fileExists();
+    bool unitExists(un code);
+    void delUnit(un code);
 
 
 private:
-    char*path;
+    const char*path;
 
 
 

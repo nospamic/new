@@ -4,6 +4,8 @@
 Add2::Add2(QWidget *parent)
     : QDialog(parent)
 {
+    QFont font("Lucida Console",12);
+    this->setFont(font);
 
     QVBoxLayout * vert = new QVBoxLayout;
 
@@ -48,11 +50,11 @@ Add2::~Add2()
 
 void Add2::itsOk()
 {
-    char*path="data.txt";
     Loader loader;
     std::string name = lineName->text().toLocal8Bit().constData();
     name = loader.removeSpaces(name);
     std::string barcode = lineBarcode->text().toLocal8Bit().constData();
+    if(barcode.length()<12) barcode = "0000000000000";
     barcode = loader.removeSpaces(barcode);
     int quantity = spinQuant->value();
     float price = linePrice->text().toFloat();
@@ -68,7 +70,7 @@ void Add2::itsOk()
     std::string stdDescription = description.toLocal8Bit().constData();
     if(name != "" && loader.nameByBarcode(barcode)=="")
     {
-        loader.addUnitToFile(path, name, price, quantity, barcode, stdDescription);
+        loader.addUnitToFile(name, price, quantity, barcode, stdDescription);
         this->close();
     }
     else

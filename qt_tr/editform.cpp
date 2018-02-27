@@ -5,6 +5,9 @@
 EditForm::EditForm(unsigned code, QWidget *parent)
     : QDialog(parent)
 {
+    QFont font("Lucida Console",12);
+    this->setFont(font);
+
     this->code = code;
     if(code < 100000)this->close();
     getFields();
