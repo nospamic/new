@@ -12,6 +12,7 @@
 #include <QTextEdit>
 #include <QListWidget>
 #include <QFont>
+#include <QDateTime>
 #include <vector>
 #include <cmath>
 
@@ -53,6 +54,7 @@ private:
     void checkShow();
     bool isUah(Unit unit);
     void findRepeat();
+    std::string createLog();
 
 private slots:
     void addToCheck();

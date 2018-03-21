@@ -8,12 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-
+    this->isQueue = new bool;
+    *isQueue = false;
     ui->setupUi(this);
-
-    QString cPath= "Current path - " + QDir::currentPath();
-    std::cout<<cPath.toLocal8Bit().constData()<<"\n";
-
+    this->setWindowTitle("Склад");
     QFont font("Lucida Console",10);
     this->setFont(font);
 
@@ -25,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
         msg.exec();
         loader.makeNewDateFile(1);
     }
+
     //------------------------------------------------------------------
     //QString qa=QString::fromStdString(a);
     //QString s = QString::number(i);
@@ -34,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //-----------------------------------------------------------------
 
     getListSelect();
-    //getUnitList();
+    loader.makeReservCopy();
     ui->pushEdit->setEnabled(false);
     ui->pushButton->setEnabled(false);
     connect (ui->list, SIGNAL(itemSelectionChanged()), this, SLOT(setEditable()));
@@ -42,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete isQueue;
     delete ui;
 }
 
@@ -53,9 +53,10 @@ void MainWindow::on_list_doubleClicked()
 {
     QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
-    EditForm * unit = new EditForm(code);
+    EditForm * unit = new EditForm(code, this);
     unit->show();
     unit->exec();
+    loader.fillBase();
     this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
@@ -64,11 +65,14 @@ void MainWindow::on_list_doubleClicked()
 void MainWindow::on_pushAdd2_clicked()
 {
 
-    Add2 * unit = new Add2;
+    Add2 * unit = new Add2(isQueue, this);
     unit->show();
     unit->exec();
+    loader.fillBase();
     this->getListSelect();
     ui->pushEdit->setEnabled(false);
+    if (*isQueue)on_pushAdd2_clicked();
+
 }
 
 void MainWindow::setEditable()
@@ -82,9 +86,10 @@ void MainWindow::on_pushEdit_clicked()
 {
     QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
-    EditForm * unit = new EditForm(code);
+    EditForm * unit = new EditForm(code, this);
     unit->show();
     unit->exec();
+    loader.fillBase();
     this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
@@ -100,7 +105,7 @@ void MainWindow::on_lineSelect_returnPressed()
 
 void MainWindow::on_buttonSaller_clicked()
 {
-    Seller * shop = new Seller;
+    Seller * shop = new Seller(this);
     shop->show();
     shop->exec();
 }
@@ -110,12 +115,14 @@ void MainWindow::getListSelect()
 
         ui->list->clear();
         QString word = ui->lineSelect->text();
-        int size = loader.objQuantity();
-        Unit *base = loader.fileToArr();
+        int size = loader.size;
+        Unit *base = loader.base;
 
         if (word.isEmpty())
         {
-            for(int n=1; n<size; n++)
+            ui->labelContent->setText("Все товары на складе.");
+            ui->buttonRefresh->setEnabled(false);
+            for(int n=0; n<size; n++)
             {
                 QString code = QString::number(base[n].getCode());
                 QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
@@ -126,8 +133,11 @@ void MainWindow::getListSelect()
         }
         else
         {
+            QString text = "Результаты поиска: " + word;
+            ui->labelContent->setText(text);
+            ui->buttonRefresh->setEnabled(true);
             word = word.toLower();
-            for(int n=0; n<size; n++)
+            for(int n=1; n<size; n++)
             {
                 QString code = QString::number(base[n].getCode());
                 QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
@@ -140,8 +150,8 @@ void MainWindow::getListSelect()
             }
 
         }
-        delete[] base;
-        ui->lineSelect->clear();
+
+        //ui->lineSelect->clear();
         ui->pushEdit->setEnabled(false);
         ui->pushButton->setEnabled(false);
 
@@ -155,4 +165,45 @@ void MainWindow::on_pushButton_clicked()
         loader.delUnit(code);
         getListSelect();
     }
+}
+
+void MainWindow::on_buttonOrder_clicked()
+{
+    ui->list->clear();
+    ui->labelContent->setText("Заказать товары...");
+    ui->buttonRefresh->setEnabled(true);
+    int size = loader.objQuantity();
+    Unit *base = loader.fileToArr();
+
+    for(int n=1; n<size; n++)
+    {
+        int minimum = base[n].getSalesPerMonth();
+        int quantityInt = base[n].getQuantity();
+        QString code = QString::number(base[n].getCode());
+        QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),30);
+        QString price = textbutor.cutter(QString::number(base[n].getPrice()),7);
+        QString quantity = QString::number(base[n].getQuantity());
+        if (quantityInt < minimum)
+        {
+            ui->list->addItem(code+"   "+name+" "+price+" "+quantity);
+        }
+    }
+
+    delete[] base;
+    ui->pushEdit->setEnabled(false);
+    ui->pushButton->setEnabled(false);
+
+}
+
+void MainWindow::on_buttonRefresh_clicked()
+{
+    ui->lineSelect->clear();
+    getListSelect();
+}
+
+void MainWindow::on_buttonCustomers_clicked()
+{
+    Customers * box = new Customers(this);
+    box->show();
+    box->exec();
 }

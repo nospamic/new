@@ -6,13 +6,18 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     : QDialog(parent)
 {
     QFont font("Lucida Console",12);
+    QFont small("Arial Narrow",10);
+    QFont evan("EanGnivc",34);
+    QRegExp money("[0-9]{1,4}[.]{0,1}[0-9]{0,2}");
+    QRegExp intager("[0-9]{0,14}");
     this->setFont(font);
 
     this->setFixedWidth(400);
-
     this->code = code;
     if(code < 100000)this->close();
     getFields();
+
+
 
     QVBoxLayout * vert = new QVBoxLayout;
 
@@ -23,6 +28,7 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     vert->addWidget(lineName);
 
     linePrice = new QLineEdit;
+    linePrice->setValidator(new QRegExpValidator(money, this));
     linePrice->setText(QString::number(price));
     linePrice->setPlaceholderText("Цена (USD)");
     vert->addWidget(linePrice);
@@ -46,7 +52,12 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     QHBoxLayout * hor2 = new QHBoxLayout;
     QLabel * lblBar = new QLabel("Barcode: ");
     lineBarcode = new QLineEdit;
-    lineBarcode->setText(QString::fromLocal8Bit((barcode).c_str()));
+    lineBarcode->setValidator(new QRegExpValidator(intager, this));
+    QString qBarcode=QString::fromLocal8Bit((barcode).c_str());
+    if (qBarcode.size() == 13)
+        {lineBarcode->setText(textbutor.testBarcode13(qBarcode));}
+    else
+        {lineBarcode->setText(qBarcode);}
     hor2->addWidget(lblBar);
     hor2->addWidget(lineBarcode);
     vert->addLayout(hor2);
@@ -75,14 +86,33 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     textDescription->setFixedHeight(80);
     vert->addWidget(textDescription);
 
+    QHBoxLayout * hor4 = new QHBoxLayout;
+    textSticker = new QTextEdit;
+    hor4->addWidget(textSticker);
+
+    textSticker->setFixedHeight(80);
+    textSticker->setFont(small);
+    textSticker->setText(textbutor.makeLable(QString::fromLocal8Bit(name.c_str()), price, isUah));
+    textSticker->moveCursor( QTextCursor::End );
+    QTextCursor cursor( textSticker->textCursor() );
+    QTextCharFormat format;
+    format.setFont(evan);
+    cursor.setCharFormat( format );
+    cursor.insertText(textbutor.barcodeToEvan(QString::fromLocal8Bit(barcode.c_str())));
+
+    printSticker = new QPushButton("Распечатать\nценник");
+    hor4->addWidget(printSticker);
+    vert->addLayout(hor4);
 
 
-    ok = new QPushButton("Add");
+
+    ok = new QPushButton(" \n Сохранить \n ");
     vert->addWidget(ok);
 
     setLayout(vert);
 
     connect(ok, SIGNAL(clicked(bool)), this, SLOT(itsOk()));
+    connect(printSticker, SIGNAL(clicked(bool)), this, SLOT(printing()));
 }
 
 EditForm::~EditForm()
@@ -92,7 +122,7 @@ EditForm::~EditForm()
 
 void EditForm::getFields()
 {
-    Loader loader;
+
     Unit unit = loader.getUnit(code);
 
     barcode = unit.getBarcode();
@@ -104,13 +134,20 @@ void EditForm::getFields()
     group = unit.getGroup();
     description = unit.getDescription();
     sales = unit.getSalesPerMonth();
+    isUah = unit.isUah();
+}
+
+void EditForm::barcodeRepair()
+{
+    if (lineBarcode->text() != textbutor.makeBarcode(code))
+    {
+        lineBarcode->setText(textbutor.makeBarcode(code));
+    }
 }
 
 
 void EditForm::itsOk()
 {
-    Loader loader;
-
     std::string name = lineName->text().toLocal8Bit().constData();
     if (name=="") name = this->name;
     name = loader.removeSpaces(name);
@@ -140,7 +177,7 @@ void EditForm::itsOk()
 
     un sales = spinSales->value();
 
-    if(loader.nameByBarcode(barcode)==name || loader.nameByBarcode(barcode)=="")
+    if(true)//(loader.nameByBarcode(barcode)==name || loader.nameByBarcode(barcode)=="")
     {
         loader.edit(code, barcode, quantity, price, echarge, name, section, group, description, sales);
         this->close();
@@ -152,4 +189,42 @@ void EditForm::itsOk()
         msg.setText("Товар с таким кодом уже есть в базе: " + message);
         msg.exec();
     }
+}
+
+void EditForm::printing()
+{
+
+#ifndef QT_NO_PRINTER
+    QString Qname = textbutor.cutter(QString::fromLocal8Bit(name.c_str()), 17);
+    QString Qprice = textbutor.makePrice(price, isUah) + "\n";
+    QFont small("Arial Narrow",9);
+    QFont big("Arial Narrow", 10);
+    big.setBold(true);
+    QFont evan("EanGnivc",32);
+    QPrinter printer(QPrinter::HighResolution);
+    QPainter paint(&printer);
+    paint.setPen(Qt::black);
+    paint.setFont(small);
+    paint.drawText(QRect(20, 20, 400, 200), Qt::AlignLeft, Qname);
+    paint.setFont(big);
+    paint.drawText(QRect(210, 20, 200, 100), Qt::AlignLeft, Qprice);
+    paint.setFont(evan);
+    paint.drawText(QRect(10, 60, 400, 200), Qt::AlignLeft, textbutor.barcodeToEvan(lineBarcode->text()));
+
+#endif
+//-------------------this work---------------------------------
+//    QFont evan("EanGnivc",70);
+//    QString text = textbutor.barcodeToEvan(lineBarcode->text());
+//    QPrinter printer(QPrinter::HighResolution);
+//    printer.setFullPage(true);
+//    printer.setPageMargins(QMarginsF(2,2,2,2));
+//    textSticker->setContentsMargins(0,0,0,0);
+//    QTextDocument *doc = new QTextDocument;
+//    doc->setPageSize(QSizeF(printer.pageRect().size()));
+//    doc->setDefaultFont(evan);
+//    doc->setPlainText(text);
+//    doc->print(&printer);
+//---------------------------------------------------------------
+
+
 }

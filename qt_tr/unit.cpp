@@ -4,17 +4,17 @@ Unit::Unit(void)
 {
 
 
-    name="Noname";
-    id=0;
-    code=100000;
-    price=0.0;
-    quantity=0;
-    echarge=0.0;
+    name = "Noname";
+    id = 0;
+    code = 100000;
+    price = 0.0;
+    quantity = 0;
+    echarge = 0.0;
     description="No_description";
     section="No_section";
     group="No_group";
-    salesPerMonth=0;
-    barcode="000000000000";
+    salesPerMonth = 1;
+    barcode="0000000000000";
 }
 
 
@@ -34,6 +34,19 @@ void Unit::setSection(std::string section){this->section=section;}
 void Unit::setGroup(std::string group){this->group=group;}
 void Unit::setDescription(std::string description){this->description=description;}
 void Unit::setSalesPerMonth(un salesPerMonth){this->salesPerMonth=salesPerMonth;}
+
+
+bool Unit::isUah()
+{
+    if (getDescription().substr(0,1)=="+" || getDescription().substr(0,1)=="#")
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 
 
 un Unit::getId(){return id;}

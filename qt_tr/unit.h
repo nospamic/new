@@ -26,6 +26,7 @@ public:
     void setGroup(std::string);
     void setDescription(std::string);
     void setSalesPerMonth(un salesPerMonth);
+    bool isUah();
 
     un getId();
     un getCode();

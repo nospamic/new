@@ -2,12 +2,19 @@
 
 Loader::Loader(void)
 {
+
     path="data.txt";
+    reservPath = "res_data.txt";
+    logPath = "LOG\\day_"+ getDate() + ".log";
+
+    base = fileToArr();
+    size = objQuantity();
 }
 
 
 Loader::~Loader(void)
 {
+    delete[] base;
 }
 
 
@@ -19,7 +26,6 @@ unsigned Loader::objQuantity()
     unsigned length=0;
     while(true)
     {
-
         Unit h;
         fs>>h;
         if(fs.eof()){break;}else{++length;}
@@ -57,7 +63,7 @@ Unit* Loader::fileToArr()
 void Loader::ArrToFile(Unit* arry, un length)
 {
 
-    //std::cout<<length<<"\n";
+
     std::fstream fs;
     fs.open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
     !fs.is_open()?std::cout<<"\nError open "<<path<<"\n":std::cout<<"\nOpen - "<<path<<" <--Array \n";
@@ -65,7 +71,7 @@ void Loader::ArrToFile(Unit* arry, un length)
     for(unsigned a=0; a<length; a++)
     {
         fs<<arry[a];
-        //std::cout<<arry[a];
+
     }
     fs.close();
 }
@@ -76,34 +82,24 @@ void Loader::makeNewDateFile(un size)
     Unit* arry=createArr(size);
     for(un a=0;a<size;a++)
     {
-        std::cout<<arry[a];
+        arry[a].setCode(100000+a);
+        arry[a].setName("$$$");
     }
-    ArrToFile(arry,size);
+    ArrToFile(arry, size);
+    fillBase();
 }
 
 
 void Loader::printArr()
 {
-
-
-    Loader loader;
-    Unit*arry=loader.fileToArr();
-
-    un size=objQuantity();
     std::cout<<"------------Print array. Size:"<<size<<"\n";
-    for(un n=0; n<size; n++)
-    {
-        std::cout<<arry[n];
-    }
+    for(un n=0; n<size; n++)std::cout<<base[n];
     std::cout<<"------------ End -----------------\n";
-    delete[] arry;
 }
 
 
 void Loader::addUnitToFile(std::string name = "noname", float price = 0, int quantity = 1, std::string barcode = "0000000000000", std::string description = "no_description")
 {
-    Unit*base=fileToArr();
-    un size=objQuantity();
     un lastId=base[size-1].getId();
     un lastCode=base[size-1].getCode();
 
@@ -121,7 +117,8 @@ void Loader::addUnitToFile(std::string name = "noname", float price = 0, int qua
     unit.setDescription(description);
     fs<<unit;
     fs.close();
-    delete[] base;
+
+    fillBase();
 }
 
 std::string Loader::removeSpaces(std::string str)
@@ -136,8 +133,7 @@ std::string Loader::removeSpaces(std::string str)
 
 void Loader::edit(un code, std::string barcode, int quantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth)
 {
-    un size = objQuantity();
-    Unit * base = fileToArr();
+
     int position = -1;
     for (un n=0; n<size; n++)
     {
@@ -162,13 +158,13 @@ void Loader::edit(un code, std::string barcode, int quantity, float price, float
 
         ArrToFile(&base[0], size);
     }
-    delete[] base;
+
+    fillBase();
 }
 
 Unit Loader::getUnit(un code)
 {
-    un size = objQuantity();
-    Unit * base = fileToArr();
+
     int position = -1;
     for (un n=0; n<size; n++)
     {
@@ -179,16 +175,14 @@ Unit Loader::getUnit(un code)
         }
     }
     Unit result = base[position];
-    delete[] base;
-    std::cout<<result<<"\n";
+
     return result;
 }
 
 
 Unit Loader::getUnit(std::string barcode)
 {
-    un size = objQuantity();
-    Unit * base = fileToArr();
+
     Unit result;
     int position = -1;
     for (un n=0; n<size; n++)
@@ -205,103 +199,60 @@ Unit Loader::getUnit(std::string barcode)
     }
     else
     {
-
         result.setName("nullUnit");
     }
-    delete[] base;
-    std::cout<<result<<"\n";
     return result;
 }
 
 
-Unit *Loader::selectFromFile(std::string word, int &size)
-{
-    std::cout<<"word = "<< word <<"  size = "<<size<<"\n";
-
-    int newPos = 0;
-    Unit* arry = fileToArr();
-    for(int n=0; n<size; n++)
-    {
-        std::string name=arry[n].getName();
-        if(name.find(word)<name.size())
-        {
-            arry[newPos] = arry[n];
-            newPos++;
-            //result.push_back(arry[n]);
-            std::cout<<"find()= "<<name.find(word)<<"   ";
-            std::cout<<arry[n]<<"   ";
-        }
-    }
-    size = newPos;
-    return &arry[0];
-}
-
 std::string Loader::nameByBarcode(std::string barcode)
 {
-    un size = objQuantity();
-    Unit* arry = fileToArr();
+
     std::string result = "";
     for(un n=0; n<size; n++)
     {
-        if (arry[n].getBarcode()==barcode)
+        if (base[n].getBarcode()==barcode)
         {
-            result =  arry[n].getName();
-            delete[] arry;
+            result =  base[n].getName();
             return result;
         }
     }
-    delete[] arry;
     return result;
 }
 
 un Loader::getPosition(un code)
 {
-    un size = objQuantity();
-    Unit* arry = fileToArr();
     for(un n=0; n<size; n++)
     {
-        if (arry[n].getCode()==code)
-        {
-            delete[] arry;
-            return n;
-        }
+        if (base[n].getCode()==code) return n;
     }
-    delete[] arry;
     return 100000;
 }
 
+
 bool Loader::fileExists()
 {
-    return access(path, 0) != -1;
+    //std::cout<<access(path, 0);
+    //return access(path, 0) != -1;
+    return size!=0;
 }
+
 
 bool Loader::unitExists(un code)
 {
-    un size = objQuantity();
-    Unit* arry = fileToArr();
     for(un n=0; n<size; n++)
     {
-        if (arry[n].getCode()==code)
-        {
-            delete[] arry; return true;
-        }
+        if (base[n].getCode()==code) return true;
     }
-    delete[] arry;
     return false;
 }
 
 bool Loader::unitExists(std::string barcode)
 {
-    un size = objQuantity();
-    Unit* arry = fileToArr();
     for(un n=0; n<size; n++)
     {
-        if (arry[n].getBarcode()==barcode)
-        {
-            delete[] arry; return true;
-        }
+        if (base[n].getBarcode() == barcode) return true;
     }
-    delete[] arry;
     return false;
 }
 
@@ -309,23 +260,22 @@ void Loader::delUnit(un code)
 {
     if (unitExists(code))
     {
-        un size = objQuantity();
-        Unit* arry = fileToArr();
         Unit* arryNew = new Unit[size-1];
         un newSize = 0;
-        for(un n=0; n<(size-1); n++)
+        for(un n=0; n<(size); n++)
         {
-            if (arry[n].getCode() != code)
+            if (base[n].getCode() != code)
             {
-                arryNew[newSize] = arry[n];
+                arryNew[newSize] = base[n];
                 newSize++;
             }
         }
     ArrToFile(arryNew, newSize);
-    delete[] arry;
     delete[] arryNew;
+    fillBase();
     }
 }
+
 
 un Loader::getLastCode()
 {
@@ -333,3 +283,73 @@ un Loader::getLastCode()
     Unit* arry = fileToArr();
     return arry[size-1].getCode();
 }
+
+
+void Loader::addToLog(std::string msg)
+{
+    if(!QDir("LOG").exists())
+        QDir().mkdir("LOG");
+    std::fstream log;
+    log.open(logPath, std::fstream::in | std::fstream::out | std::fstream::app);
+    log<<msg;
+
+}
+
+std::string Loader::getDate()
+{
+    struct tm *date;
+    time_t t = time(NULL);
+    date = gmtime(&t);
+    int day =date->tm_mday;
+    int month = date->tm_mon+1;
+    int year = date->tm_year+1900;
+    //std::cout<<date->tm_hour<<':'<<date->tm_min<<':'<<date->tm_sec;
+    std::string date1 = std::to_string(day) + "_" + std::to_string(month) + "_" + std::to_string(year);
+    return date1;
+}
+
+float Loader::getBalance()
+{
+    float balance = 0;
+    un size = objQuantity();
+    Unit* arry = fileToArr();
+    for(un n=1; n<size; n++)
+    {
+       if(arry[n].getDescription().substr(0,1)=="#")
+       {
+           balance += arry[n].getPrice() * arry[n].getQuantity();
+       }
+       else
+       {
+           balance += arry[n].getPrice() * arry[n].getQuantity() * arry[0].getPrice();
+       }
+    }
+    delete[] arry;
+    return balance;
+}
+
+void Loader::makeReservCopy()
+{
+    un length = objQuantity();
+    Unit *base = fileToArr();
+
+    std::fstream fs;
+    fs.open(reservPath, std::fstream::in | std::fstream::out | std::fstream::trunc);
+    !fs.is_open()?std::cout<<"\nError open "<<reservPath<<"\n":std::cout<<"\nOpen - "<<reservPath<<" <--Array \n";
+    for(unsigned a=0; a<length; a++) fs<<base[a];
+    fs.close();
+
+    delete[] base;
+}
+
+void Loader::fillBase()
+{
+    if (this->base != nullptr) delete[] this->base;
+    this->base = fileToArr();
+    this->size = objQuantity();
+}
+
+
+
+
+

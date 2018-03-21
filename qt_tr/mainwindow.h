@@ -13,6 +13,7 @@
 #include "add2.h"
 #include "editform.h"
 #include "seller.h"
+#include "customers.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,12 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_buttonOrder_clicked();
+
+    void on_buttonRefresh_clicked();
+
+    void on_buttonCustomers_clicked();
+
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
@@ -47,6 +54,7 @@ private:
     Loader loader;
     Textbutor textbutor;
     char *path;
+    bool *isQueue;
 
 };
 

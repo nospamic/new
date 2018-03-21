@@ -6,6 +6,7 @@
 #include <vector>
 #include "Unit.h"
 #include "Loader.h"
+#include "human.h"
 
 typedef unsigned int un;
 
@@ -45,8 +46,35 @@ std::istream& operator>>(std::istream& is,  Unit& un)
     return is;
 }
 
+std::ostream& operator<<(std::ostream& os, const Human& hu)
+{
+    os<<
+    hu.code<<" "<<
+    hu.name<<" "<<
+    hu.tel<<" "<<
+    hu.description<<" "<<
+    hu.summ<<" "<<
+    hu.debt<<" "<<
+    hu.discount<<"\n";
+    return os;
+}
+
+std::istream& operator>>(std::istream& is,  Human& hu)
+{
+    is>>
+    hu.code>>
+    hu.name>>
+    hu.tel>>
+    hu.description>>
+    hu.summ>>
+    hu.debt>>
+    hu.discount;
+    return is;
+}
+
 int main(int argc, char *argv[])
 {
+
     QApplication a(argc, argv);
     MainWindow w;
     w.show();

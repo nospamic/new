@@ -1,5 +1,5 @@
-#ifndef EDITFORM_H
-#define EDITFORM_H
+#ifndef HUMANEDIT_H
+#define HUMANEDIT_H
 
 #include <QValidator>
 #include <QDialog>
@@ -16,18 +16,26 @@
 #include <QPrinterInfo>
 #include <QPainter>
 #include "textbutor.h"
-#include "loader.h"
+#include "humanloader.h"
 
-class EditForm : public QDialog
+class HumanEdit : public QDialog
 {
     Q_OBJECT
 
 public:
-    EditForm(unsigned code, QWidget *parent = 0);
-    ~EditForm();
+    HumanEdit(unsigned code, QWidget *parent = 0);
+    ~HumanEdit();
 
 private:
     unsigned code;
+
+    std::string name;
+    std::string tel;
+    std::string description;
+    float debt;
+    float summ;
+    int discount;
+    HumanLoader humanloader;
 
 
     QLineEdit * lineName;
@@ -44,28 +52,13 @@ private:
 
 
 
-    QPushButton * ok;
-
-
-    std::string barcode;
-    int quantity;
-    float price;
-    float echarge;
-    std::string name;
-    std::string section;
-    std::string group;
-    std::string description;
-    unsigned sales;
-    bool isUah;
-    Textbutor textbutor;
-    Loader loader;
     void getFields();
-    void barcodeRepair();
+
 
 
 public slots:
     void itsOk();
-    void printing();
+
 };
 
-#endif // EDITFORM_H
+#endif // HUMANEDIT_H

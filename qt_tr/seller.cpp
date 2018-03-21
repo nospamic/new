@@ -3,6 +3,7 @@
 Seller::Seller(QWidget *parent)
     : QDialog(parent)
 {
+    this->setWindowTitle("Продавец");
     QRegExp intager("[0-9]{10,14}");
     QRegExp money("[0-9]{1,4}[.]{0,1}[0-9]{0,2}");
     exchange = loader.getUnit(100000).getPrice();
@@ -84,8 +85,8 @@ void Seller::getListSelect()
 {
     listSearsh->clear();
     QString word = lineSearsh->text();
-    int size = loader.objQuantity();
-    Unit *base = loader.fileToArr();
+    int size = loader.size;
+    Unit *base = loader.base;
 
     if (word.isEmpty())
     {
@@ -114,29 +115,32 @@ void Seller::getListSelect()
         }
 
     }
-    delete[] base;
+
 }
 
 
 void Seller::sold()
 {
-    if(check.size()>0 && linePay->text() != "")
+    if(check.size()>0 && linePay->text().toFloat() >= checkSumm)
     {
-        int size = loader.objQuantity();
-        Unit *base = loader.fileToArr();
+        int size = loader.size;
+        Unit *base = loader.base;
         for(unsigned n=0; n<check.size(); n++)
         {
             unsigned position = loader.getPosition(check[n].getCode());
             base[position].setQuantity(base[position].getQuantity() - quantity[n]);
         }
         loader.ArrToFile(base, size);
-        delete[] base;
+
+
+        loader.addToLog(createLog());
         check.clear();
         quantity.clear();
         listCheck->clear();
         labelSumm->setText("К оплате: --");
         linePay->clear();
         labelChange->setText("Сдача: --");
+        lineSearsh->clear();
         getListSelect();
         lineBarcod->setFocus();
     }
@@ -255,6 +259,26 @@ void Seller::findRepeat()
 
 }
 
+std::string Seller::createLog()
+{
+    QDateTime dt = QDateTime::currentDateTime();
+    QString dateTime = dt.toString();
+
+    QString qResult ="--------------------" + dateTime + "--------------------" + QString::number(loader.getBalance()) + "\n\n";
+    unsigned size = check.size();
+    for(unsigned n=0; n<size; n++)
+    {
+        qResult += listCheck->item(n)->text();
+        qResult += "\n";
+    }
+    qResult += "----------------------------------------------------------------------\n";
+    qResult +=labelSumm->text();
+    qResult +="\t Оплачено: " + linePay->text() + "грн.";
+    qResult +="\t" + labelChange->text() + "\n\n\n";
+
+    return qResult.toLocal8Bit().constData();
+}
+
 
 void Seller::addToCheck()
 {
@@ -265,6 +289,8 @@ void Seller::addToCheck()
     check.push_back(item);
     quantity.push_back(1);
     checkShow();
+    buttonDel->setEnabled(false);
+    spinQuantity->setEnabled(false);
 }
 
 void Seller::setSpinQuantity()

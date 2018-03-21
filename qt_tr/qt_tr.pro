@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -31,7 +32,12 @@ SOURCES += \
     add2.cpp \
     editform.cpp \
     textbutor.cpp \
-    seller.cpp
+    seller.cpp \
+    customers.cpp \
+    human.cpp \
+    humanloader.cpp \
+    humanadd.cpp \
+    humanedit.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -40,7 +46,12 @@ HEADERS += \
     add2.h \
     editform.h \
     textbutor.h \
-    seller.h
+    seller.h \
+    customers.h \
+    human.h \
+    humanloader.h \
+    humanadd.h \
+    humanedit.h
 
 FORMS += \
         mainwindow.ui
