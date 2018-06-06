@@ -1,6 +1,9 @@
 #ifndef SELLER_H
 #define SELLER_H
 
+
+#include <QDesktopWidget>
+#include <QDebug>
 #include <QValidator>
 #include <QDialog>
 #include <QVBoxLayout>
@@ -19,6 +22,9 @@
 #include "loader.h"
 #include "unit.h"
 #include "textbutor.h"
+#include "human.h"
+#include "humanedit.h"
+#include "humanloader.h"
 
 class Seller : public QDialog
 {
@@ -40,13 +46,19 @@ private:
     QLabel *labelSumm;
     QLineEdit *linePay;
     QLabel *labelChange;
+    QLabel *labelDiscount;
+    QPushButton *buttonNext;
+    QLineEdit *lineManInfo;
 
     Loader loader;
     Textbutor textbutor;
+    HumanLoader humanloader;
+    Human man;
     std::vector<Unit>check;
     std::vector<int>quantity;
     float exchange;
     float checkSumm;
+    int discount;
 
 
 
@@ -55,6 +67,7 @@ private:
     bool isUah(Unit unit);
     void findRepeat();
     std::string createLog();
+    QString getQPrice(Unit unit);
 
 private slots:
     void addToCheck();
@@ -66,6 +79,11 @@ private slots:
     void showChange();
     void delFromCheck();
     void delEnable();
+    void humanTest(QString barcode);
+    void manShow();
+    void nextPressed();
+    void searsh(QString word);
+    void printCheck();
 
 };
 

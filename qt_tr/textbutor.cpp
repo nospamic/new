@@ -87,7 +87,7 @@ QString Textbutor::makePrice(float price, bool isUah)
 {
     QString qPrice;
     if(isUah) {qPrice = " " + QString::number(price) + " грн.";}
-    else {qPrice = " 000" + QString::number(price);}
+    else {qPrice = " 00" + QString::number(price);}
     return qPrice;
 }
 
@@ -149,5 +149,53 @@ std::string Textbutor::removeSpaces(std::string str)
     {
         if (str[a]==' ' || str[a]=='\n') {result.push_back('_');}else {result.push_back(str[a]);}
     }
+    return result;
+}
+
+QString Textbutor::toDot(QString str)
+{
+    QString result="";
+    for(int a=0; a<str.size();a++)
+    {
+        if (str[a]==',') {result.push_back('.');}else {result.push_back(str[a]);}
+    }
+    return result;
+}
+
+int Textbutor::spaceFirstPos(QString str)
+{
+    for(int a=0; a<str.size();a++)
+    {
+        if (str[a]==' ' || str[a]=='_') {return a;}
+    }
+    return str.size();
+}
+
+bool Textbutor::isBarcode(QString str)
+{
+    QString digits = "0123456789";
+    if(str.size() < 8)return false;
+    for(int a=0; a<str.size();a++)
+    {
+        if (!digits.contains(str.mid(a,1), Qt::CaseInsensitive)) {return false;}
+    }
+    return true;
+}
+
+std::vector<QString> Textbutor::stringToVector(QString word)
+{
+    std::vector<QString>result;
+    QString add = "";
+    for(int n=0; n<word.size(); n++)
+    {
+        if(word.mid(n,1)!=" " && word.mid(n,1)!="_"){add+=word.mid(n,1);}
+        else
+            if(add.size()>0)
+            {
+               result.push_back(add);
+                add = "";
+            }
+    }
+    if(add.size()>0) result.push_back(add);
     return result;
 }

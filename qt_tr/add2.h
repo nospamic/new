@@ -12,6 +12,8 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QCheckBox>
+#include <QPrinter>
+#include <QPainter>
 #include "textbutor.h"
 #include "loader.h"
 
@@ -33,6 +35,7 @@ private:
     QLineEdit *lineBarcode;
     QPushButton *buttonGen;
     QCheckBox *checkQueue;
+    QSpinBox *spinPrint;
     QPushButton * ok;
 
     Textbutor textbutor;
@@ -44,6 +47,8 @@ public slots:
     void currencySwich();
     void setBarcode();
     void setQueue(bool isQ);
+    void printSticker();
+    void okEnable();
 };
 
 #endif // ADD2_H

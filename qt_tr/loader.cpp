@@ -83,7 +83,9 @@ void Loader::makeNewDateFile(un size)
     for(un a=0;a<size;a++)
     {
         arry[a].setCode(100000+a);
-        arry[a].setName("$$$");
+        arry[a].setName("$_USD_$");
+        arry[a].setPrice(26.0);
+        //arry[a].setDescription("Установите_курс_валюты_в_колонке_'Цена'");
     }
     ArrToFile(arry, size);
     fillBase();
@@ -160,6 +162,25 @@ void Loader::edit(un code, std::string barcode, int quantity, float price, float
     }
 
     fillBase();
+}
+
+void Loader::edit(Unit unit)
+{
+    un code = unit.getCode();
+    un position = this->getPosition(code);
+
+    base[position].setBarcode(unit.getBarcode());
+    base[position].setQuantity(unit.getQuantity());
+    base[position].setPrice(unit.getPrice());
+    base[position].setEcharge(unit.getEcharge());
+    base[position].setName(unit.getName());
+    base[position].setSection(unit.getSection());
+    base[position].setGroup(unit.getGroup());
+    base[position].setDescription(unit.getDescription());
+    base[position].setSalesPerMonth(unit.getSalesPerMonth());
+
+    ArrToFile(&base[0], size);
+
 }
 
 Unit Loader::getUnit(un code)
@@ -292,6 +313,7 @@ void Loader::addToLog(std::string msg)
     std::fstream log;
     log.open(logPath, std::fstream::in | std::fstream::out | std::fstream::app);
     log<<msg;
+    log.close();
 
 }
 
@@ -317,11 +339,11 @@ float Loader::getBalance()
     {
        if(arry[n].getDescription().substr(0,1)=="#")
        {
-           balance += arry[n].getPrice() * arry[n].getQuantity();
+           balance += round(arry[n].getPrice()) * arry[n].getQuantity();
        }
        else
        {
-           balance += arry[n].getPrice() * arry[n].getQuantity() * arry[0].getPrice();
+           balance += round(arry[n].getPrice() * arry[0].getPrice()) * arry[n].getQuantity() ;
        }
     }
     delete[] arry;
@@ -348,6 +370,14 @@ void Loader::fillBase()
     this->base = fileToArr();
     this->size = objQuantity();
 }
+
+int Loader::round(float a)
+{
+    (a>=0) ? (a-int(a)>=0.5) ? a=int(a+1) : a=int(a) : true;
+    (a<0)  ? (a-int(a)<-0.5) ? a=int(a-1) : a=int(a) : true;
+    return int(a);
+}
+
 
 
 

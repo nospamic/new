@@ -18,6 +18,7 @@
 #include "human.h"
 #include "humanloader.h"
 #include "humanadd.h"
+#include "humanedit.h"
 
 
 class Customers : public QDialog
@@ -32,6 +33,8 @@ private:
     Textbutor textbutor;
     HumanLoader humanloader;
 
+    QPushButton * buttonCards;
+    QSpinBox * spinCards;
     QListWidget *list;
     QLineEdit *lineSearsh;
     QPushButton *buttonAdd;
@@ -46,6 +49,8 @@ public slots:
     void delHuman();
     void selectHuman();
     void setDelEditEnable();
+    void setEnableCards();
+    void addBlanks();
 
 };
 

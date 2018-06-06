@@ -46,6 +46,10 @@ private slots:
 
     void on_buttonCustomers_clicked();
 
+    void searsh(QString word);
+
+    bool isUah(Unit unit);
+
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;
@@ -55,6 +59,7 @@ private:
     Textbutor textbutor;
     char *path;
     bool *isQueue;
+    QString state;
 
 };
 

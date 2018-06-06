@@ -17,38 +17,41 @@
 #include <QPainter>
 #include "textbutor.h"
 #include "humanloader.h"
+#include "human.h"
 
 class HumanEdit : public QDialog
 {
     Q_OBJECT
 
 public:
-    HumanEdit(unsigned code, QWidget *parent = 0);
+    HumanEdit(unsigned code, bool activateCard = 0, QWidget *parent = 0);
     ~HumanEdit();
 
 private:
-    unsigned code;
-
+    Human man;
+    int code;
     std::string name;
     std::string tel;
     std::string description;
     float debt;
     float summ;
     int discount;
-    HumanLoader humanloader;
+
+    bool activateCard;
+
 
 
     QLineEdit * lineName;
-    QLineEdit * linePrice;
-    QSpinBox * spinQuant;
-    QLineEdit * lineBarcode;
-    QLineEdit * lineEcharge;
-    QLineEdit * lineSection;
-    QLineEdit * lineGroup;
+    QLineEdit * lineTel;
+    QSpinBox * spinDiscount;
+    QLineEdit * lineDebt;
+    QLineEdit * lineSumm;
     QTextEdit * textDescription;
-    QTextEdit * textSticker;
-    QSpinBox * spinSales;
-    QPushButton * printSticker;
+    QPushButton * ok;
+    QPushButton *buttonPrint;
+
+    Textbutor textbutor;
+    HumanLoader humanloader;
 
 
 
@@ -58,6 +61,8 @@ private:
 
 public slots:
     void itsOk();
+    void okEnabled();
+    void printSticker();
 
 };
 

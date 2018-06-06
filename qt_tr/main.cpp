@@ -10,6 +10,8 @@
 
 typedef unsigned int un;
 
+
+
 std::ostream& operator<<(std::ostream& os, const Unit& un)
 {
     os<<

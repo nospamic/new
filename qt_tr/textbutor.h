@@ -8,6 +8,7 @@
 #include <string>
 #include <QMessageBox>
 
+
 class Textbutor
 {
 public:
@@ -21,6 +22,11 @@ public:
     QString checkSummGen(QString barcode);
     QString testBarcode13(QString barcode);
     std::string removeSpaces(std::string str);
+    QString toDot (QString str);
+    int spaceFirstPos(QString str);
+    bool isBarcode(QString str);
+    std::vector<QString> stringToVector(QString word);
+
 
 
 

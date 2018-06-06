@@ -23,9 +23,11 @@ public:
     void delHuman(int code);
     bool existsHuman(int code);
     void addHuman(std::string name, std::string tel, std::string description, int discount);
+    void editHuman(int code, std::string name, std::string tel, std::string description, int discount, float debt,  float summ);
+    void edit(Human man);
     Human getHuman(int code);
     void loadBase();
-
+    int getLastCode();
 
 
 private:
@@ -34,6 +36,7 @@ private:
     void saveBase();
     void saveReserv();
     unsigned getSize();
+
 
 };
 

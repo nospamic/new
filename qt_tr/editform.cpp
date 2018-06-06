@@ -8,7 +8,7 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     QFont font("Lucida Console",12);
     QFont small("Arial Narrow",10);
     QFont evan("EanGnivc",34);
-    QRegExp money("[0-9]{1,4}[.]{0,1}[0-9]{0,2}");
+    QRegExp money("[0-9]{1,4}[.,]{0,1}[0-9]{0,2}");
     QRegExp intager("[0-9]{0,14}");
     this->setFont(font);
 
@@ -37,6 +37,7 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     QLabel * lab1 = new QLabel("Количество ");
     spinQuant = new QSpinBox;
     spinQuant->setValue(quantity);
+    spinQuant->setMaximum(99999);
     hor1->addWidget(lab1);
     hor1->addWidget(spinQuant);
     vert->addLayout(hor1);
@@ -54,10 +55,7 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     lineBarcode = new QLineEdit;
     lineBarcode->setValidator(new QRegExpValidator(intager, this));
     QString qBarcode=QString::fromLocal8Bit((barcode).c_str());
-    if (qBarcode.size() == 13)
-        {lineBarcode->setText(textbutor.testBarcode13(qBarcode));}
-    else
-        {lineBarcode->setText(qBarcode);}
+    lineBarcode->setText(qBarcode);
     hor2->addWidget(lblBar);
     hor2->addWidget(lineBarcode);
     vert->addLayout(hor2);
@@ -154,13 +152,13 @@ void EditForm::itsOk()
 
     int quantity = spinQuant->value();
 
-    float price = linePrice->text().toFloat();
+    float price = textbutor.toDot(linePrice->text()).toFloat();
 
     std::string barcode = lineBarcode->text().toLocal8Bit().constData();
     if (barcode=="") barcode = this->barcode;
     barcode = loader.removeSpaces(barcode);
 
-    float echarge = lineEcharge->text().toFloat();
+    float echarge = textbutor.toDot(lineEcharge->text()).toFloat();
 
     std::string section = lineSection->text().toLocal8Bit().constData();
     if (section=="") section = this->section;
@@ -195,24 +193,55 @@ void EditForm::printing()
 {
 
 #ifndef QT_NO_PRINTER
-    QString Qname = textbutor.cutter(QString::fromLocal8Bit(name.c_str()), 17);
+    int yCorrect = -15;
+    std::vector<QString>words = textbutor.stringToVector(lineName->text());
+
+    QString upWord = "";
+    QString downWord = "";
+    if (words.size()>=2)
+    {
+        upWord = words[0] + " " + words[1];
+        if(upWord.size() > 12)
+        {
+            upWord = words[0];
+            for (unsigned n = 1; n < words.size(); n++) {downWord+=words[n]; downWord+=" ";}
+        }
+        else
+        {
+            upWord = words[0] + " " + words[1];
+            for (unsigned n = 2; n < words.size(); n++) {downWord+=words[n]; downWord+=" ";}
+        }
+    }
+    else
+    {
+        upWord = words[0];
+    }
+
+    QString Qname = upWord;
+    QString QnameRight = textbutor.cutter(downWord, 25);
+
     QString Qprice = textbutor.makePrice(price, isUah) + "\n";
     QFont small("Arial Narrow",9);
     QFont big("Arial Narrow", 10);
-    big.setBold(true);
+    //big.setBold(true);
     QFont evan("EanGnivc",32);
     QPrinter printer(QPrinter::HighResolution);
+    printer.setPrinterName("sticker");
+    printer.setPaperSize(QSizeF(38.0, 23.0), QPrinter::Millimeter);
+    printer.setPageMargins(0.0, 0.0, 0.0, 0.0, QPrinter::Millimeter);
     QPainter paint(&printer);
     paint.setPen(Qt::black);
     paint.setFont(small);
-    paint.drawText(QRect(20, 20, 400, 200), Qt::AlignLeft, Qname);
+    paint.drawText(QRect(10, 20 + yCorrect, 400, 200), Qt::AlignLeft, Qname);
     paint.setFont(big);
-    paint.drawText(QRect(210, 20, 200, 100), Qt::AlignLeft, Qprice);
+    paint.drawText(QRect(210, 20 + yCorrect, 200, 100), Qt::AlignLeft, Qprice);
     paint.setFont(evan);
-    paint.drawText(QRect(10, 60, 400, 200), Qt::AlignLeft, textbutor.barcodeToEvan(lineBarcode->text()));
+    paint.drawText(QRect(10, 60 + yCorrect, 400, 200), Qt::AlignLeft, textbutor.barcodeToEvan(lineBarcode->text()));
+    paint.setFont(small);
+    paint.drawText(QRect(10, 155 + yCorrect, 400, 200), Qt::AlignLeft, QnameRight);
 
 #endif
-//-------------------this work---------------------------------
+//-------------------this works---------------------------------
 //    QFont evan("EanGnivc",70);
 //    QString text = textbutor.barcodeToEvan(lineBarcode->text());
 //    QPrinter printer(QPrinter::HighResolution);

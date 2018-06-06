@@ -63,7 +63,7 @@ bool HumanLoader::existsHuman(int code)
 void HumanLoader::addHuman(std::string name, std::string tel, std::string description, int discount)
 {
     Human man;
-    man.setCode(100000 + size);
+    man.setCode(getLastCode() + 1);
     man.setName(name);
     man.setTel(tel);
     man.setDescription(description);
@@ -76,6 +76,42 @@ void HumanLoader::addHuman(std::string name, std::string tel, std::string descri
     base = new Human[size];
     base = &baseNew[0];
 
+    saveBase();
+}
+
+void HumanLoader::editHuman(int code, std::string name, std::string tel, std::string description, int discount, float debt, float summ)
+{
+    for(unsigned n = 0; n<size; n++)
+    {
+        if(base[n].getCode()==code)
+        {
+            base[n].setName(name);
+            base[n].setTel(tel);
+            base[n].setDescription(description);
+            base[n].setDiscount(discount);
+            base[n].setDebt(debt);
+            base[n].setSumm(summ);
+            break;
+        }
+    }
+    saveBase();
+}
+
+void HumanLoader::edit(Human man)
+{
+    for(unsigned n = 0; n<size; n++)
+    {
+        if(base[n].getCode()==man.getCode())
+        {
+            base[n].setName(man.getName());
+            base[n].setTel(man.getTel());
+            base[n].setDescription(man.getDescription());
+            base[n].setDiscount(man.getDiscount());
+            base[n].setDebt(man.getDebt());
+            base[n].setSumm(man.getSumm());
+            break;
+        }
+    }
     saveBase();
 }
 
@@ -130,6 +166,13 @@ unsigned HumanLoader::getSize()
     fs.close();
 
     return length;
+}
+
+int HumanLoader::getLastCode()
+{
+    int lastCode = 0;
+    for(unsigned n=0; n<size; n++)lastCode = base[n].getCode();
+    return lastCode;
 }
 
 void HumanLoader::saveBase()

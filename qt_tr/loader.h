@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QDir>
+#include <QString>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -35,6 +36,7 @@ public:
     void addUnitToFile(std::string name, float price, int quantity, std::string barcode, std::string description);
     std::string removeSpaces(std::string);
     void edit(un code, std::string barcode, int quantity, float price, float echarge, std::string name, std::string section, std::string group, std::string description, un salesPerMonth);
+    void edit(Unit unit);
     Unit getUnit(un code);
     Unit getUnit(std::string barcode);
     std::string nameByBarcode(std::string barcode);
@@ -49,6 +51,8 @@ public:
     float getBalance();
     void makeReservCopy();
     void fillBase();
+    int round(float a);
+
 
 
 private:
