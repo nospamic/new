@@ -166,7 +166,7 @@ void Seller::sold()
 
         printCheck();
         man.setSumm(man.getSumm() + checkSumm - int(checkSumm*discount/100));
-        humanloader.edit(man);
+        if (man.getName()!="no")humanloader.edit(man);
         loader.addToLog(createLog());
         check.clear();
         quantity.clear();
@@ -455,6 +455,7 @@ void Seller::findRepeat()
 std::string Seller::createLog()
 {
     QDateTime dt = QDateTime::currentDateTime();
+
     QString dateTime = dt.toString();
 
     QString qResult ="--------------------" + dateTime + "--------------------" + QString::number(loader.getBalance()) + "\n\n";

@@ -11,6 +11,7 @@
 #include <memory>
 #include <ctime>
 #include <io.h>
+#include <QDebug>
 
 #include "Unit.h"
 
@@ -52,6 +53,8 @@ public:
     void makeReservCopy();
     void fillBase();
     int round(float a);
+    float daySummFromLog(QString file);
+    QStringList getFiles(QString dir);
 
 
 

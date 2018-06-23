@@ -50,6 +50,11 @@ private slots:
 
     bool isUah(Unit unit);
 
+
+
+
+    void on_statistica_clicked();
+
 private:
     Ui::MainWindow *ui;
     QStandardItemModel *model;

@@ -308,6 +308,7 @@ un Loader::getLastCode()
 
 void Loader::addToLog(std::string msg)
 {
+    this->logPath = "LOG\\day_"+ getDate() + ".log";
     if(!QDir("LOG").exists())
         QDir().mkdir("LOG");
     std::fstream log;
@@ -376,6 +377,56 @@ int Loader::round(float a)
     (a>=0) ? (a-int(a)>=0.5) ? a=int(a+1) : a=int(a) : true;
     (a<0)  ? (a-int(a)<-0.5) ? a=int(a-1) : a=int(a) : true;
     return int(a);
+}
+
+float Loader::daySummFromLog(QString file)
+{
+    std::vector<std::string> day;
+    float daySumm=0;
+
+    //this->logPath = "LOG\\day_"+ getDate() + ".log";
+    std::string stdFile = file.toLocal8Bit().constData();
+    stdFile = "LOG\\" + stdFile;
+    if(!QDir("LOG").exists())
+        QDir().mkdir("LOG");
+
+    std::fstream log;
+    log.open(stdFile, std::fstream::in | std::fstream::out | std::fstream::app);
+    while(true)
+    {
+        if(log.eof()){break;}
+        std::string line = "";
+        log>>line;
+        day.push_back(line);
+        //std::cout <<line<<"\n";
+    }
+    log.close();
+
+    for(un n=0; n<day.size(); n++)
+    {
+        for(un i=0; i<day[n].size(); i++)
+        {
+            if(day[n].substr(i,1)=="=")
+            {
+                //std::cout << "= " << day[n+1]<<"\n";
+                QString number = QString::fromLocal8Bit((day[n+1]).c_str());
+                daySumm+=number.toFloat();
+                //break;
+            }
+        }
+    }
+
+    return daySumm;
+}
+
+QStringList Loader::getFiles(QString dir)
+{
+    QDir myDir(dir);
+    myDir.setSorting(QDir::Time);
+
+    QStringList files = myDir.entryList();
+
+    return files;
 }
 
 

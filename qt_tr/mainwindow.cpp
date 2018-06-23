@@ -285,3 +285,31 @@ bool MainWindow::isUah(Unit unit)
         return false;
     }
 }
+
+
+
+void MainWindow::on_statistica_clicked()
+{
+
+    ui->list->clear();
+
+    this->state = "statistica";
+    ui->labelContent->setText("Статистика");
+    ui->buttonRefresh->setEnabled(true);
+
+    QStringList files = loader.getFiles("LOG");
+    un length = files.length();
+    for(un n = 0; n < length; n++)
+    {
+        QString info = files[n];
+        if (info.right(3)=="log")
+        {
+            float balance = loader.daySummFromLog(info);
+            info = info.mid(4, info.size());
+            info.chop(4);
+            info = textbutor.cutter(info, 12)+ QString::number(balance) + " грн.";
+            ui->list->addItem(info);
+        }
+    }
+
+}
