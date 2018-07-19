@@ -9,6 +9,24 @@ Unit_loader::Unit_loader()
     load();
 }
 
+unsigned Unit_loader::getFileSize()
+{
+    std::fstream fs;
+    fs.open(path, std::fstream::in | std::fstream::out | std::fstream::app);
+    //!fs.is_open()?exit(0):true;
+    unsigned length=0;
+    while(true)
+    {
+        Unit h;
+        fs>>h;
+        if(fs.eof()){break;}else{++length;}
+        //std::cout << h <<"  length="<<length<<"\n";
+    }
+    fs.close();
+    //std::cout <<"\n"<<length<<"\n";
+    return length;
+}
+
 
 void Unit_loader::load()
 {
@@ -22,9 +40,9 @@ void Unit_loader::load()
     {
         Unit h;
         fs>>h;
-        base.push_back(h);
-        if(fs.eof())break;
+        if(fs.eof()){break;}else{base.push_back(h);}
     }
+    //qDebug()<<base.size();
     fs.close();
 }
 
@@ -37,7 +55,9 @@ void Unit_loader::save()
 
     for(unsigned a=0; a<base.size(); a++)
     {
-        fs<<base[a];
+        Unit unit;
+        unit = base[a];
+        fs<<unit;
     }
     fs.close();
 }
@@ -45,6 +65,7 @@ void Unit_loader::save()
 
 void Unit_loader::newFile()
 {
+
     base.clear();
     Unit unit;
 
@@ -78,7 +99,7 @@ void Unit_loader::del(un code)
 
         for(un n=0; n<base.size(); n++)
         {
-            if (base[n].getCode() != code)
+            if (base[n].getCode() == code)
             {
                 base.erase(base.begin() + n);
             }
@@ -112,7 +133,7 @@ void Unit_loader::edit(Unit unit)
     base[position].setSection(unit.getSection());
     base[position].setGroup(unit.getGroup());
     base[position].setDescription(unit.getDescription());
-    base[position].setSalesPerMonth(unit.getSalesPerMonth());
+    base[position].setMinimum(unit.getMinimum());
 
     save();
 }
@@ -183,6 +204,7 @@ std::string Unit_loader::nameByBarcode(std::string barcode)
     return result;
 }
 
+
 bool Unit_loader::unitExists(un code)
 {
     for(un n=0; n<base.size(); n++)
@@ -191,6 +213,7 @@ bool Unit_loader::unitExists(un code)
     }
     return false;
 }
+
 
 bool Unit_loader::unitExists(std::string barcode)
 {
@@ -244,7 +267,7 @@ void Unit_loader::makeReservCopy()
 {
     std::fstream fs;
     fs.open(reservPath, std::fstream::in | std::fstream::out | std::fstream::trunc);
-    !fs.is_open()?qDebug()<<"\nError open "<<reservPath<<"\n":qDebug()<<"\nOpen - "<<reservPath<<" <--Array \n";
+    !fs.is_open()?qDebug()<<"\nError save "<<reservPath<<"\n":qDebug()<<"\nSave - "<<reservPath<<"\n";
     for(unsigned a=0; a<base.size(); a++) fs<<base[a];
     fs.close();
 }
@@ -305,6 +328,11 @@ QStringList Unit_loader::getFiles(QString dir)
     QStringList files = myDir.entryList();
 
     return files;
+}
+
+bool Unit_loader::fileExists()
+{
+    return base.size() != 0;
 }
 
 

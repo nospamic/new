@@ -1,6 +1,5 @@
 #include "editform.h"
-#include "loader.h"
-#include "unit.h"
+
 
 EditForm::EditForm(unsigned code, QWidget *parent)
     : QDialog(parent)
@@ -11,6 +10,7 @@ EditForm::EditForm(unsigned code, QWidget *parent)
     QRegExp money("[0-9]{1,4}[.,]{0,1}[0-9]{0,2}");
     QRegExp intager("[0-9]{0,14}");
     this->setFont(font);
+    this->setWindowTitle("Редактировать товар");
 
     this->setFixedWidth(400);
     this->code = code;
@@ -121,7 +121,7 @@ EditForm::~EditForm()
 void EditForm::getFields()
 {
 
-    Unit unit = loader.getUnit(code);
+    Unit unit = uLoad.getUnit(code);
 
     barcode = unit.getBarcode();
     quantity = unit.getQuantity();
@@ -131,7 +131,7 @@ void EditForm::getFields()
     section = unit.getSection();
     group = unit.getGroup();
     description = unit.getDescription();
-    sales = unit.getSalesPerMonth();
+    sales = unit.getMinimum();
     isUah = unit.isUah();
 }
 
@@ -148,7 +148,7 @@ void EditForm::itsOk()
 {
     std::string name = lineName->text().toLocal8Bit().constData();
     if (name=="") name = this->name;
-    name = loader.removeSpaces(name);
+    name = uLoad.removeSpaces(name);
 
     int quantity = spinQuant->value();
 
@@ -156,35 +156,47 @@ void EditForm::itsOk()
 
     std::string barcode = lineBarcode->text().toLocal8Bit().constData();
     if (barcode=="") barcode = this->barcode;
-    barcode = loader.removeSpaces(barcode);
+    barcode = uLoad.removeSpaces(barcode);
 
     float echarge = textbutor.toDot(lineEcharge->text()).toFloat();
 
     std::string section = lineSection->text().toLocal8Bit().constData();
     if (section=="") section = this->section;
-    section = loader.removeSpaces(section);
+    section = uLoad.removeSpaces(section);
 
     std::string group = lineGroup->text().toLocal8Bit().constData();
     if (group=="") group = this->group;
-    group = loader.removeSpaces(group);
+    group = uLoad.removeSpaces(group);
 
     QString descr = textDescription->toPlainText();
     std::string description = descr.toLocal8Bit().constData();
     if (description=="") description = this->description;
-    description = loader.removeSpaces(description);
+    description = uLoad.removeSpaces(description);
 
     un sales = spinSales->value();
 
-    if(true)//(loader.nameByBarcode(barcode)==name || loader.nameByBarcode(barcode)=="")
+    if(uLoad.getUnit(barcode).getCode() == code || !uLoad.unitExists(barcode))
     {
-        loader.edit(code, barcode, quantity, price, echarge, name, section, group, description, sales);
+        Unit unit;
+        unit.setCode(code);
+        unit.setBarcode(barcode);
+        unit.setQuantity(quantity);
+        unit.setPrice(price);
+        unit.setEcharge(echarge);
+        unit.setName(name);
+        unit.setSection(section);
+        unit.setGroup(group);
+        unit.setDescription(description);
+        unit.setMinimum(sales);
+
+        uLoad.edit(unit);
         this->close();
     }
     else
     {
-        QString message=QString::fromLocal8Bit(loader.nameByBarcode(barcode).c_str());
+        QString message=QString::fromLocal8Bit(uLoad.nameByBarcode(barcode).c_str());
         QMessageBox msg;
-        msg.setText("Товар с таким кодом уже есть в базе: " + message);
+        msg.setText("Товар с таким штрих-кодом уже есть в базе: " + message);
         msg.exec();
     }
 }

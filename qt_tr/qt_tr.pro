@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     unit.cpp \
-    loader.cpp \
     add2.cpp \
     editform.cpp \
     textbutor.cpp \
@@ -43,7 +42,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     unit.h \
-    loader.h \
     add2.h \
     editform.h \
     textbutor.h \

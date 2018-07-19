@@ -17,12 +17,12 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setFont(font);
 
 
-    if(!loader.fileExists())
+    if(!uLoad.fileExists())
     {
         QMessageBox msg;
         msg.setText("Файл data.txt не существует. Создаю новый.");
         msg.exec();
-        loader.makeNewDateFile(1);
+        uLoad.newFile();
     }
 
     //------------------------------------------------------------------
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //-----------------------------------------------------------------
 
     getListSelect();
-    loader.makeReservCopy();
+    if(uLoad.base.size()>10) uLoad.makeReservCopy();
     ui->pushEdit->setEnabled(false);
     connect (ui->list, SIGNAL(itemSelectionChanged()), this, SLOT(setEditable()));
 }
@@ -56,7 +56,7 @@ void MainWindow::on_list_doubleClicked()
     EditForm * unit = new EditForm(code, this);
     unit->show();
     unit->exec();
-    loader.fillBase();
+    uLoad.load();
     this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
@@ -68,7 +68,7 @@ void MainWindow::on_pushAdd2_clicked()
     Add2 * unit = new Add2(isQueue, this);
     unit->show();
     unit->exec();
-    loader.fillBase();
+    uLoad.load();
     this->getListSelect();
     ui->pushEdit->setEnabled(false);
     ui->list->scrollToBottom();
@@ -89,7 +89,7 @@ void MainWindow::on_pushEdit_clicked()
     EditForm * unit = new EditForm(code, this);
     unit->show();
     unit->exec();
-    loader.fillBase();
+    uLoad.load();
     this->getListSelect();
     ui->pushEdit->setEnabled(false);
 }
@@ -116,8 +116,8 @@ void MainWindow::getListSelect()
 
         ui->list->clear();
         QString word = ui->lineSelect->text();
-        int size = loader.size;
-        Unit *base = loader.base;
+        int size = uLoad.base.size();
+        std::vector<Unit>base = uLoad.base;
 
         if (textbutor.isBarcode(word))
         {
@@ -142,7 +142,7 @@ void MainWindow::getListSelect()
         {
             ui->labelContent->setText("Все товары на складе.");
             ui->buttonRefresh->setEnabled(false);
-            for(int n=0; n<size; n++)
+            for(int n=0; n < size; n++)
             {
                 QString code = QString::number(base[n].getCode());
                 QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),40);
@@ -168,7 +168,7 @@ void MainWindow::getListSelect()
         {
             for(int n=1; n<size; n++)
             {
-                int minimum = base[n].getSalesPerMonth();
+                int minimum = base[n].getMinimum();
                 int quantityInt = base[n].getQuantity();
                 QString code = QString::number(base[n].getCode());
                 QString name = textbutor.cutter(QString::fromLocal8Bit((base[n].getName()).c_str()),40);
@@ -192,7 +192,7 @@ void MainWindow::on_pushButton_clicked()
     if(!ui->list->currentItem()->text().isEmpty())
     {
         unsigned code = ui->list->currentItem()->text().left(6).toInt();
-        loader.delUnit(code);
+        uLoad.del(code);
         getListSelect();
     }
 }
@@ -241,14 +241,11 @@ void MainWindow::searsh(QString word)
     }
     if(add.size()>0) whatSearsh.push_back(add);
 
-    std::vector<Unit>vBase;
-    for (unsigned n=0; n<loader.size; n++)vBase.push_back(loader.base[n]);
-
+    std::vector<Unit>vBase = uLoad.base;
     int size =  whatSearsh.size();
-    //qDebug()<<"Ищем "<<size<<" слов";
+
     for(int n = size-1; n >= 0; n--)
     {
-        //qDebug()<<"Показываем "<<n+1<<" совпадений";
         for(unsigned i=0; i<vBase.size(); i++)
         {
             int coincidence = 0;
@@ -257,7 +254,7 @@ void MainWindow::searsh(QString word)
             {
                 if(name.contains(whatSearsh[a], Qt::CaseInsensitive)){coincidence++;}
             }
-            //if(coincidence>0)qDebug()<<"n= "<<n<<"   совпадений-"<<coincidence<<"    "<<name;
+
             if (coincidence==(n+1))
             {
                 QString code = QString::number(vBase[i].getCode());
@@ -297,19 +294,19 @@ void MainWindow::on_statistica_clicked()
     ui->labelContent->setText("Статистика");
     ui->buttonRefresh->setEnabled(true);
 
-    QStringList files = loader.getFiles("LOG");
+    QStringList files = uLoad.getFiles("LOG");
     un length = files.length();
     for(un n = 0; n < length; n++)
     {
         QString info = files[n];
         if (info.right(3)=="log")
         {
-            float balance = loader.daySummFromLog(info);
+            float balance = uLoad.daySummFromLog(info);
             info = info.mid(4, info.size());
             info.chop(4);
             info = textbutor.cutter(info, 12)+ QString::number(balance) + " грн.";
             ui->list->addItem(info);
         }
     }
-
+    ui->list->scrollToTop();
 }

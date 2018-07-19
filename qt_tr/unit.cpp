@@ -13,7 +13,7 @@ Unit::Unit(void)
     description="No_description";
     section="No_section";
     group="No_group";
-    salesPerMonth = 1;
+    minimum = 1;
     barcode="0000000000000";
 }
 
@@ -33,7 +33,7 @@ void Unit::setName(std::string name){this->name=name;}
 void Unit::setSection(std::string section){this->section=section;}
 void Unit::setGroup(std::string group){this->group=group;}
 void Unit::setDescription(std::string description){this->description=description;}
-void Unit::setSalesPerMonth(un salesPerMonth){this->salesPerMonth=salesPerMonth;}
+void Unit::setMinimum(un minimum){this->minimum=minimum;}
 
 
 bool Unit::isUah()
@@ -59,4 +59,4 @@ std::string  Unit::getName(){return name;}
 std::string Unit::getSection(){return section;}
 std::string Unit::getGroup(){return group;}
 std::string Unit::getDescription(){return description;}
-un Unit::getSalesPerMonth(){return salesPerMonth;}
+un Unit::getMinimum(){return minimum;}

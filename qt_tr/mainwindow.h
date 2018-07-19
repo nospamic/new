@@ -7,9 +7,9 @@
 #include <QMessageBox>
 #include <QWidget>
 #include <direct.h>
-#include "loader.h"
 #include "textbutor.h"
 #include "unit.h"
+#include "unit_loader.h"
 #include "add2.h"
 #include "editform.h"
 #include "seller.h"
@@ -60,7 +60,8 @@ private:
     QStandardItemModel *model;
 
 
-    Loader loader;
+
+    Unit_loader uLoad;
     Textbutor textbutor;
     char *path;
     bool *isQueue;

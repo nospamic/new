@@ -25,7 +25,7 @@ public:
     void setSection(std::string);
     void setGroup(std::string);
     void setDescription(std::string);
-    void setSalesPerMonth(un salesPerMonth);
+    void setMinimum(un minimum);
     bool isUah();
 
     un getId();
@@ -38,7 +38,7 @@ public:
     std::string getSection();
     std::string getGroup();
     std::string getDescription();
-    un getSalesPerMonth();
+    un getMinimum();
 
 private:
     unsigned id;
@@ -51,7 +51,7 @@ private:
     std::string section;
     std::string group;
     std::string description;
-    unsigned salesPerMonth;
+    unsigned minimum;
 
     friend std::ostream& operator<<(std::ostream& os, const Unit& );
     friend std::istream& operator>>(std::istream& is,  Unit& );

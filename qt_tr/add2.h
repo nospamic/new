@@ -15,7 +15,7 @@
 #include <QPrinter>
 #include <QPainter>
 #include "textbutor.h"
-#include "loader.h"
+#include "unit_loader.h"
 
 
 class Add2 : public QDialog
@@ -39,7 +39,7 @@ private:
     QPushButton * ok;
 
     Textbutor textbutor;
-    Loader loader;
+    Unit_loader uLoad;
     bool* isQueue;
 
 public slots:

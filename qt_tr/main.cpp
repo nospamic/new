@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include "Unit.h"
-#include "Loader.h"
 #include "human.h"
 
 typedef unsigned int un;
@@ -26,7 +25,7 @@ std::ostream& operator<<(std::ostream& os, const Unit& un)
     un.section<<" "<<
     un.group<<" "<<
     un.barcode<<" "<<
-    un.salesPerMonth<<"\n";
+    un.minimum<<"\n";
     return os;
 }
 
@@ -44,7 +43,7 @@ std::istream& operator>>(std::istream& is,  Unit& un)
     un.section>>
     un.group>>
     un.barcode>>
-    un.salesPerMonth;
+    un.minimum;
     return is;
 }
 

@@ -1,5 +1,5 @@
 #include "add2.h"
-#include "loader.h"
+
 
 Add2::Add2(bool *isQueue, QWidget *parent)
     : QDialog(parent)
@@ -115,10 +115,10 @@ void Add2::itsOk()
 {
 
     std::string name = lineName->text().toLocal8Bit().constData();
-    name = loader.removeSpaces(name);
+    name = uLoad.removeSpaces(name);
     std::string barcode = lineBarcode->text().toLocal8Bit().constData();
     if(barcode.length()<6) barcode = "0000000000000";
-    barcode = loader.removeSpaces(barcode);
+    barcode = uLoad.removeSpaces(barcode);
     int quantity = spinQuant->value();
     float price = textbutor.toDot(linePrice->text()).toFloat();
     QString description;
@@ -131,15 +131,21 @@ void Add2::itsOk()
         description = "$_"+textbutor.getDate();
     }
     std::string stdDescription = description.toLocal8Bit().constData();
-    if(name != "" && loader.nameByBarcode(barcode)=="")
+    if(name != "" && uLoad.nameByBarcode(barcode)=="")
     {
-        loader.addUnitToFile(name, price, quantity, barcode, stdDescription);
+        Unit unit;
+        unit.setName(name);
+        unit.setPrice(price);
+        unit.setQuantity(quantity);
+        unit.setBarcode(barcode);
+        unit.setDescription(stdDescription);
+        uLoad.add(unit);
         if(spinPrint->value() > 0)for(int n =0; n<spinPrint->value();n++)printSticker();
         this->close();
     }
     else
     {
-        QString message=QString::fromLocal8Bit(loader.nameByBarcode(barcode).c_str());
+        QString message=QString::fromLocal8Bit(uLoad.nameByBarcode(barcode).c_str());
         QMessageBox msg;
         msg.setText("Товар с таким кодом уже есть в базе: " + message);
         msg.exec();
@@ -162,7 +168,7 @@ void Add2::setBarcode()
 {
     if(lineBarcode->text().isEmpty())
     {
-        lineBarcode->setText(textbutor.makeBarcode(loader.getLastCode()+1));
+        lineBarcode->setText(textbutor.makeBarcode(uLoad.getLastCode()+1));
     }
 }
 

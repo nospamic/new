@@ -16,7 +16,8 @@
 #include <QPrinterInfo>
 #include <QPainter>
 #include "textbutor.h"
-#include "loader.h"
+#include "unit.h"
+#include "unit_loader.h"
 
 class EditForm : public QDialog
 {
@@ -58,7 +59,7 @@ private:
     unsigned sales;
     bool isUah;
     Textbutor textbutor;
-    Loader loader;
+    Unit_loader uLoad;
     void getFields();
     void barcodeRepair();
 

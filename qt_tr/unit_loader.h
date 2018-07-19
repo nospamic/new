@@ -23,6 +23,7 @@ public:
     Unit_loader();
     std::vector<Unit>base;
 
+    unsigned getFileSize();
     void load();
     void save();
     void newFile();
@@ -43,6 +44,7 @@ public:
     int round(float a);
     float daySummFromLog(QString file);
     QStringList getFiles(QString dir);
+    bool fileExists();
 
 
 

@@ -18,8 +18,7 @@
 #include <QDateTime>
 #include <vector>
 #include <cmath>
-
-#include "loader.h"
+#include "unit_loader.h"
 #include "unit.h"
 #include "textbutor.h"
 #include "human.h"
@@ -50,7 +49,8 @@ private:
     QPushButton *buttonNext;
     QLineEdit *lineManInfo;
 
-    Loader loader;
+
+    Unit_loader uLoad;
     Textbutor textbutor;
     HumanLoader humanloader;
     Human man;
@@ -68,6 +68,7 @@ private:
     void findRepeat();
     std::string createLog();
     QString getQPrice(Unit unit);
+    void changeHelp(float change);
 
 private slots:
     void addToCheck();
