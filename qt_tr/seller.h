@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QValidator>
 #include <QDialog>
+#include <QCheckBox>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QPushButton>
@@ -18,6 +19,7 @@
 #include <QDateTime>
 #include <vector>
 #include <cmath>
+#include <QTimer>
 #include "unit_loader.h"
 #include "unit.h"
 #include "textbutor.h"
@@ -36,7 +38,8 @@ public:
 private:
     QListWidget *listSearsh;
     QLineEdit *lineBarcod;
-    QLineEdit *lineSearsh;
+    QCheckBox *checkBack;
+    QCheckBox *checkDebt;
     QPushButton *buttonSearsh;
     QListWidget *listCheck;
     QSpinBox *spinQuantity;
@@ -48,6 +51,11 @@ private:
     QLabel *labelDiscount;
     QPushButton *buttonNext;
     QLineEdit *lineManInfo;
+    QTimer *timer;
+    QPalette white;
+    QPalette red;
+    QPalette yellow;
+    QPalette green;
 
 
     Unit_loader uLoad;
@@ -69,6 +77,7 @@ private:
     std::string createLog();
     QString getQPrice(Unit unit);
     void changeHelp(float change);
+    void reset();
 
 private slots:
     void addToCheck();
@@ -85,6 +94,8 @@ private slots:
     void nextPressed();
     void searsh(QString word);
     void printCheck();
+    void backClicked();
+    void colorLine();
 
 };
 

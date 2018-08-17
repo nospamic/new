@@ -29,7 +29,6 @@ SOURCES += \
         mainwindow.cpp \
     unit.cpp \
     add2.cpp \
-    editform.cpp \
     textbutor.cpp \
     seller.cpp \
     customers.cpp \
@@ -37,13 +36,13 @@ SOURCES += \
     humanloader.cpp \
     humanadd.cpp \
     humanedit.cpp \
-    unit_loader.cpp
+    unit_loader.cpp \
+    unit_edit.cpp
 
 HEADERS += \
         mainwindow.h \
     unit.h \
     add2.h \
-    editform.h \
     textbutor.h \
     seller.h \
     customers.h \
@@ -51,7 +50,8 @@ HEADERS += \
     humanloader.h \
     humanadd.h \
     humanedit.h \
-    unit_loader.h
+    unit_loader.h \
+    unit_edit.h
 
 FORMS += \
         mainwindow.ui

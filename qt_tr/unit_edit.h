@@ -1,6 +1,8 @@
-#ifndef EDITFORM_H
-#define EDITFORM_H
+#ifndef UNIT_EDIT_H
+#define UNIT_EDIT_H
 
+
+#include <QDesktopWidget>
 #include <QValidator>
 #include <QDialog>
 #include <QVBoxLayout>
@@ -19,13 +21,13 @@
 #include "unit.h"
 #include "unit_loader.h"
 
-class EditForm : public QDialog
+class Unit_edit : public QDialog
 {
     Q_OBJECT
 
 public:
-    EditForm(unsigned code, QWidget *parent = 0);
-    ~EditForm();
+    Unit_edit(unsigned code, QWidget *parent = 0);
+    ~Unit_edit();
 
 private:
     unsigned code;
@@ -42,24 +44,16 @@ private:
     QTextEdit * textSticker;
     QSpinBox * spinSales;
     QPushButton * printSticker;
+    QSpinBox * spinPrint;
 
 
 
     QPushButton * ok;
 
-
-    std::string barcode;
-    int quantity;
-    float price;
-    float echarge;
-    std::string name;
-    std::string section;
-    std::string group;
-    std::string description;
-    unsigned sales;
     bool isUah;
     Textbutor textbutor;
     Unit_loader uLoad;
+    Unit unit;
     void getFields();
     void barcodeRepair();
 
@@ -69,4 +63,4 @@ public slots:
     void printing();
 };
 
-#endif // EDITFORM_H
+#endif // UNIT_EDIT_H

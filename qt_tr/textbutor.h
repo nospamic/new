@@ -26,7 +26,7 @@ public:
     int spaceFirstPos(QString str);
     bool isBarcode(QString str);
     std::vector<QString> stringToVector(QString word);
-
+    QString latinToKiril(QString str);
 
 
 

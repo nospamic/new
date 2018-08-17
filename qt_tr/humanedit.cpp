@@ -129,14 +129,11 @@ void HumanEdit::getFields()
 void HumanEdit::itsOk()
 {
     name = lineName->text().toLocal8Bit().constData();
-    name = textbutor.removeSpaces(name);
     if(name.size()==0) name="no_name";
     tel = lineTel->text().toLocal8Bit().constData();
-    tel = textbutor.removeSpaces(tel);
     if(tel.substr(0,1)=="!")tel = tel.substr(1, tel.size());
     if(tel.size()==0) tel="000";
     description = textDescription->toPlainText().toLocal8Bit().constData();
-    description = textbutor.removeSpaces(description);
     if(description.size()==0) description="no_description";
     debt = textbutor.toDot(lineDebt->text()).toFloat();
     summ = textbutor.toDot(lineSumm->text()).toFloat();

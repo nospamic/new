@@ -118,13 +118,13 @@ QString Textbutor::checkSummGen(QString barcode)
         number = barcode.mid(n+1, 1).toInt();
         number = number*3;
         checkSumm += number;
-        std::cout << number << "+";
+        //std::cout << number << "+";
     }
     float res = (checkSumm/10) - (int(checkSumm/10));
     if(res != 0) res = 10-(res*10);
 
     QString result = QString::number(res).left(1);
-    std::cout << "=" << checkSumm<<" -> "<<res<<"\n";
+    //std::cout << "=" << checkSumm<<" -> "<<res<<"\n";
     return barcode + result;
 }
 
@@ -198,4 +198,22 @@ std::vector<QString> Textbutor::stringToVector(QString word)
     }
     if(add.size()>0) result.push_back(add);
     return result;
+}
+
+QString Textbutor::latinToKiril(QString str)
+{
+
+    QString latinChar = "qwertyuiop[]asdfghjkl;'zxcvbnm,.QWERTYUIOP{}ASDFGHJKL:\"ZXCVBNM<>";
+    QString kirilChar = "йцукенгшщзхъфывапролджэячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ";
+
+    for(int n=0; n<str.size();n++)
+    {
+        if(latinChar.contains(str[n]))
+        {
+            int posit = latinChar.indexOf(str[n]);
+            str[n] = kirilChar[posit];
+        }
+    }
+    return str;
+
 }

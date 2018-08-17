@@ -53,7 +53,7 @@ void MainWindow::on_list_doubleClicked()
 {
     QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
-    EditForm * unit = new EditForm(code, this);
+    Unit_edit * unit = new Unit_edit(code, this);
     unit->show();
     unit->exec();
     uLoad.load();
@@ -86,7 +86,7 @@ void MainWindow::on_pushEdit_clicked()
 {
     QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
-    EditForm * unit = new EditForm(code, this);
+    Unit_edit * unit = new Unit_edit(code, this);
     unit->show();
     unit->exec();
     uLoad.load();
@@ -161,6 +161,12 @@ void MainWindow::getListSelect()
             ui->labelContent->setText(text);
             ui->buttonRefresh->setEnabled(true);
             searsh(word);
+            if(ui->list->count() == 0)
+            {
+                qDebug()<<"change";
+                ui->lineSelect->setText(textbutor.latinToKiril(word));
+                searsh(textbutor.latinToKiril(word));
+            }
             ui->list->scrollToTop();
         }
 

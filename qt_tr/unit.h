@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 typedef unsigned int un;
 class Unit
 {
@@ -27,6 +28,7 @@ public:
     void setDescription(std::string);
     void setMinimum(un minimum);
     bool isUah();
+    void addSales(int sales);
 
     un getId();
     un getCode();
@@ -39,6 +41,7 @@ public:
     std::string getGroup();
     std::string getDescription();
     un getMinimum();
+    un getSales();
 
 private:
     unsigned id;
@@ -52,6 +55,10 @@ private:
     std::string group;
     std::string description;
     unsigned minimum;
+
+    std::string removeSpaces(std::string str);
+    std::string intToString(int value);
+    int stringToInt(std::string str);
 
     friend std::ostream& operator<<(std::ostream& os, const Unit& );
     friend std::istream& operator>>(std::istream& is,  Unit& );

@@ -115,10 +115,8 @@ void Add2::itsOk()
 {
 
     std::string name = lineName->text().toLocal8Bit().constData();
-    name = uLoad.removeSpaces(name);
     std::string barcode = lineBarcode->text().toLocal8Bit().constData();
     if(barcode.length()<6) barcode = "0000000000000";
-    barcode = uLoad.removeSpaces(barcode);
     int quantity = spinQuant->value();
     float price = textbutor.toDot(linePrice->text()).toFloat();
     QString description;

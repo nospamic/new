@@ -8,17 +8,24 @@ Seller::Seller(QWidget *parent)
     checkSumm = 0;
     this->setWindowTitle("Продавец");
     QRegExp intager("[0-9]{0,14}");
-    QRegExp money("[0-9]{1,4}[.,]{0,1}[0-9]{0,2}");
+    QRegExp money("[0-9]{1,13}[.,]{0,1}[0-9]{0,2}");
     exchange = uLoad.getUnit(100000).getPrice();
+
+    timer = new QTimer();
 
     QFont font("Lucida Console",12);
     QFont small("Lucida Console",8);
     this->setFont(font);
 
+    white.setColor(QPalette::Base, Qt::white);
+    red.setColor(QPalette::Base, Qt::red);
+    yellow.setColor(QPalette::Base, Qt::yellow);
+    green.setColor(QPalette::Base, Qt::green);
 
     QRect r = QApplication::desktop()->screenGeometry();
     this->resize(800, r.height()*0.8);
 
+    this->setStyleSheet("QCheckBox { border: 1px solid gray; padding: 2px }");
 
     QVBoxLayout *vert = new QVBoxLayout;
     QLabel * lblHead = new QLabel(" Код          Название                                   Цена(грн)       К-во(шт.)");
@@ -30,16 +37,16 @@ Seller::Seller(QWidget *parent)
 
 
     QHBoxLayout *hor1 = new QHBoxLayout;
-
     lineBarcod = new QLineEdit;
     lineBarcod->setPlaceholderText("Найти...");
+    lineBarcod->setAutoFillBackground(true);
     //lineBarcod->setValidator(new QRegExpValidator(intager, this));
     hor1->addWidget(lineBarcod);
-    //lineSearsh = new QLineEdit;
-    //lineSearsh->setPlaceholderText("Найти...");
-    //hor1->addWidget(lineSearsh);
-    //buttonSearsh = new QPushButton(">>");
-    //hor1->addWidget(buttonSearsh);
+    checkBack = new QCheckBox("Возврат");
+    hor1->addWidget(checkBack);
+    checkDebt = new QCheckBox("Долг");
+    checkDebt->setEnabled(false);
+    hor1->addWidget(checkDebt);
 
     vert->addLayout(hor1);
 
@@ -64,11 +71,10 @@ Seller::Seller(QWidget *parent)
     vert2->addWidget(spinQuantity);
     vert2->addWidget(buttonDel);
     labelDiscount = new QLabel;
-    QPalette yellow;
-    yellow.setColor(QPalette::Background, Qt::yellow);
-
+    QPalette yellowLabel;
+    yellowLabel.setColor(QPalette::Background, Qt::yellow);
     labelDiscount->setAutoFillBackground(false);
-    labelDiscount->setPalette(yellow);
+    labelDiscount->setPalette(yellowLabel);
 
     vert2->addWidget(labelDiscount);
     buttonNext = new QPushButton;
@@ -94,11 +100,6 @@ Seller::Seller(QWidget *parent)
     hor3->addWidget(labelChange);
     vert->addLayout(hor3);
 
-    //labelManInfo = new QLabel;
-    //vert->addWidget(labelManInfo);
-    //labelManInfo->setFont(small);
-
-
 
     setLayout(vert);
 
@@ -113,18 +114,25 @@ Seller::Seller(QWidget *parent)
     connect(listCheck, SIGNAL(clicked(QModelIndex)), this, SLOT(delEnable()));
     connect(buttonNext, SIGNAL(clicked(bool)), this, SLOT(nextPressed()));
     connect(listCheck, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(delFromCheck()));
+    connect(checkBack, SIGNAL(clicked(bool)), this, SLOT(backClicked()));
+    connect(timer, SIGNAL(timeout()),this, SLOT(colorLine()));
+    connect(listSearsh, SIGNAL(clicked(QModelIndex)), lineBarcod, SLOT(setFocus()));
 
     getListSelect();
     lineBarcod->setFocus();
     setTabOrder(lineBarcod, linePay);
 
+    timer->start(500);
 
 }
 
 Seller::~Seller()
 {
+    timer->stop();
+    delete timer;
 
 }
+
 
 void Seller::getListSelect()
 {
@@ -148,6 +156,10 @@ void Seller::getListSelect()
     else
     {
         searsh(word);
+        if(listSearsh->count() == 0)
+        {
+            searsh(textbutor.latinToKiril(word));
+        }
     }
     lineBarcod->setFocus();
 }
@@ -155,7 +167,13 @@ void Seller::getListSelect()
 
 void Seller::sold()
 {
-    if(check.size()>0 && textbutor.toDot(linePay->text()).toFloat() >= checkSumm - uLoad.round(checkSumm*discount/100))
+    if(textbutor.isBarcode(linePay->text()))
+    {
+        lineBarcod->setText(linePay->text());
+        linePay->clear();
+        this->barcodeScanned();
+    }
+    else if(check.size()>0 && textbutor.toDot(linePay->text()).toFloat() >= checkSumm - uLoad.round(checkSumm*discount/100))
     {
         uLoad.load();
 
@@ -163,33 +181,21 @@ void Seller::sold()
         {
             unsigned position = uLoad.getPosition(check[n].getCode());
             uLoad.base[position].setQuantity(uLoad.base[position].getQuantity() - quantity[n]);
-            //uLoad.base[position].setMinimum(uLoad.base[position].getMinimum() + quantity[n]);
+            uLoad.base[position].addSales(quantity[n]);
+
         }
         uLoad.save();
 
         printCheck();
         man.setSumm(man.getSumm() + checkSumm - uLoad.round(checkSumm*discount/100));
         if (man.getName()!="no")humanloader.edit(man);
+
         uLoad.addToLog(createLog());
-        check.clear();
-        quantity.clear();
-        listCheck->clear();
-        labelSumm->setText("К оплате: --");
-        linePay->clear();
-        labelChange->setText("Сдача: --");
-        //lineSearsh->clear();
-        getListSelect();
-        lineBarcod->setFocus();
-        this->discount = 0;
-        labelDiscount->clear();
-        labelDiscount->setAutoFillBackground(false);
-        man.setName("no");
-        lineManInfo->clear();
-        buttonNext->setEnabled(false);
-        checkSumm = 0;
+        reset();
         QApplication::beep();
     }
 }
+
 
 void Seller::showChange()
 {
@@ -210,6 +216,7 @@ void Seller::showChange()
 
 }
 
+
 void Seller::delFromCheck()
 {
     if(check.size()>1)
@@ -228,12 +235,14 @@ void Seller::delFromCheck()
     checkShow();
 }
 
+
 void Seller::delEnable()
 {
     buttonDel->setEnabled(true);
     buttonDel->setAutoDefault(false);
     spinQuantity->setEnabled(true);
 }
+
 
 void Seller::humanTest(QString barcode)
 {
@@ -252,6 +261,7 @@ void Seller::humanTest(QString barcode)
     buttonNext->setEnabled(true);
 }
 
+
 void Seller::manShow()
 {
     if(this->man.getName() != "no")
@@ -263,25 +273,12 @@ void Seller::manShow()
     }
 }
 
+
 void Seller::nextPressed()
 {
-    check.clear();
-    quantity.clear();
-    listCheck->clear();
-    labelSumm->setText("К оплате: --");
-    linePay->clear();
-    labelChange->setText("Сдача: --");
-    //lineSearsh->clear();
-    getListSelect();
-    lineBarcod->setFocus();
-    this->discount = 0;
-    labelDiscount->clear();
-    labelDiscount->setAutoFillBackground(false);
-    man.setName("no");
-    lineManInfo->clear();
-    buttonNext->setEnabled(false);
-    checkSumm = 0;
+   reset();
 }
+
 
 void Seller::searsh(QString word)
 {
@@ -372,6 +369,28 @@ void Seller::printCheck()
     paint.setFont(small);
     paint.drawText(QRect(0, 0, 450, 900), Qt::AlignLeft, qResult);
 #endif
+}
+
+
+void Seller::backClicked()
+{
+    if(checkBack->isChecked())
+    {
+        this->lineBarcod->setPalette(red);
+        this->lineBarcod->setFocus();
+    }
+    else
+    {
+        this->lineBarcod->setPalette(white);
+        this->lineBarcod->setFocus();
+    }
+}
+
+
+void Seller::colorLine()
+{
+    lineBarcod->hasFocus() ? lineBarcod->setPalette(green): lineBarcod->setPalette(white);
+    if (checkBack->isChecked()) lineBarcod->setPalette(red);
 }
 
 
@@ -511,6 +530,26 @@ void Seller::changeHelp(float change)
 }
 
 
+void Seller::reset()
+{
+    check.clear();
+    quantity.clear();
+    listCheck->clear();
+    labelSumm->setText("К оплате: --");
+    linePay->clear();
+    labelChange->setText("Сдача: --");
+    getListSelect();
+    lineBarcod->setFocus();
+    this->discount = 0;
+    labelDiscount->clear();
+    labelDiscount->setAutoFillBackground(false);
+    man.setName("no");
+    lineManInfo->clear();
+    buttonNext->setEnabled(false);
+    checkSumm = 0;
+}
+
+
 void Seller::addToCheck()
 {
     QString strCode = listSearsh->currentItem()->text();
@@ -518,8 +557,10 @@ void Seller::addToCheck()
     int code = strCode.toInt();
     Unit item = uLoad.getUnit(code);
     check.push_back(item);
-    quantity.push_back(1);
+    !checkBack->isChecked()?quantity.push_back(1):quantity.push_back(-1);
     checkShow();
+    checkBack->setChecked(false);
+    this->backClicked();
     buttonDel->setEnabled(false);
     spinQuantity->setEnabled(false);
 }
@@ -571,7 +612,9 @@ void Seller::barcodeScanned()
     {
         unit = uLoad.getUnit(barcode.toLocal8Bit().constData());
         check.push_back(unit);
-        quantity.push_back(1);
+        !checkBack->isChecked()?quantity.push_back(1):quantity.push_back(-1);
+        checkBack->setChecked(false);
+        this->backClicked();
     }
     lineBarcod->clear();
     checkShow();

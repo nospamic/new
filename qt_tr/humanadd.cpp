@@ -59,12 +59,9 @@ void HumanAdd::itsOk()
     {
 
         std::string name = lineName->text().toLocal8Bit().constData();
-        name = textbutor.removeSpaces(name);
         std::string tel = lineTel->text().toLocal8Bit().constData();
-        tel = textbutor.removeSpaces(tel);
         int discount = spinDiscount->value();
         std::string description = textDescription->toPlainText().toLocal8Bit().constData();
-        description = textbutor.removeSpaces(description);
         if (description.size()==0) description="no_description";
         humanloader.addHuman(name, tel, description, discount);
         this->close();

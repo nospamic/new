@@ -53,10 +53,11 @@ void Unit_loader::save()
     fs.open(path, std::fstream::in | std::fstream::out | std::fstream::trunc);
     !fs.is_open()?qDebug()<<"\nError open "<<path<<"\n":qDebug()<<"\nSave - "<<path<<"\n";
 
-    for(unsigned a=0; a<base.size(); a++)
+    std::vector<Unit>::iterator it;
+    for(it = base.begin(); it != base.end(); it++)
     {
         Unit unit;
-        unit = base[a];
+        unit = *it;
         fs<<unit;
     }
     fs.close();
@@ -108,17 +109,6 @@ void Unit_loader::del(un code)
     }
 }
 
-
-std::string Unit_loader::removeSpaces(std::string str)
-{
-    std::string result="";
-    for(un a=0; a<str.size();a++)
-    {
-        if (str[a]==' ' || str[a]=='\n') {result.push_back('_');}
-        else {result.push_back(str[a]);}
-    }
-    return result;
-}
 
 void Unit_loader::edit(Unit unit)
 {
@@ -193,11 +183,11 @@ un Unit_loader::getPosition(un code)
 std::string Unit_loader::nameByBarcode(std::string barcode)
 {
     std::string result = "";
-    for(un n=0; n<base.size(); n++)
+    for(auto &unit : base)
     {
-        if (base[n].getBarcode()==barcode)
+        if (unit.getBarcode()==barcode)
         {
-            result =  base[n].getName();
+            result =  unit.getName();
             return result;
         }
     }
@@ -207,9 +197,9 @@ std::string Unit_loader::nameByBarcode(std::string barcode)
 
 bool Unit_loader::unitExists(un code)
 {
-    for(un n=0; n<base.size(); n++)
+    for(auto &unit : base)
     {
-        if (base[n].getCode()==code) return true;
+        if (unit.getCode()==code) return true;
     }
     return false;
 }
@@ -217,9 +207,9 @@ bool Unit_loader::unitExists(un code)
 
 bool Unit_loader::unitExists(std::string barcode)
 {
-    for(un n=0; n<base.size(); n++)
+    for(auto &unit : base)
     {
-        if (base[n].getBarcode() == barcode) return true;
+        if (unit.getBarcode() == barcode) return true;
     }
     return false;
 }
@@ -248,15 +238,15 @@ float Unit_loader::getBalance()
 {
     float balance = 0;
 
-    for(un n=1; n<base.size(); n++)
+    for(un n=1; n < base.size(); n++)
     {
        if(base[n].getDescription().substr(0,1)=="#")
        {
-           balance += round(base[n].getPrice()) * base[n].getQuantity();
+           balance += round(base[n].getPrice() * base[n].getQuantity());
        }
        else
        {
-           balance += round(base[n].getPrice() * base[0].getPrice()) * base[n].getQuantity();
+           balance += round(base[n].getPrice() * base[n].getQuantity() * base[0].getPrice());
        }
     }
     return balance;

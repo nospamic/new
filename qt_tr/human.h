@@ -31,6 +31,8 @@ private:
     float debt;
     int discount;
 
+    std::string removeSpaces(std::string str);
+
     friend std::ostream& operator<<(std::ostream& os, const Human& );
     friend std::istream& operator>>(std::istream& is,  Human& );
 };

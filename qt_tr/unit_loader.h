@@ -29,7 +29,6 @@ public:
     void newFile();
     void add(Unit unit);
     void del(un code);
-    std::string removeSpaces(std::string str);
     void edit(Unit unit);
     Unit getUnit(un code);
     Unit getUnit(std::string barcode);
