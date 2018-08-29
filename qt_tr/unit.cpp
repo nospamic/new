@@ -101,7 +101,7 @@ std::string Unit::removeSpaces(std::string str)
     std::string result="";
     for(un a=0; a<str.size();a++)
     {
-        if (str[a]==' ' || str[a]=='\n') {result.push_back('_');}
+        if (str[a]==' ' || str[a]=='\n' || str[a]=='\t') {result.push_back('_');}
         else {result.push_back(str[a]);}
     }
     return result;

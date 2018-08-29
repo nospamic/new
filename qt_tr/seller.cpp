@@ -12,6 +12,7 @@ Seller::Seller(QWidget *parent)
     exchange = uLoad.getUnit(100000).getPrice();
 
     timer = new QTimer();
+    payTimer = new QTimer();
 
     QFont font("Lucida Console",12);
     QFont small("Lucida Console",8);
@@ -44,9 +45,10 @@ Seller::Seller(QWidget *parent)
     hor1->addWidget(lineBarcod);
     checkBack = new QCheckBox("Возврат");
     hor1->addWidget(checkBack);
-    checkDebt = new QCheckBox("Долг");
-    checkDebt->setEnabled(false);
-    hor1->addWidget(checkDebt);
+    buttonDebt = new QPushButton("Долг");
+    buttonDebt->setAutoDefault(false);
+    buttonDebt->setEnabled(false);
+    hor1->addWidget(buttonDebt);
 
     vert->addLayout(hor1);
 
@@ -107,7 +109,6 @@ Seller::Seller(QWidget *parent)
     connect(listCheck, SIGNAL(clicked(QModelIndex)), this, SLOT(setSpinQuantity()));
     connect(spinQuantity, SIGNAL(valueChanged(int)), this, SLOT(changeQuantity()));
     connect(lineBarcod, SIGNAL(returnPressed()), this, SLOT(barcodeScanned()));
-    //connect(lineSearsh, SIGNAL(returnPressed()), this, SLOT(getListSelect()));
     connect(linePay, SIGNAL(returnPressed()), this, SLOT(sold()));
     connect(linePay, SIGNAL(textChanged(QString)), this, SLOT(showChange()));
     connect(buttonDel, SIGNAL(clicked(bool)), this, SLOT(delFromCheck()));
@@ -116,7 +117,9 @@ Seller::Seller(QWidget *parent)
     connect(listCheck, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(delFromCheck()));
     connect(checkBack, SIGNAL(clicked(bool)), this, SLOT(backClicked()));
     connect(timer, SIGNAL(timeout()),this, SLOT(colorLine()));
+    connect(payTimer, SIGNAL(timeout()),lineBarcod, SLOT(setFocus()));
     connect(listSearsh, SIGNAL(clicked(QModelIndex)), lineBarcod, SLOT(setFocus()));
+    connect(buttonDebt, SIGNAL(pressed()), this, SLOT(debt()));
 
     getListSelect();
     lineBarcod->setFocus();
@@ -126,11 +129,11 @@ Seller::Seller(QWidget *parent)
 
 }
 
+
 Seller::~Seller()
 {
     timer->stop();
     delete timer;
-
 }
 
 
@@ -173,21 +176,12 @@ void Seller::sold()
         linePay->clear();
         this->barcodeScanned();
     }
-    else if(check.size()>0 && textbutor.toDot(linePay->text()).toFloat() >= checkSumm - uLoad.round(checkSumm*discount/100))
+    else if(check.size()>0 && textbutor.toDot(linePay->text()).toFloat() >= result())
     {
-        uLoad.load();
-
-        for(unsigned n=0; n<check.size(); n++)
-        {
-            unsigned position = uLoad.getPosition(check[n].getCode());
-            uLoad.base[position].setQuantity(uLoad.base[position].getQuantity() - quantity[n]);
-            uLoad.base[position].addSales(quantity[n]);
-
-        }
-        uLoad.save();
-
+        writeOff();
         printCheck();
-        man.setSumm(man.getSumm() + checkSumm - uLoad.round(checkSumm*discount/100));
+
+        man.setSumm(man.getSumm() + result());
         if (man.getName()!="no")humanloader.edit(man);
 
         uLoad.addToLog(createLog());
@@ -199,10 +193,10 @@ void Seller::sold()
 
 void Seller::showChange()
 {
-    float change = textbutor.toDot(linePay->text()).toFloat() - (checkSumm - uLoad.round(checkSumm*discount/100));
+    float change = textbutor.toDot(linePay->text()).toFloat() - (result());
     change = round(change*100)/100;
     QString qchange;
-    if(linePay->text().isEmpty() || textbutor.toDot(linePay->text()).toFloat() <= (checkSumm - uLoad.round(checkSumm*discount/100)))
+    if(linePay->text().isEmpty() || textbutor.toDot(linePay->text()).toFloat() <= (result()))
     {
         qchange = "Сдача: --";
     }
@@ -248,7 +242,7 @@ void Seller::humanTest(QString barcode)
 {
     humanloader.loadBase();
     int code = barcode.mid(6, 6).toInt();
-    Human man = humanloader.getHuman(code);
+
     if(man.getTel().substr(0,1) == "!")
     {
         HumanEdit * edit = new HumanEdit(code, true, this);
@@ -258,6 +252,8 @@ void Seller::humanTest(QString barcode)
     }
     this->man = humanloader.getHuman(code);
     manShow();
+    lineBarcod->setFocus();
+    buttonDebt->setEnabled(true);
     buttonNext->setEnabled(true);
 }
 
@@ -391,6 +387,28 @@ void Seller::colorLine()
 {
     lineBarcod->hasFocus() ? lineBarcod->setPalette(green): lineBarcod->setPalette(white);
     if (checkBack->isChecked()) lineBarcod->setPalette(red);
+
+    if (listSearsh->hasFocus() || listCheck->hasFocus()) lineBarcod->setFocus();
+
+    if(!lineBarcod->hasFocus() && !payTimer->isActive())payTimer->start(20000);
+    if(lineBarcod->hasFocus() && payTimer->isActive())payTimer->stop();
+}
+
+
+void Seller::debt()
+{
+    qDebug()<<"debt";
+    writeOff();
+    printCheck();
+
+    man.setDebt(man.getDebt() + result() - textbutor.toDot(linePay->text()).toFloat());
+    man.setDescription(man.getDescription() + createLog());
+    humanloader.edit(man);
+
+    uLoad.addToLog(createLog());
+    reset();
+    QApplication::beep();
+
 }
 
 
@@ -434,7 +452,7 @@ void Seller::checkShow()
             listCheck->addItem(toList);
             checkSumm += int(price * quantity[n]);
         }
-        int checkResult = checkSumm - uLoad.round(checkSumm*discount/100);
+        int checkResult = result();
         QString summ = "К оплате: " + QString::number(checkResult) + " грн.";
         labelSumm->setText(summ);
         showChange();
@@ -547,6 +565,28 @@ void Seller::reset()
     lineManInfo->clear();
     buttonNext->setEnabled(false);
     checkSumm = 0;
+    buttonDebt->setEnabled(false);
+}
+
+
+int Seller::result()
+{
+    return checkSumm - uLoad.round(checkSumm*discount/100);
+}
+
+
+void Seller::writeOff()
+{
+    uLoad.load();
+
+    for(unsigned n=0; n<check.size(); n++)
+    {
+        unsigned position = uLoad.getPosition(check[n].getCode());
+        uLoad.base[position].setQuantity(uLoad.base[position].getQuantity() - quantity[n]);
+        uLoad.base[position].addSales(quantity[n]);
+
+    }
+    uLoad.save();
 }
 
 

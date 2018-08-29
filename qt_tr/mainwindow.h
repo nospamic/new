@@ -38,7 +38,7 @@ private slots:
     void on_buttonSaller_clicked();
     void getListSelect();
 
-    void on_pushButton_clicked();
+    void on_del_clicked();
 
     void on_buttonOrder_clicked();
 
@@ -66,6 +66,8 @@ private:
     char *path;
     bool *isQueue;
     QString state;
+    QTimer *timerSeller;
+    int wait;
 
 };
 

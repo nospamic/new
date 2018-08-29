@@ -28,6 +28,8 @@ public:
     Human getHuman(int code);
     void loadBase();
     int getLastCode();
+    void debtAdd(Human man, float newDebt);
+
 
 
 private:

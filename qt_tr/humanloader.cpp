@@ -168,12 +168,21 @@ unsigned HumanLoader::getSize()
     return length;
 }
 
+
 int HumanLoader::getLastCode()
 {
     int lastCode = 0;
     for(unsigned n=0; n<size; n++)lastCode = base[n].getCode();
     return lastCode;
 }
+
+
+void HumanLoader::debtAdd(Human man, float newDebt)
+{
+    man.setDebt(man.getDebt() + newDebt);
+    edit(man);
+}
+
 
 void HumanLoader::saveBase()
 {
@@ -184,6 +193,7 @@ void HumanLoader::saveBase()
     for(unsigned a=0; a<size; a++) fs<<base[a];
     fs.close();
 }
+
 
 void HumanLoader::saveReserv()
 {

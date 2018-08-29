@@ -39,7 +39,7 @@ private:
     QListWidget *listSearsh;
     QLineEdit *lineBarcod;
     QCheckBox *checkBack;
-    QCheckBox *checkDebt;
+    QPushButton *buttonDebt;
     QPushButton *buttonSearsh;
     QListWidget *listCheck;
     QSpinBox *spinQuantity;
@@ -52,6 +52,7 @@ private:
     QPushButton *buttonNext;
     QLineEdit *lineManInfo;
     QTimer *timer;
+    QTimer *payTimer;
     QPalette white;
     QPalette red;
     QPalette yellow;
@@ -71,6 +72,7 @@ private:
 
 
 
+
     void checkShow();
     bool isUah(Unit unit);
     void findRepeat();
@@ -78,6 +80,8 @@ private:
     QString getQPrice(Unit unit);
     void changeHelp(float change);
     void reset();
+    int result();
+    void writeOff();
 
 private slots:
     void addToCheck();
@@ -96,6 +100,7 @@ private slots:
     void printCheck();
     void backClicked();
     void colorLine();
+    void debt();
 
 };
 

@@ -16,6 +16,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QFont font("Lucida Console",10);
     this->setFont(font);
 
+    timerSeller = new QTimer();
+    wait = 60000;
+    timerSeller->start(wait);
+
 
     if(!uLoad.fileExists())
     {
@@ -37,6 +41,7 @@ MainWindow::MainWindow(QWidget *parent) :
     if(uLoad.base.size()>10) uLoad.makeReservCopy();
     ui->pushEdit->setEnabled(false);
     connect (ui->list, SIGNAL(itemSelectionChanged()), this, SLOT(setEditable()));
+    connect (timerSeller, SIGNAL(timeout()), this, SLOT(on_buttonSaller_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -51,6 +56,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_list_doubleClicked()
 {
+    timerSeller->stop();
     QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
     Unit_edit * unit = new Unit_edit(code, this);
@@ -64,6 +70,7 @@ void MainWindow::on_list_doubleClicked()
 
 void MainWindow::on_pushAdd2_clicked()
 {
+    timerSeller->stop();
     do{
     Add2 * unit = new Add2(isQueue, this);
     unit->show();
@@ -78,12 +85,15 @@ void MainWindow::on_pushAdd2_clicked()
 void MainWindow::setEditable()
 {
     ui->pushEdit->setEnabled(true);
-    ui->pushButton->setEnabled(true);
+    ui->del->setEnabled(true);
+    timerSeller->stop();
+    timerSeller->start(wait);
 }
 
 
 void MainWindow::on_pushEdit_clicked()
 {
+   timerSeller->stop();
     QString str = ui->list->currentItem()->text().left(6);
     un code = str.toInt();
     Unit_edit * unit = new Unit_edit(code, this);
@@ -106,6 +116,7 @@ void MainWindow::on_lineSelect_returnPressed()
 
 void MainWindow::on_buttonSaller_clicked()
 {
+    timerSeller->stop();
     Seller * shop = new Seller(this);
     shop->show();
     shop->exec();
@@ -190,16 +201,28 @@ void MainWindow::getListSelect()
 
 
         ui->pushEdit->setEnabled(false);
-        ui->pushButton->setEnabled(false);
+        ui->del->setEnabled(false);
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_del_clicked()
 {
     if(!ui->list->currentItem()->text().isEmpty())
     {
         unsigned code = ui->list->currentItem()->text().left(6).toInt();
-        uLoad.del(code);
-        getListSelect();
+        Unit unit = uLoad.getUnit(code);
+        QString msg;
+        msg = "Удалить " + QString::fromLocal8Bit((unit.getName()).c_str()) + "?";
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Удаление товара");
+        msgBox.setText(msg);
+        msgBox.setStandardButtons(QMessageBox::Yes);
+        msgBox.addButton(QMessageBox::No);
+        msgBox.setDefaultButton(QMessageBox::No);
+        if(msgBox.exec() == QMessageBox::Yes)
+        {
+            uLoad.del(code);
+            getListSelect();
+        }
     }
 }
 
@@ -212,7 +235,7 @@ void MainWindow::on_buttonOrder_clicked()
 
     getListSelect();
     ui->pushEdit->setEnabled(false);
-    ui->pushButton->setEnabled(false);
+    ui->del->setEnabled(false);
 
 }
 
@@ -225,6 +248,7 @@ void MainWindow::on_buttonRefresh_clicked()
 
 void MainWindow::on_buttonCustomers_clicked()
 {
+    timerSeller->stop();
     Customers * box = new Customers(this);
     box->show();
     box->exec();

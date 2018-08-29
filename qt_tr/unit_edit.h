@@ -43,7 +43,6 @@ private:
     QTextEdit * textDescription;
     QTextEdit * textSticker;
     QSpinBox * spinSales;
-    QPushButton * printSticker;
     QSpinBox * spinPrint;
 
 

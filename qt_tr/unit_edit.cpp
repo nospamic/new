@@ -103,24 +103,26 @@ Unit_edit::Unit_edit(unsigned code, QWidget *parent)
 
 
 
-    printSticker = new QPushButton("Распечатать\nценник");
-    hor4->addWidget(printSticker);
-    vert->addLayout(hor4);
+    //printSticker = new QPushButton("Распечатать\nценник");
+    //hor4->addWidget(printSticker);
 
-    spinPrint = new QSpinBox;
-    spinPrint->setMinimum(1);
+    QLabel * labelPrint = new QLabel(" Печатать \n ценники: ");
+    hor4->addWidget(labelPrint);
+    spinPrint = new QSpinBox();
+    spinPrint->setMinimum(0);
     spinPrint->setFixedHeight(40);
     spinPrint->setFixedWidth(40);
     hor4->addWidget(spinPrint);
+    vert->addLayout(hor4);
 
-
-    ok = new QPushButton(" \n Сохранить \n ");
+    ok = new QPushButton(" \n Сохранить / печатать ценники \n ");
+    ok->setAutoDefault(false);
     vert->addWidget(ok);
 
     setLayout(vert);
 
     connect(ok, SIGNAL(clicked(bool)), this, SLOT(itsOk()));
-    connect(printSticker, SIGNAL(clicked(bool)), this, SLOT(printing()));
+
 }
 
 Unit_edit::~Unit_edit()
@@ -174,6 +176,7 @@ void Unit_edit::itsOk()
     if(uLoad.getUnit(barcode).getCode() == code || !uLoad.unitExists(unit.getBarcode()))
     {
         uLoad.edit(unit);
+        printing();
         this->close();
     }
     else
@@ -189,7 +192,6 @@ void Unit_edit::printing()
 {
 
 #ifndef QT_NO_PRINTER
-    printSticker->setEnabled(false);
     ok->setEnabled(false);
     int yCorrect = -15;
     std::vector<QString>words = textbutor.stringToVector(lineName->text());
@@ -241,7 +243,6 @@ void Unit_edit::printing()
         paint.setFont(small);
         paint.drawText(QRect(10, 155 + yCorrect, 400, 200), Qt::AlignLeft, QnameRight);
     }
-    printSticker->setEnabled(true);
     ok->setEnabled(true);
 #endif
 //-------------------this works---------------------------------

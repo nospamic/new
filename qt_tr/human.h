@@ -22,6 +22,7 @@ public:
     float getDebt();
     int getDiscount();
 
+
 private:
     int code;
     std::string name;
