@@ -1,6 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include <windows.h>
 #include "map.h"
 #include "fastconsole.h"
 #include "dynarry.h"

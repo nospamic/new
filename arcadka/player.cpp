@@ -9,32 +9,13 @@ Player::Player(un posX, un posY, un sizeX, un sizeY, int hp)
     this->sizeX = sizeX;
     this->sizeY = sizeY;
     this->hp = hp;
-    this->piece.symbol = ' ';
-    this->piece.type = Cell::EMPTY;
-    DynArry<Cell> d(sizeX, sizeY, piece);
-    this->body = d;
     this->speedX = 0;
     this->speedY = 0;
     this->angle = 0;
-
-//        for(un x=0; x<this->sizeX;x++)
-//        {
-//            Cell cell;
-//            cell.type = Cell::PLAYER;
-//            cell.symbol = char(int(x)+48);
-//            body.setElement(x,0,cell);
-//        }
-        Cell cell;
-        cell.type = Cell::PLAYER;
-        cell.symbol = '#';
-        body.setRectangle(3,3,sizeX-6,sizeY-6,cell,piece);
-        cell.symbol = '0';
-        body.setElement(4,2,cell);
-        body.setElement(sizeX-5,2,cell);
-
-
-
-    view = body;
+    blockF = false;
+    blockB = false;
+    piece = Cell(Cell::EMPTY, ' ', 0);
+    refresh();
 
 }
 
@@ -43,51 +24,55 @@ Player::Player()
 
 }
 
-void Player::feel(DynArry<Cell> space)
+void Player::refresh()
 {
-
-    if(speedY < 0)
+    body = DynArry<Cell> (sizeX, sizeY, piece);
+    Cell cell = Cell(Cell::PLAYER,'#',0);
+    body.setRectangle(3,3,sizeX-6,sizeY-6,cell,piece);
+    cell.symbol = '0';
+    body.set(4,2,cell);
+    body.set(sizeX-5,2,cell);
+    Cell sensorF(Cell::SENSOR_F,'.',0);
+    Cell sensorB(Cell::SENSOR_B,'.',0);
+    for(un x=3;x<sizeX-3;x++)
     {
-    for(un x=posX; x<posX+sizeX; x++)
-        {
-            un y = posY - 1;
-            un type = space.getElement(x,y).type;
-            if(type == BORDER) speedY = 0;
-        }
+        body.set(x,1,sensorF);
+        body.set(x,sizeY-2,sensorB);
     }
-    if(speedY > 0)
+    setView();
+}
+
+
+void Player::move()
+{
+    if (int(speedY) != 0)
     {
-    for(un x=posX; x<posX+sizeX; x++)
-        {
-            un y = posY + sizeY;
-            un type = space.getElement(x,y).type;
-            if(type == BORDER) speedY = 0;
-        }
+        blockF?speedY=1:true;
+        blockB?speedY=-1:true;
+        float alpha = (angle+90) * 3.1415 / 180;
+        posX += cos(alpha) * float(speedY);
+        posY += sin(alpha) * float(speedY);
     }
 }
 
-void Player::move(DynArry<Cell> space)
+void Player::live()
 {
     control();
     setView();
-    feel(space);
-
-    if (speedY != 0)
-    {
-        double alpha = (angle+90) * 3.1415 / 180;
-        posX += cos(alpha) * double(speedY);
-        posY += sin(alpha) * double(speedY);
-    }
+    move();
 }
+
 
 void Player::control()
 {
-    GetKeyState(VK_RIGHT)&0x80 ? angle+=2 : GetKeyState(VK_LEFT)&0x80 ? angle-=2 : true;
-    GetKeyState(VK_DOWN )&0x80 ? speedY = 1 : GetKeyState(VK_UP  )&0x80 ? speedY = -1 : speedY = 0;
+    if(GetKeyState(VK_RIGHT)&0x80){ angle+=3;}
+    if(GetKeyState(VK_LEFT)&0x80) {angle-=3;}
+    if(GetKeyState(VK_DOWN)&0x80 && !blockB) {speedY = 1;}
+    else if(GetKeyState(VK_UP)&0x80 && !blockF){speedY = -1;}
+    else {speedY = 0;}
+
 }
 
-void Player::setView()
-{
-    view = body;
-    view.rotate(int(sizeX/2),int(sizeY/2),angle);
-}
+
+
+

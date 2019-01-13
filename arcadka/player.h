@@ -2,7 +2,7 @@
 #define PLAYER_H
 
 #include <iostream>
-#include <Windows.h>
+#include <windows.h>
 #include <string>
 #include "dynarry.h"
 #include "arcmob.h"
@@ -15,11 +15,13 @@ class Player : public ArcMob
 public:
     Player(un posX, un posY, un sizeX, un sizeY, int hp);
     Player();
-    void feel(DynArry<Cell>space);
-    void move(DynArry<Cell>space);
+
+    void move();
+    void live()override;
     void control();
+    void refresh();
 private:
-    void setView();
+
 
 
 };

@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <math.h>
 typedef unsigned int un;
-const double PI=3.1415;
+const float PI=3.141593F;
 
 
 template <typename T>
@@ -15,13 +15,12 @@ class DynArry
 public:
     DynArry(un sizeX, un sizeY, T fill);
     DynArry();
-    T getElement(un xPos, un yPos);
-    void setElement(un xPos, un yPos, T);
+    T get(un xPos, un yPos);
+    void set(un xPos, un yPos, T);
     void fillArr();
     void fillArr(T val);
-    void rotate(int centerX, int centerY, double alpha);
-    int rotateX(double x, double y, int centerX, int centerY, double fi);
-    int rotateY(double x, double y, int centerX, int centerY, double fi);
+    void rotate(int centerX, int centerY, float alpha);
+
     void setCircle(un posX, un posY, un radius, T brush);
     void setLine(un posX, un posY, int sizeX, int sizeY, T brush);
     void setRectangle(un posX, un posY, un sizeX, un sizeY, T brush, T fill);
@@ -32,9 +31,10 @@ private:
     std::vector<T>base;
 
     //Rotate/////////////////////////////////////////////////////////////
-    int round(double a);
-    double angle(int x, int y, int centerX, int centerY);
-    double radius(double x, double y, int centerX, int centerY);
+    int round(float a);
+    int rotateX(float x, float y, int centerX, int centerY, float fi);
+    int rotateY(float x, float y, int centerX, int centerY, float fi);
+    float radius(float x, float y, int centerX, int centerY);
 
     //------------------------------------------------------------------
 };
@@ -89,14 +89,14 @@ void DynArry<T>::fillArr(T val)
 
 
 template <typename T>
-T DynArry<T>::getElement(un xPos, un yPos)
+T DynArry<T>::get(un xPos, un yPos)
 {
     return base[sizeX*yPos + xPos];
 }
 
 
 template <typename T>
-void DynArry<T>::setElement(un xPos, un yPos, T value)
+void DynArry<T>::set(un xPos, un yPos, T value)
 {
     if(sizeX*yPos + xPos < base.size())base[sizeX*yPos + xPos] = value;
 }
@@ -104,14 +104,14 @@ void DynArry<T>::setElement(un xPos, un yPos, T value)
 template<typename T>
 void DynArry<T>::setCircle(un posX, un posY, un radius, T brush)
 {
-    int xStart = posX+radius;
-    int yStart = posY;
-    setElement(xStart,yStart,brush);
+    int xStart = int(posX+radius);
+    int yStart = int(posY);
+    set(xStart,yStart,brush);
     for(un n=0; n<360;n++)
     {
         un x = rotateX(xStart, yStart, posX+radius, posY+radius, n);
         un y = rotateY(xStart, yStart, posX+radius, posY+radius, n);
-        if(x>=0 && x<sizeX && y>=0 && y<sizeY)setElement(x,y,brush);
+        if(x>=0 && x<sizeX && y>=0 && y<sizeY)set(x,y,brush);
     }
 }
 
@@ -124,7 +124,7 @@ void DynArry<T>::setLine(un posX, un posY, int sizeX, int sizeY, T brush)
     float y=posY;
     float dx, dy;
 
-    int length = int(radius(double(sizeX), double(sizeY), 0,0));//int(x), int(y)));
+    int length = int(radius(float(sizeX), float(sizeY), 0,0));//int(x), int(y)));
 
     dx = float(sizeX)/float(length);
     dy = float(sizeY)/float(length);
@@ -132,7 +132,7 @@ void DynArry<T>::setLine(un posX, un posY, int sizeX, int sizeY, T brush)
     {
         //std::cout<<"n="<<n<<" x="<<x<<" y="<<y<<"\n";
         if(x>=0 && round(x)<int(this->sizeX) && y>=0 && round(y)<int(this->sizeY))
-        setElement(round(x),round(y),brush);
+        set(round(x),round(y),brush);
         x+=dx;
         y+=dy;
     }
@@ -147,9 +147,9 @@ void DynArry<T>::setRectangle(un posX, un posY, un sizeX, un sizeY, T brush, T f
         for(un x=posX; x<posX+sizeX; x++)
         {
             if(x>posX && x<posX+sizeX-1 && y>posY && y<posY+sizeY-1)
-            {setElement(x,y,fill);}
+            {set(x,y,fill);}
             else
-            {setElement(x,y,brush);}
+            {set(x,y,brush);}
         }
     }
 }
@@ -157,22 +157,20 @@ void DynArry<T>::setRectangle(un posX, un posY, un sizeX, un sizeY, T brush, T f
 
 
 template<typename T>
-void DynArry<T>::rotate(int centerX, int centerY, double alpha)
+void DynArry<T>::rotate(int centerX, int centerY, float alpha)
 {
     std::vector <T> temp(sizeX*sizeY);
     for(un n=0;n<temp.size();n++) temp[n]=fill;
-//    for(un y=0; y<sizeY; y++)
-//    {
-//        for (un x=0; x<sizeX; x++){temp.push_back(fill);}
-//    }
-
     for(un y=0;y<sizeY;y++)
     {
         for(un x=0;x<sizeX;x++)
         {
-            int x1=rotateX(double(x),double(y), centerX, centerY, alpha);
-            int y1=rotateY(double(x),double(y), centerX, centerY, alpha);
-            if (x1<sizeX && y1<sizeY && x1>=0 && y1>=0){temp[x1+sizeX*y1]=base[x+sizeX*y];}
+            if (!(base[x+sizeX*y]==fill))
+            {
+                int x1=rotateX(float(x),float(y), centerX, centerY, alpha);
+                int y1=rotateY(float(x),float(y), centerX, centerY, alpha);
+                if (x1<int(sizeX) && y1<int(sizeY) && x1>=0 && y1>=0){temp[x1+sizeX*y1]=base[x+sizeX*y];}
+            }
             //std::cout<<x<<"    "<<x1<<"\n";
         }
     }
@@ -186,59 +184,61 @@ void DynArry<T>::rotate(int centerX, int centerY, double alpha)
 
 
 template<typename T>
-int DynArry<T>::round(double a)
+int DynArry<T>::round(float a)
 {
-    if(a>=0) a-int(a)>0.5 ? a=int(a+1) : a=int(a);
-    if(a<0) a-int(a)<-0.5 ? a=int(a-1) : a=int(a);
+    if(a>=0) a-int(a)>=0.5F ? a=int(a+1) : a=int(a);
+    if(a<0) a-int(a)<=-0.5F ? a=int(a-1) : a=int(a);
     return int(a);
 }
 
-template<typename T>
-double DynArry<T>::angle(int x, int y, int centerX, int centerY)
-{
-    double dx=x-centerX;double dy=y-centerY;
-    double alpha = ((atan(dx/dy))/PI*180);
-    if (dx<0&&dy<0){alpha=360-alpha;}
-    if (dx<0&&dy>=0){alpha=180-alpha;}
-    if (dx>=0&&dy>0){alpha=180-alpha;}
-    if (dx>0&&dy<0){alpha=0-alpha;}
-    if(dy==0&&dx>0){alpha=90;}
-    if(dy==0&&dx<0){alpha=270;}
-    if(dy==0&&dx==0){alpha=0;}
-    return alpha;
-}
+
 
 template<typename T>
-double DynArry<T>::radius(double x, double y, int centerX, int centerY)
+float DynArry<T>::radius(float x, float y, int centerX, int centerY)
 {
-    double dx=abs(x-centerX);
-    double dy=abs(y-centerY);
-    double r=double(sqrt(pow(dx,2)+pow(dy,2)));
+    float dx=abs(int(x)-centerX);
+    float dy=abs(int(y)-centerY);
+    float r=float(sqrt(pow(double(dx),2)+pow(double(dy),2)));
     //std::cout<<r<<"\n";
     return r;
 }
 
 template<typename T>
-int DynArry<T>::rotateX(double x, double y, int centerX, int centerY, double fi)
+int DynArry<T>::rotateX(float x, float y, int centerX, int centerY, float fi)
 {
-    double alpha;
-    double r=radius(x, y, centerX, centerY);
-    alpha = angle(x, y, centerX, centerY);
-    x=((cos((alpha+fi-90) * PI / 180))*r)+centerX;
-    x=round(x);
-    return x;
+    float x0 = float(centerX);
+    float y0 = float(centerY);
+    float alpha = (fi)*PI/180;
+    float X = x0 + (x - x0) * float(cos(double(alpha))) - (y - y0) * float(sin(double(alpha)));
+    return round(X);
 }
 
 template<typename T>
-int DynArry<T>::rotateY(double x, double y, int centerX, int centerY, double fi)
+int DynArry<T>::rotateY(float x, float y, int centerX, int centerY, float fi)
 {
-    double r=radius(x, y, centerX, centerY);
-    double alpha = angle(x, y, centerX, centerY);
-    y=((sin((alpha+fi-90) * PI / 180))*r)+centerY;
-    y=round(y);
-    return y;
+    float x0 = float(centerX);
+    float y0 = float(centerY);
+    float alpha = (fi)*PI/180;
+    float Y = y0 + (y - y0) * float(cos(double(alpha))) + (x - x0) * float(sin(double(alpha)));
+    return round(Y);
 }
 
+class Area
+{
+public:
+    int x,y;
+    un w;
+    un h;
+    Area(){}
+    Area(int x, int y, un w, un h)
+    {
+        this->x=x;
+        this->y=y;
+        this->w=w;
+        this->h=h;
+    }
 
+};
 
 #endif // DYNARRY_H
+

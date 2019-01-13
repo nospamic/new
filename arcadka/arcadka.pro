@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     level.cpp \
     player.cpp \
     arcobject.cpp \
-    arcmob.cpp
+    arcmob.cpp \
+    food.cpp
 
 HEADERS += \
     dynarry.h \
@@ -33,4 +34,5 @@ HEADERS += \
     level.h \
     player.h \
     arcobject.h \
-    arcmob.h
+    arcmob.h \
+    food.h

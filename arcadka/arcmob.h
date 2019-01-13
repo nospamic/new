@@ -7,13 +7,17 @@ class ArcMob : public ArcObject
 {
 public:
     ArcMob();
-
-    double angle;
+    void setView() override;
+    void live() override;
+    float angle;
     float speedX, speedY;
+    bool blockF, blockB;
     int hp;
 
 protected:
 
 };
+
+
 
 #endif // ARCMOB_H

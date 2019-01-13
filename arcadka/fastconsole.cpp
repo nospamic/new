@@ -43,13 +43,13 @@ void FastConsole::prepare()
     system("cls");
 }
 
-void FastConsole::setPicture(DynArry<char> pic, un Xpos, un Ypos)
+void FastConsole::setPicture(DynArry<char> &pic, un Xpos, un Ypos)
 {
     for (un y = 0; y < pic.sizeY; y++)
     {
         for (un x = 0; x < pic.sizeX; x++)
         {
-           if(x+Xpos < sizeX && y+Ypos < sizeY && pic.getElement(x,y) != ' ') buffer.setElement(x+Xpos, y+Ypos, pic.getElement(x,y));
+           if(x+Xpos < sizeX && y+Ypos < sizeY && pic.get(x,y) != ' ') buffer.set(x+Xpos, y+Ypos, pic.get(x,y));
         }
     }
 }
@@ -59,13 +59,13 @@ void FastConsole::setRectangle(un posX, un posY, un sizeX, un sizeY, char brush)
     DynArry<char> rec(sizeX,sizeY,' ');
     for(un n=0; n<sizeX; n++)
     {
-        rec.setElement(n,0,brush);
-        rec.setElement(n,sizeY-1,brush);
+        rec.set(n,0,brush);
+        rec.set(n,sizeY-1,brush);
     }
     for(un n=1; n<sizeY-1; n++)
     {
-        rec.setElement(0,n,brush);
-        rec.setElement(sizeX-1,n,brush);
+        rec.set(0,n,brush);
+        rec.set(sizeX-1,n,brush);
 
     }
     setPicture(rec,posX,posY);
@@ -113,13 +113,13 @@ void FastConsole::show()
     {
         for (un x = 0; x < sizeX; x++)
         {
-            if (screen.getElement(x,y) != buffer.getElement(x,y))
+            if (screen.get(x,y) != buffer.get(x,y))
             {
-                screen.setElement(x, y, buffer.getElement(x,y));
+                screen.set(x, y, buffer.get(x,y));
                 setCursor(x, y);
-//                std::cout<<"getElement(x,y)-"<<buffer.getElement(x,y)<<"\n";
+//                std::cout<<"get(x,y)-"<<buffer.get(x,y)<<"\n";
 //                system("pause");
-                if(!(x==sizeX-1 && y==sizeY-1))std::cout << buffer.getElement(x,y);
+                if(!(x==sizeX-1 && y==sizeY-1))std::cout << buffer.get(x,y);
 
                 //Sleep (10);
             }
@@ -135,10 +135,10 @@ void FastConsole::resetScr()
     {
         for (un x = 0; x < sizeX; x++)
         {
-            buffer.setElement(x, y, ' ');
-            if (screen.getElement(x,y) != ' ')
+            buffer.set(x, y, ' ');
+            if (screen.get(x,y) != ' ')
             {
-                screen.setElement(x, y, ' ');
+                screen.set(x, y, ' ');
                 setCursor(x, y);
                 std::cout << ' ';
             }

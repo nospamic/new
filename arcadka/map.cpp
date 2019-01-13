@@ -7,53 +7,73 @@ Map::Map()
 
 Map::Map(un gameSizeX, un gameSizeY)
 {
-    borderWidth = 1;
+    borderWidth = 3;
     gameSizeX > gameSizeY ? padding = gameSizeX/2 : padding = gameSizeY/2;
     this->gameSizeX = gameSizeX;
     this->gameSizeY = gameSizeY;
     sizeX = gameSizeX + (padding * 2) + (borderWidth * 2);
     sizeY = gameSizeY + (padding * 2) + (borderWidth * 2);
-    border.symbol = '#';
-    border.type = 0;
-    empty.symbol = ' ';
-    empty.type = 4;
-    DynArry<Cell>sp(sizeX, sizeY, empty);
-    space = sp;
-    space.setRectangle(padding+borderWidth, padding+borderWidth, gameSizeX+(borderWidth*2), gameSizeY+(borderWidth*2),border,empty);
+    empty = Cell(Cell::EMPTY, ' ', 0);
+    border = Cell(Cell::BORDER, char(177) , 0);
+    space = DynArry<Cell>(sizeX, sizeY, empty);
     startX = sizeX/2;
     startY = sizeY/2;
-    Cell cell;
-    cell.type = Cell::EMPTY;
-    cell.symbol = '*';
-    for(un y=padding+3; y<sizeY-padding-3;y+=20)
-    {
-        for(un x=padding+3; x<sizeX-padding-3;x+=30)
-        {
-            space.setCircle(x,y,3,cell);
-        }
-    }
-
 }
 
 
-void Map::clear()
+DynArry<Cell> Map::getBorder()
 {
-    for(un y=0; y<space.sizeY;y++)
+    DynArry<Cell>borderLine(gameSizeX+borderWidth*2, gameSizeX+borderWidth*2, empty);
+    for(un n=0;n<borderWidth;n++)
     {
-        for(un x=0; x<space.sizeX;x++)
+        borderLine.setRectangle(n, n, gameSizeX+(borderWidth*2)-(n*2), gameSizeY+(borderWidth*2)-(n*2),border,empty);
+    }
+
+    Cell point(Cell::DECOR,'.',0);
+    for(un y=borderWidth; y<gameSizeY;y+=10)
+    {
+        for(un x=borderWidth; x<gameSizeX;x+=14)
         {
-            if (space.getElement(x,y).type!=Cell::BORDER && space.getElement(x,y).type != Cell::EMPTY)
-                space.setElement(x,y,empty);
+            borderLine.set(x,y,point);
+        }
+    }
+
+    return borderLine;
+}
+
+
+void Map::clear(Area area)
+{
+
+    for(un y=area.y; y<area.y+area.h;y++)
+    {
+        for(un x=area.x; x<area.x+area.w;x++)
+        {
+            if (space.get(x,y).type!=Cell::BORDER && space.get(x,y).type != Cell::EMPTY)
+                space.set(x,y,empty);
         }
     }
 }
 
 
-void Map::setObject(DynArry<Cell> arr, un xPos, un yPos)
+void Map::setObject(DynArry<Cell> &arr, un xPos, un yPos, Area area)
 {
-    for(un y=yPos;y<yPos+arr.sizeY;y++)
+    un xStart;
+    un xEnd;
+    un yStart;
+    un yEnd;
+    (area.x<xPos) ?  xStart=xPos :  xStart = area.x;
+    (area.x+area.w > xPos+arr.sizeX) ? xEnd=xPos+arr.sizeX : xEnd=area.x+area.w;
+    (area.y<yPos) ?  yStart=yPos :  yStart = area.y;
+    (area.y+area.h > yPos+arr.sizeY) ? yEnd=yPos+arr.sizeY : yEnd=area.y+area.h;
+
+    for(un y=yStart;y<yEnd;y++)
     {
-        for(un x=xPos; x<xPos+arr.sizeX;x++) space.setElement(x,y,arr.getElement(x-xPos,y-yPos));
+        for(un x=xStart; x<xEnd;x++)
+        {
+            un type = arr.get(x-xPos,y-yPos).type;
+            if(type !=Cell::EMPTY && type != Cell::SENSOR_F && type != Cell::SENSOR_B ) space.set(x,y,arr.get(x-xPos,y-yPos));
+        }
     }
 }
 

@@ -2,7 +2,7 @@
 #define FASTCONSOLE_H
 
 #include <iostream>
-#include <Windows.h>
+#include <windows.h>
 #include <string>
 #include "dynarry.h"
 
@@ -16,7 +16,7 @@ public:
 
     void prepare();
     un sizeX, sizeY;
-    void setPicture (DynArry<char>pic, un Xpos, un Ypos);
+    void setPicture (DynArry<char>&pic, un Xpos, un Ypos);
     void setRectangle(un posX, un posY, un sizeX, un sizeY, char brush);
     void setCircle(un posX, un posY, un radius, char brush);
     void setLine(un posX, un posY, int sizeX, int sizeY, char brush);
